@@ -1,2 +1,2 @@
-# Puzzlez
-Senior Project: Puzzlez, a puzzle application tailored to Special Needs students and users. 
+# Puzzlify
+Senior Project: Puzzlify, a puzzle application tailored to Special Needs students and users. 
