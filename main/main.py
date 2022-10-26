@@ -27,3 +27,4 @@ menu.mainloop(screen)
 
 
 
+area = 3.14
