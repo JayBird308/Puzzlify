@@ -1,14 +1,20 @@
 #live share test
 
 import pygame
+import pygame_menu
 from sys import exit
 
-width = 2550;
-height = 1440;
+width = 600;
+height = 400;
 
 pygame.init()
 screen = pygame.display.set_mode((width,height))
 clock = pygame.time.Clock()
+
+def set_difficulty(value, difficulty):
+
+pass
+
 
 
 while True:
@@ -26,5 +32,3 @@ while True:
 
 
 
-
-#test
