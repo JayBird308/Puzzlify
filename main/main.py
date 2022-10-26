@@ -27,4 +27,4 @@ menu.mainloop(screen)
 
 
 
-area = 3.14
+lenght = 14
