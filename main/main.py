@@ -27,4 +27,3 @@ menu.mainloop(screen)
 
 
 
-lenght = 14
