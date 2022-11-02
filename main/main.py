@@ -4,9 +4,6 @@ import pygame
 import pygame_menu
 from sys import exit
 
-import pygame
-from sys import exit
-
 def set_difficulty(value, difficulty):
     pass
 
