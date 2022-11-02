@@ -31,10 +31,6 @@ def main():
 
     while running:
 
-
-    pygame.init()
-    clock = pygame.time.Clock()
-
     menu = pygame_menu.Menu('Puzzlify', 400, 300, theme = pygame_menu.themes.THEME_BLUE)
     menu.add.button('Play', game_start)
     menu.add.button('Quit', pygame_menu.events.EXIT)
