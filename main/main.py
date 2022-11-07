@@ -10,6 +10,12 @@ def set_difficulty(value, difficulty):
 def game_start():
     pass
 
+def game_select():
+    pass
+
+def account_info():
+    pass
+
 def main():
 
     # initialize the pygame module
@@ -25,6 +31,12 @@ def main():
 
     # create surface on screen of size height x
     screen = pygame.display.set_mode((width,height))
+
+    # adds menu options
+    menu = pygame_menu.Menu('Puzzlify', 600, 400, theme = pygame_menu.themes.THEME_BLUE)
+    menu.add.button('Game Selection', game_select)
+    menu.add.button('Account', account_info)
+    menu.add.button('Quit', pygame_menu.events.EXIT)
 
     #main loop run variable
     running = True
