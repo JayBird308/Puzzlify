@@ -1,9 +1,10 @@
 import pygame
 import pygame_menu
-# import theme
+from customMenu_theme import *
+import ctypes
 from sys import exit
 
-def set_difficulty(value, difficulty):
+def set_difficulty():
     pass
 
 def game_start():
@@ -20,9 +21,10 @@ def main():
     # initialize the pygame module
     pygame.init()
 
-    # height and width dimensions of application window
-    width = 600;
-    height = 400;
+    # height and width of user's desktop to fit application window to
+    user32 = ctypes.windll.user32
+    width = user32.GetSystemMetrics(0)
+    height = user32.GetSystemMetrics(1)
 
     # load and set pygame logo
     screen = pygame.display.set_mode((width,height))
@@ -32,7 +34,7 @@ def main():
     screen = pygame.display.set_mode((width,height))
 
     # adds menu options
-    menu = pygame_menu.Menu('Puzzlify', 600, 400, theme = pygame_menu.themes.THEME_GREEN)
+    menu = pygame_menu.Menu('Puzzlify', width, height, theme = pygame_menu.themes.THEME_GREEN)
     menu.add.button('Game Selection', game_select)
     menu.add.button('Account', account_info)
     menu.add.button('Quit', pygame_menu.events.EXIT)
