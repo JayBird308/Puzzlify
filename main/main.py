@@ -1,7 +1,6 @@
-#live share test
-
 import pygame
 import pygame_menu
+# import theme
 from sys import exit
 
 def set_difficulty(value, difficulty):
@@ -33,7 +32,7 @@ def main():
     screen = pygame.display.set_mode((width,height))
 
     # adds menu options
-    menu = pygame_menu.Menu('Puzzlify', 600, 400, theme = pygame_menu.themes.THEME_BLUE)
+    menu = pygame_menu.Menu('Puzzlify', 600, 400, theme = pygame_menu.themes.THEME_GREEN)
     menu.add.button('Game Selection', game_select)
     menu.add.button('Account', account_info)
     menu.add.button('Quit', pygame_menu.events.EXIT)
@@ -49,6 +48,7 @@ def main():
             if event.type == pygame.QUIT:
                     # set running condition to false, which will exit main loop
                     running = False
+        menu.mainloop(screen)
         pygame.display.update()
         clock.tick(60)
 
