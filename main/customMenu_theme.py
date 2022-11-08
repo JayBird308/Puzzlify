@@ -1,11 +1,25 @@
 import pygame_menu
 
-customImage = pygame_menu.baseimage.BaseImage(image_path= r'C:\Users\jtall\OneDrive\Documents\GitHub\Puzzlify\main\images\logo.png',
-                                          drawing_mode=pygame_menu.baseimage.IMAGE_MODE_CENTER)
+# font settings
+font = pygame_menu.font.FONT_NEVIS
+widgetFontSize = 80
+titleFontSize = 120
 
-customMenu_theme = pygame_menu.Theme(background_color = (0,0,0,0), #transparent color
-                            title_background_color = (255,0,0),
+# set path for custom image for use in theme
+customImage = pygame_menu.baseimage.BaseImage(image_path= r'C:\Users\jtall\OneDrive\Documents\GitHub\Puzzlify\main\images\upscaled_menu_image.png',
+                                          drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+
+# create custom theme
+customMenu_theme = pygame_menu.Theme(background_color = (238,242,226,0), 
+                            title_background_color = (248,218,91),
+                            title_font_color = (0,0,0,0),
+                            title_font = font,
+                            title_font_size = titleFontSize,
                             title_font_shadow=True,
-                            widget_padding=25)
+                            widget_padding=25,
+                            widget_background_color = (238,242,226,0),
+                            widget_font = font,
+                            widget_font_size = widgetFontSize,
+                            widget_selection_effect = pygame_menu.widgets.LeftArrowSelection())
 
 customMenu_theme.background_color=customImage
