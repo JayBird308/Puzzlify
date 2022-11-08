@@ -2,7 +2,6 @@ import pygame
 import pygame_menu
 from customMenu_theme import *
 import ctypes
-from sys import exit
 
 def set_difficulty():
     pass
@@ -26,7 +25,7 @@ def main():
     width = user32.GetSystemMetrics(0)
     height = user32.GetSystemMetrics(1)
 
-    # load and set pygame logo
+    # load and set pygame window and clock
     screen = pygame.display.set_mode((width,height))
     clock = pygame.time.Clock()
 
