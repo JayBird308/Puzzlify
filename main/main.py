@@ -26,7 +26,6 @@ def main():
     height = user32.GetSystemMetrics(1)
 
     # load and set pygame window and clock
-    screen = pygame.display.set_mode((width,height))
     clock = pygame.time.Clock()
 
     # create surface on screen of size height x
