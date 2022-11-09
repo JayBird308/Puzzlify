@@ -6,8 +6,8 @@ widgetFontSize = 80
 titleFontSize = 120
 
 # set path for custom image for use in theme
-customImage = pygame_menu.baseimage.BaseImage(image_path= r'C:\Users\jtall\OneDrive\Documents\GitHub\Puzzlify\main\images\upscaled_menu_image.png',
-                                          drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+customImage = pygame_menu.baseimage.BaseImage('main\\images\\upscaled_menu_image.png',
+                            drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
 
 # create custom theme
 customMenu_theme = pygame_menu.Theme(background_color = (238,242,226,0), 
