@@ -3,13 +3,14 @@ import pygame_menu
 from customMenu_theme import *
 import ctypes
 
-def set_difficulty():
-    pass
-
-def game_start():
-    pass
+# GLOBAL VARIABLES
+global USER32, WIDTH, HEIGHT
+USER32 = ctypes.windll.user32
+WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
+HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
 def game_select():
+    pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
     pass
 
 def account_info():
@@ -20,26 +21,21 @@ def main():
     # initialize the pygame module
     pygame.init()
 
-    # height and width of user's desktop to fit application window to
-    user32 = ctypes.windll.user32
-    width = user32.GetSystemMetrics(0)
-    height = user32.GetSystemMetrics(1)
-
     # load and set pygame window and clock
     clock = pygame.time.Clock()
 
     # create surface on screen of size height x
-    screen = pygame.display.set_mode((width,height))
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
     # adds menu options
-    menu = pygame_menu.Menu('Welcome ' + 'Account_Name', width, height, theme = customMenu_theme)
+    menu = pygame_menu.Menu('Welcome ' + 'Account_Name', WIDTH, HEIGHT, theme = customMenu_theme)
     menu.add.button('Game Selection', game_select)
     menu.add.button('Account', account_info)
     menu.add.button('Quit', pygame_menu.events.EXIT)
 
     #main loop run variable
     running = True
-
+    
     # main loop
     while running:
         # event handling, gets all event from the event queue
