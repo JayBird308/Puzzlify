@@ -9,11 +9,14 @@ USER32 = ctypes.windll.user32
 WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
+# menu button action to open game selection submenu
 def game_select():
     pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
     pass
 
+# menu button action to open account submenu
 def account_info():
+    pygame_menu.Menu('Account', WIDTH, HEIGHT, theme = customMenu_theme)
     pass
 
 def main():
@@ -24,11 +27,11 @@ def main():
     # load and set pygame window and clock
     clock = pygame.time.Clock()
 
-    # create surface on screen of size height x
+    # create surface on screen of size width x height
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
     # adds menu options
-    menu = pygame_menu.Menu('Welcome ' + 'Account_Name', WIDTH, HEIGHT, theme = customMenu_theme)
+    menu = pygame_menu.Menu('Welcome ' + 'Account_Name' + '!', WIDTH, HEIGHT, theme = customMenu_theme)
     menu.add.button('Game Selection', game_select)
     menu.add.button('Account', account_info)
     menu.add.button('Quit', pygame_menu.events.EXIT)
