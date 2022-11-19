@@ -62,11 +62,11 @@ def main():
     # load and set pygame window and clock
     clock = pygame.time.Clock()
 
-    # create surface on screen of size height x
+    # create surface on screen of size width x height
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
     # adds menu options
-    menu = pygame_menu.Menu('Welcome ' + 'Account_Name', WIDTH, HEIGHT, theme = customMenu_theme)
+    menu = pygame_menu.Menu('Welcome ' + 'Account_Name' + '!', WIDTH, HEIGHT, theme = customMenu_theme)
     menu.add.button('Game Selection', game_select)
     menu.add.button('Account', account_info)
     menu.add.button('Quit', pygame_menu.events.EXIT)

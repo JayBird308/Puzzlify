@@ -3,7 +3,7 @@ import pygame_menu
 # font settings
 font = pygame_menu.font.FONT_NEVIS
 widgetFontSize = 80
-titleFontSize = 120
+titleFontSize = 100
 
 # set path for custom image for use in theme
 customImage = pygame_menu.baseimage.BaseImage('main\\images\\upscaled_menu_image.png',
