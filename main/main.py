@@ -9,11 +9,49 @@ USER32 = ctypes.windll.user32
 WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
+# game selection sub menu
 def game_select():
-    pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
+    gameMenu.add.button('Main Menu', main)
+    gameMenu.add.button('Quit', pygame_menu.events.EXIT)
+    gameMenu.mainloop(screen)
     pass
 
+# account sub menu
 def account_info():
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    accountMenu = pygame_menu.Menu('Account', WIDTH, HEIGHT, theme = customMenu_theme)
+    accountMenu.add.button('Account Login', account_login)
+    accountMenu.add.button('Create an Account', account_create)
+    accountMenu.add.button('Main Menu', main)
+    accountMenu.add.button('Quit', pygame_menu.events.EXIT)
+    accountMenu.mainloop(screen)
+    pass
+
+# account creation sub menu
+def account_create():
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    accountMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
+    accountMenu.add.text_input('Username: ', default = 'user')
+    accountMenu.add.text_input('Password: ', default = 'password')
+    accountMenu.add.text_input('Email Address: ', default = 'user@email.com')
+    accountMenu.add.button('Account Menu', account_info)
+    accountMenu.mainloop(screen)
+    pass
+
+# account login sub menu
+def account_login():
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    accountMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
+    accountMenu.add.text_input('Username: ', default = 'user')
+    accountMenu.add.text_input('Password: ', default = 'password')
+    accountMenu.add.button('Login', login)
+    accountMenu.add.button('Account Menu', account_info)
+    accountMenu.mainloop(screen)
+    pass
+
+def login():
     pass
 
 def main():
