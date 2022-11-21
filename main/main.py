@@ -13,7 +13,7 @@ HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 def game_select():
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
     gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
-    gameMenu.add.button('Main Menu', main)
+    gameMenu.add.button('Back', main)
     gameMenu.add.button('Quit', pygame_menu.events.EXIT)
     gameMenu.mainloop(screen)
     pass
@@ -24,8 +24,8 @@ def account_info():
     accountMenu = pygame_menu.Menu('Account', WIDTH, HEIGHT, theme = customMenu_theme)
     accountMenu.add.button('Account Login', account_login)
     accountMenu.add.button('Create an Account', account_create)
-    accountMenu.add.button('Main Menu', main)
-    accountMenu.add.button('Quit', pygame_menu.events.EXIT)
+    accountMenu.add.button('Account Statistics', account_stats)
+    accountMenu.add.button('Back', main)
     accountMenu.mainloop(screen)
     pass
 
@@ -36,7 +36,7 @@ def account_create():
     accountMenu.add.text_input('Username: ', default = 'user')
     accountMenu.add.text_input('Password: ', default = 'password')
     accountMenu.add.text_input('Email Address: ', default = 'user@email.com')
-    accountMenu.add.button('Account Menu', account_info)
+    accountMenu.add.button('Back', account_info)
     accountMenu.mainloop(screen)
     pass
 
@@ -47,11 +47,21 @@ def account_login():
     accountMenu.add.text_input('Username: ', default = 'user')
     accountMenu.add.text_input('Password: ', default = 'password')
     accountMenu.add.button('Login', login)
-    accountMenu.add.button('Account Menu', account_info)
+    accountMenu.add.button('Back', account_info)
     accountMenu.mainloop(screen)
     pass
 
+# account statistics sub menu
+def account_stats():
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    accountMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
+    accountMenu.add.button('Back', account_info)
+    accountMenu.mainloop(screen)
+    pass
+
+# login button action for database credentials
 def login():
+    
     pass
 
 def main():

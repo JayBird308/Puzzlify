@@ -22,4 +22,4 @@ customMenu_theme = pygame_menu.Theme(background_color = (238,242,226,0),
                             widget_font_size = widgetFontSize,
                             widget_selection_effect = pygame_menu.widgets.LeftArrowSelection())
 
-customMenu_theme.background_color=customImage
+# customMenu_theme.background_color=customImage
