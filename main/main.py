@@ -10,12 +10,18 @@ USER32 = ctypes.windll.user32
 WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
+# Math quiz
+def math_quiz():
+    object = MQ.quiz()
+    MQ.__init__()
+    
+
 # game selection sub menu
 def game_select():
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
     gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
+    gameMenu.add.button('Math Quiz', math_quiz)
     gameMenu.add.button('Back', main)
-    gameMenu.add.button('Quit', pygame_menu.events.EXIT)
     gameMenu.mainloop(screen)
     pass
 
@@ -101,10 +107,10 @@ if __name__ == "__main__":
 
     # call main
     main()
-
     object = MQ.quiz()
-
     MQ.__init__()
+    
+    
 
 
 
