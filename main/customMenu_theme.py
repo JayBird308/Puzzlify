@@ -6,7 +6,7 @@ widgetFontSize = 80
 titleFontSize = 100
 
 # set path for custom image for use in theme
-customImage = pygame_menu.baseimage.BaseImage('main\\images\\upscaled_menu_image.png',
+customImage = pygame_menu.baseimage.BaseImage('main\\images\\puzzle1menu.png',
                             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
 
 # create custom theme
@@ -22,4 +22,4 @@ customMenu_theme = pygame_menu.Theme(background_color = (238,242,226,0),
                             widget_font_size = widgetFontSize,
                             widget_selection_effect = pygame_menu.widgets.LeftArrowSelection())
 
-# customMenu_theme.background_color=customImage
+customMenu_theme.background_color=customImage

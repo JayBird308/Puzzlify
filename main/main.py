@@ -3,6 +3,7 @@ import pygame_menu
 from customMenu_theme import *
 import ctypes
 import MathQuiz as MQ
+import mysql.connector
 
 # GLOBAL VARIABLES
 global USER32, WIDTH, HEIGHT
@@ -12,9 +13,8 @@ HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
 # Math quiz
 def math_quiz():
-    object = MQ.quiz()
-    MQ.__init__()
     
+    pass
 
 # game selection sub menu
 def game_select():
@@ -43,6 +43,7 @@ def account_create():
     accountMenu.add.text_input('Username: ', default = 'user')
     accountMenu.add.text_input('Password: ', default = 'password')
     accountMenu.add.text_input('Email Address: ', default = 'user@email.com')
+    accountMenu.add.button('Submit Account', signup)
     accountMenu.add.button('Back', account_info)
     accountMenu.mainloop(screen)
     pass
@@ -66,12 +67,20 @@ def account_stats():
     accountMenu.mainloop(screen)
     pass
 
-# login button action for database credentials
+# login button action for account database
 def login():
     
     pass
 
+# sign up button action for account database
+def signup():
+    
+    pass
+
 def main():
+    # database connection
+    # myconn = mysql.connector.connect(host = "mysql.play.planbook.xyz", user = "play_dev0", passwd = "Play_Dev_0")
+    # print(myconn)
 
     # initialize the pygame module
     pygame.init()
@@ -108,7 +117,6 @@ if __name__ == "__main__":
     # call main
     main()
     object = MQ.quiz()
-    MQ.__init__()
     
     
 
