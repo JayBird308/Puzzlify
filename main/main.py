@@ -3,7 +3,6 @@ import pygame_menu
 from customMenu_theme import *
 import ctypes
 import MathQuiz as MQ
-import mysql.connector
 
 # GLOBAL VARIABLES
 global USER32, WIDTH, HEIGHT
