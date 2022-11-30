@@ -5,7 +5,7 @@ import ctypes
 # import MathQuiz as MQ
 
 # GLOBAL VARIABLES
-global USER32, WIDTH, HEIGHT
+global USER32, WIDTH, HEIGHT, SCREEN
 USER32 = ctypes.windll.user32
 WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
@@ -73,10 +73,6 @@ def signup():
     pass
 
 def main():
-    # database connection
-    # myconn = mysql.connector.connect(host = "mysql.play.planbook.xyz", user = "play_dev0", passwd = "Play_Dev_0")
-    # print(myconn)
-
     # initialize the pygame module
     pygame.init()
 
