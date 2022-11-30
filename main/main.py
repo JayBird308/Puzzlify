@@ -2,7 +2,7 @@ import pygame
 import pygame_menu
 from customMenu_theme import *
 import ctypes
-import MathQuiz as MQ
+# import MathQuiz as MQ
 
 # GLOBAL VARIABLES
 global USER32, WIDTH, HEIGHT
@@ -102,9 +102,9 @@ if __name__ == "__main__":
     # call main
     main()
 
-    object = MQ.quiz()
+    # object = MQ.quiz()
 
-    MQ.__init__()
+    # MQ.__init__()
 
 
 
