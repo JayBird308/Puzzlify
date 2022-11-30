@@ -6,7 +6,7 @@ wrong = 0
 correct = 0
  
 '''
-Class quiz() holds 3 functions : __init__() , generate_question() , user_answer ()
+Class quiz() : __init__() , generate_question() , user_answer()
 '''
 class quiz():
  
@@ -21,9 +21,7 @@ class quiz():
         global questionsTotal
         global wrong
         global correct
-        '''
-        Constructor
-        '''
+
         loopNum = 0
         while loopNum < questionsTotal:
             self.generate_question()
@@ -72,10 +70,10 @@ class quiz():
     user_answer() function :
     ------------------------
     simply grabs an input from the user...
-    - returns the input where the function was used...
-        - in this example : the returned input is returned to generate_question() for further validation
+    - returns the input
     '''
     def user_answer(self):
         ans = input()
         return ans
        
+quiz()
