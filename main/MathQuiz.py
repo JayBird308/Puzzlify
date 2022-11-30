@@ -31,8 +31,6 @@ class quiz():
         print('Wrong: ' + wrong.__str__())
         print('Correct: ' + correct.__str__())
         print('---------------')
-        exit(0)
-   
     '''
     generate_question() function :
     ------------------------------
@@ -76,4 +74,3 @@ class quiz():
         ans = input()
         return ans
        
-quiz()

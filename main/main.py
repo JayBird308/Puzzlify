@@ -2,7 +2,7 @@ import pygame
 import pygame_menu
 from customMenu_theme import *
 import ctypes
-# import MathQuiz as MQ
+import MathQuiz as MQ
 
 # GLOBAL VARIABLES
 global USER32, WIDTH, HEIGHT, SCREEN
@@ -13,7 +13,9 @@ SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
 
 # Math quiz
 def math_quiz():
-    
+    MQ.quiz()
+    print('Exiting...')
+    exit(0)
     pass
 
 # game selection sub menu
