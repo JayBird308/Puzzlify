@@ -84,7 +84,7 @@ def main():
     clock = pygame.time.Clock()
 
     # adds menu options
-    menu = pygame_menu.Menu('Welcome to Puzzlify!', WIDTH, HEIGHT, theme = customMenu_theme)
+    menu = pygame_menu.Menu('     Welcome to Puzzlify!', WIDTH, HEIGHT, theme = customMenu_theme)
     menu.add.button('Game Selection', game_select)
     menu.add.button('Account', account_info)
     menu.add.button('Quit', pygame_menu.events.EXIT)
