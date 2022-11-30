@@ -10,12 +10,17 @@ USER32 = ctypes.windll.user32
 WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
+# Math quiz
+def math_quiz():
+    
+    pass
+
 # game selection sub menu
 def game_select():
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
     gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
+    gameMenu.add.button('Math Quiz', math_quiz)
     gameMenu.add.button('Back', main)
-    gameMenu.add.button('Quit', pygame_menu.events.EXIT)
     gameMenu.mainloop(screen)
     pass
 
@@ -37,6 +42,7 @@ def account_create():
     accountMenu.add.text_input('Username: ', default = 'user')
     accountMenu.add.text_input('Password: ', default = 'password')
     accountMenu.add.text_input('Email Address: ', default = 'user@email.com')
+    accountMenu.add.button('Submit Account', signup)
     accountMenu.add.button('Back', account_info)
     accountMenu.mainloop(screen)
     pass
@@ -60,12 +66,20 @@ def account_stats():
     accountMenu.mainloop(screen)
     pass
 
-# login button action for database credentials
+# login button action for account database
 def login():
     
     pass
 
+# sign up button action for account database
+def signup():
+    
+    pass
+
 def main():
+    # database connection
+    # myconn = mysql.connector.connect(host = "mysql.play.planbook.xyz", user = "play_dev0", passwd = "Play_Dev_0")
+    # print(myconn)
 
     # initialize the pygame module
     pygame.init()
