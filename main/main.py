@@ -13,7 +13,11 @@ SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
 
 # Math quiz
 def math_quiz():
+    pygame.display.iconify()
+    # game runs in console at the moment..
+
     MQ.quiz()
+    
     print('Exiting...')
     exit(0)
     pass
