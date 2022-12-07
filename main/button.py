@@ -1,7 +1,19 @@
 import pygame
 
 class button:
-    def __init__(self, position, size, clr=[100, 100, 100], cngclr=None, func=None, text='', font="Segoe Print", font_size=16, font_clr=[0, 0, 0]):
+
+    def __init__(
+        self, 
+        position, 
+        size, 
+        clr=[100, 100, 100], 
+        cngclr=None, 
+        func=None, 
+        text='', 
+        font="Segoe Print", 
+        font_size=16, 
+        font_clr=[0, 0, 0]):
+
         self.clr    = clr
         self.size   = size
         self.func   = func
@@ -15,7 +27,6 @@ class button:
 
         if len(clr) == 4:
             self.surf.set_alpha(clr[3])
-
 
         self.font = pygame.font.SysFont(font, font_size)
         self.txt = text
