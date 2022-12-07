@@ -4,73 +4,58 @@ import random
 questionsTotal = 3
 wrong = 0
 correct = 0
- 
-'''
-Class quiz() : __init__() , generate_question() , user_answer()
-'''
-class quiz():
- 
-    '''
-    __init__ function :
-    -----------------------------------------------
-    - has access to read global variables.
-    - runs a loop of how many questions to ask
-    - once loop ends, it prints statistics
-    '''
-    def __init__(self):
-        global questionsTotal
-        global wrong
-        global correct
 
-        loopNum = 0
-        while loopNum < questionsTotal:
-            self.generate_question()
-            loopNum = loopNum + 1
-        print('-- Final Statistics --')
-        print('Number of Questions: ' + questionsTotal.__str__())
-        print('Wrong: ' + wrong.__str__())
-        print('Correct: ' + correct.__str__())
-        print('---------------')
-    '''
-    generate_question() function :
-    ------------------------------
-    - has access to global variables for modifications
-    - gets two random numbers for a simple addition problem
-    - grabs an input from the user...
-        - checks the input by processing it through if else statements
-    '''
-    def generate_question(self):
-        global wrong
-        global correct
+num1 = 0
+num2 = 0
+sol = 0
+
+
+class quiz():
+    # def __init__(self):
+    #     global questionsTotal
+    #     global wrong
+    #     global correct
+
+    #     loopNum = 0
+    #     while loopNum < questionsTotal:
+    #         self.generate_question()
+    #         loopNum = loopNum + 1
+    #     print('-- Final Statistics --')
+    #     print('Number of Questions: ' + questionsTotal.__str__())
+    #     print('Wrong: ' + wrong.__str__())
+    #     print('Correct: ' + correct.__str__())
+    #     print('---------------')
+
+    def gen_num1():
+        global num1
+        num1 = random.randint(0, 10)
+        return num1
+
+    def get_num1():
+        global num1
+        return num1
+
+    def get_num2():
+        global num2
+        return num2
+
+    def get_solution():
+        global num1
+        global num2
+        global sol
+        sol = num1 + num2
+        return sol
+
+    def generate_question():
+        global num1
+        global num2
+        global sol
+
+        num1 = quiz.gen_num1()
+        num2 = random.randint(0, 10)
+        sol = num1 + num2
+        question = (num1.__str__() + ' + ' + num2.__str__() + ' = ?')
+
         print('Math Question: ', end='')
-       
-        num1 = random.randint(0,10)
-        num2 = random.randint(0,10)
-        s = num1 + num2
-       
-        print(num1.__str__() + ' + ' + num2.__str__() + ' = ?')
-        ans = self.user_answer()
-       
-        if (ans.isdigit()):
-            ans = int(ans)
-            if (ans == s):
-                correct = correct + 1
-                print('You are correct!')
-            else:
-                wrong = wrong + 1
-                print('Your answer is incorrect...')
-        else:
-            wrong = wrong + 1
-            print('Your answer is not even a number!')
-        print('---------------')
-   
-    '''
-    user_answer() function :
-    ------------------------
-    simply grabs an input from the user...
-    - returns the input
-    '''
-    def user_answer(self):
-        ans = input()
-        return ans
-       
+        print(question)
+        return question
