@@ -39,20 +39,16 @@ class quiz():
 
     def set_btn1():
         quiz.check_choice(array[0])
-        print("Check " + array[0].__str__())
 
     def set_btn2():
         quiz.check_choice(array[1])
-        print("Check " + array[1].__str__())
 
     def set_btn3():
         quiz.check_choice(array[2])
-        print("Check " + array[2].__str__())
-
+        
     def set_btn4():
         quiz.check_choice(array[3])
-        print("Check " + array[3].__str__())
-
+        
     def reset_values():
         global questionCounter, wrong, correct
         questionCounter = 1
@@ -124,7 +120,7 @@ class quiz():
             # Counter
             total_l = label.Label(
                 screen=SCREEN,
-                text="total: " + (questionsTotal-1).__str__(),
+                text="Total: " + (questionsTotal-1).__str__(),
                 x=center_w - 150,
                 y=center_h,
                 size=48
@@ -181,8 +177,6 @@ class quiz():
         global main_menu, clock, choice_num, num1, num2, array, questionCounter
         global btn1, btn2, btn3, btn4, questionsTotal, wrong, correct
 
-        print("questionCounter: " + questionCounter.__str__())
-
         # Get initial values
         question = quiz.generate_question()
         
@@ -209,7 +203,7 @@ class quiz():
                 array[1] = quiz.gen_rand_num()
             elif array[1] == array[3]:
                 array[1] = quiz.gen_rand_num()
-            if array[1] != array[0] or array[1] != array[2] or array[1] != array[3]:
+            if array[1] != array[0] and array[1] and array[2] and array[1] != array[3]:
                 break
 
         while True:
@@ -219,7 +213,7 @@ class quiz():
                 array[2] = quiz.gen_rand_num()
             elif array[2] == array[3]:
                 array[2] = quiz.gen_rand_num()
-            if array[2] != array[0] or array[2] != array[1] or array[2] != array[3]:
+            if array[2] != array[0] and array[2] != array[1] and array[2] != array[3]:
                 break
 
         # shuffle options
@@ -376,4 +370,5 @@ class quiz():
         
         print('Math Question: ', end='')
         print(question)
+        print("Solution: " + sol.__str__())
         return question
