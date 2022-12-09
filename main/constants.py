@@ -15,6 +15,9 @@ HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
 SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
 FPS = 60
+USERNAME = ""
+USERPASSWORD = ""
+USEREMAIL = ""
 
 clock: Optional['pygame.time.Clock'] = pygame.time.Clock()
 main_menu: Optional['pygame_menu.Menu'] = pygame_menu.Menu(
