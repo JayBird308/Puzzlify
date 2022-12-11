@@ -1,57 +1,76 @@
+from flask import Flask, request
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
 from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, Optional, List
-# import button, label
 import constants
+# import button, label
 
 # GLOBAL VARIABLES
-global USER32, WIDTH, HEIGHT, SCREEN, FPS, USERNAME, USERPASSWORD, USEREMAIL
+global USER32, WIDTH, HEIGHT, SCREEN, FPS
 USER32 = constants.USER32
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
 FPS = constants.FPS
-USERNAME = constants.USERNAME
-USERPASSWORD = constants.USERPASSWORD
-USEREMAIL = constants.USEREMAIL
 
 clock = constants.clock
 main_menu = constants.main_menu
 
-class main:
+class User:
+    def __init__(self):
+        self.Name = None
+        self.Password = None
+        self.Email = None
 
-    def printCredentials(USERNAME, USERPASSWORD, USEREMAIL):
+class main:
+    User = User()
+
+    def printUserEmail(USEREMAIL):
+        print("Account Email: ", main.User.Email)
+
+    def printUserCredentials(USERNAME, USERPASSWORD, USEREMAIL):
+        print("Account Credentials:")
         print("USERNAME: ", USERNAME)
         print("USERPASSWORD: ", USERPASSWORD)
         print("USEREMAIL: ", USEREMAIL)
 
     def setUserName(username):
-        USERNAME = username
-        return USERNAME
+        main.User.Name = username
+        return main.User.Name
 
     def setUserPass(userpassword):
-        USERPASSWORD = userpassword
-        return USERPASSWORD
+        main.User.Password = userpassword
+        return main.User.Password
 
     def setUserEmail(useremail):
-        USEREMAIL = useremail
-        return USEREMAIL
+        main.User.Email = useremail
+        return main.User.Email
 
     def random_color() -> Tuple[int, int, int]:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
 
     # login button action for account database
     def login():
-        pass
+        try:
+            cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
+            print("Account Login Success!")
+            main.printUserEmail(main.User.Email)
+        except:
+            print("Invalid Credentials, try again.")
 
     # sign up button action for account database
     def signup():
-        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", USERNAME, USERPASSWORD, USEREMAIL)
-        main.printCredentials(USERNAME, USERPASSWORD, USEREMAIL)
-        cursor.commit()
+        try:
+            cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+            main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+            cursor.commit()
+            print("Account Registration Successful!")
+        except:
+            print ("Account Registration Failed: Credentials are blank or email already in use.")
+        
 
     def main_background() -> None:
         """ Function used by menus, draw on background while menu is active."""
@@ -89,16 +108,17 @@ class main:
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = USEREMAIL)
-        accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= USERPASSWORD)
+        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = main.setUserEmail)
+        accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
         accountLoginMenu.add.button('Login', main.login)
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
 
         # sign up button action for account database
         def signup():
-            cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", USERNAME, USERPASSWORD, USEREMAIL)
-            main.printCredentials(USERNAME, USERPASSWORD, USEREMAIL)
+            cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+            main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
             cursor.commit()
+            connection.close()
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
