@@ -1,11 +1,11 @@
+from flask import Flask, request
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
 from databaseConnection import *
 from random import randrange
-from typing import Tuple, Any, Optional, List
+from typing import Tuple, Any, List
 import constants
-# import button, label
 
 # GLOBAL VARIABLES
 global USER32, WIDTH, HEIGHT, SCREEN, FPS
@@ -95,7 +95,7 @@ class main:
         mathQuiz.add.button('Start', 
                             MQ.quiz.play_function,
                             pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30))
-        mathQuiz.add.button('Back', pygame_menu.events.BACK)
+        mathQuiz.add.button('Return to main menu', pygame_menu.events.BACK)
 
         # ---------------------------------
         # Create menus: Sub Menus
@@ -118,6 +118,7 @@ class main:
             main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
             cursor.commit()
             connection.close()
+            #pass
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
@@ -129,10 +130,6 @@ class main:
 
         ### --> Account Stats Menu <--- ##
         accountStatsMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountStatsMenu.add.label('Total Questions Answered: ')
-        accountStatsMenu.add.label('Total Answers Correct: ')
-        accountStatsMenu.add.label('Total Answers Wrong: ')
-        accountStatsMenu.add.label('Overall Grade: ')
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Info Menu <--- ##

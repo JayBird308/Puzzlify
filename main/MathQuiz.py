@@ -2,7 +2,6 @@
 import pygame, pygame_menu
 import random, label
 import button, constants
-from typing import Tuple, Any, Optional, List
 
 ' Global variables '
 global USER32, WIDTH, HEIGHT, SCREEN, FPS
@@ -220,9 +219,6 @@ class quiz():
         for x in range(50):
             random.shuffle(array)
 
-        # Reset main menu and disable
-        # You also can set another menu, like a 'pause menu', or just use the same
-        # main_menu as the menu that will check all your input.
         main_menu.disable()
         main_menu.full_reset()
 
@@ -233,12 +229,10 @@ class quiz():
                 font=pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30),
                 test=False)
 
-        frame = 0
         # while 1 < 4 : counter should iterate 3 times before resetting on exit
         while questionCounter < questionsTotal:
             # noinspection PyUnresolvedReferences
-            clock.tick(60)
-            frame += 1
+            clock.tick(15)
 
             events = pygame.event.get()
             for e in events:
