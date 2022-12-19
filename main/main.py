@@ -1,4 +1,3 @@
-from flask import Flask, request
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
@@ -96,7 +95,7 @@ class main:
         mathQuiz.add.button('Start', 
                             MQ.quiz.play_function,
                             pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30))
-        mathQuiz.add.button('Return to main menu', pygame_menu.events.BACK)
+        mathQuiz.add.button('Back', pygame_menu.events.BACK)
 
         # ---------------------------------
         # Create menus: Sub Menus
