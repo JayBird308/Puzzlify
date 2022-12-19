@@ -129,6 +129,10 @@ class main:
 
         ### --> Account Stats Menu <--- ##
         accountStatsMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
+        accountStatsMenu.add.label('Total Questions Answered: ')
+        accountStatsMenu.add.label('Total Answers Correct: ')
+        accountStatsMenu.add.label('Total Answers Wrong: ')
+        accountStatsMenu.add.label('Overall Grade: ')
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Info Menu <--- ##
