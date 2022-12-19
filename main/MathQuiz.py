@@ -332,10 +332,6 @@ class quiz():
             # update the display to show widgets
             pygame.display.flip()
 
-            # If test returns
-            if test and frame == 2:
-                break
-
     def gen_rand_num():
         num = random.randint(0, 10)
         return num
