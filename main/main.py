@@ -1,7 +1,7 @@
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
-from databaseConnection import *
+# from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, Optional, List
 import constants
@@ -18,6 +18,7 @@ FPS = constants.FPS
 clock = constants.clock
 main_menu = constants.main_menu
 
+# User class for account information
 class User:
     def __init__(self):
         self.Name = None
@@ -52,23 +53,23 @@ class main:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
 
     # login button action for account database
-    def login():
-        try:
-            cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
-            print("Account Login Success!")
-            main.printUserEmail(main.User.Email)
-        except:
-            print("Invalid Credentials, try again.")
+    # def login():
+    #    try:
+    #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
+    #        print("Account Login Success!")
+    #        main.printUserEmail(main.User.Email)
+    #    except:
+    #        print("Invalid Credentials, try again.")
 
     # sign up button action for account database
-    def signup():
-        try:
-            cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
-            main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
-            cursor.commit()
-            print("Account Registration Successful!")
-        except:
-            print ("Account Registration Failed: Credentials are blank or email already in use.")
+    # def signup():
+    #    try:
+    #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+    #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+    #        cursor.commit()
+    #        print("Account Registration Successful!")
+    #    except:
+    #        print ("Account Registration Failed: Credentials are blank or email already in use.")
         
 
     def main_background() -> None:
@@ -113,18 +114,18 @@ class main:
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
 
         # sign up button action for account database
-        def signup():
-            cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
-            main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
-            cursor.commit()
-            connection.close()
+        # def signup():
+        #    cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+        #    main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+        #    cursor.commit()
+        #    connection.close()
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
         accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
         accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
-        accountCreateMenu.add.button('Submit Account', signup)
+        accountCreateMenu.add.button('Submit Account')
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Stats Menu <--- ##
