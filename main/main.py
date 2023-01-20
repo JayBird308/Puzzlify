@@ -2,15 +2,15 @@ import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
 import memoryGame as memGame
-# from databaseConnection import *
+from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
 from firebase_admin import db
 import constants
 
 # GLOBAL VARIABLES
-global USER32, WIDTH, HEIGHT, SCREEN, FPS
-USER32 = constants.USER32
+global WIDTH, HEIGHT, SCREEN, FPS
+# USER32 = constants.USER32
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN

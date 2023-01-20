@@ -5,7 +5,7 @@ import button, constants
 
 ' Global variables '
 global USER32, WIDTH, HEIGHT, SCREEN, FPS
-USER32 = constants.USER32
+# USER32 = constants.USER32
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
