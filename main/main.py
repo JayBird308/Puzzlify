@@ -115,10 +115,11 @@ class main:
 
         # sign up button action for account database
         def signup():
-            cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
-            main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
-            cursor.commit()
-            connection.close()
+            # cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+            # main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+            # cursor.commit()
+            # connection.close()
+            pass
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
