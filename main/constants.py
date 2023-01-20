@@ -4,7 +4,7 @@ from customMenu_theme import *
 
 pygame.init()
 
-USER32 = ctypes.windll.user32
+# USER32 = ctypes.windll.user32
 
 # WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 # HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
