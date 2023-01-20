@@ -1,6 +1,7 @@
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
+import memoryGame as memGame
 # from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
@@ -53,16 +54,17 @@ class main:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
 
     # login button action for account database
-    # def login():
+    def login():
     #    try:
     #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
     #        print("Account Login Success!")
     #        main.printUserEmail(main.User.Email)
     #    except:
     #        print("Invalid Credentials, try again.")
+        pass
 
     # sign up button action for account database
-    # def signup():
+    def signup():
     #    try:
     #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
     #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
@@ -70,6 +72,7 @@ class main:
     #        print("Account Registration Successful!")
     #    except:
     #        print ("Account Registration Failed: Credentials are blank or email already in use.")
+        pass
         
 
     def main_background() -> None:
@@ -99,11 +102,27 @@ class main:
         mathQuiz.add.button('Return to main menu', pygame_menu.events.BACK)
 
         # ---------------------------------
+        # Create menus: Play Memory Game Menu
+        # ---------------------------------
+        memoryGame = pygame_menu.Menu(
+            'Memory Quiz',
+            WIDTH, HEIGHT,
+            theme = customMenu_theme
+        )
+
+        mathQuiz.add.button('Start', 
+                            memGame.play,
+                            pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30))
+        mathQuiz.add.button('Return to main menu', pygame_menu.events.BACK)
+
+
+        # ---------------------------------
         # Create menus: Sub Menus
         # ---------------------------------
         ### --> Game Selection Menu <--- ##
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
         gameMenu.add.button('Math Quiz', mathQuiz)
+        gameMenu.add.button('Memmory Game', memoryGame)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Login Menu <--- ##
