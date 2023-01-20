@@ -2,6 +2,7 @@ from flask import Flask, request
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
+import memoryGame as memGame
 # from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
@@ -101,11 +102,27 @@ class main:
         mathQuiz.add.button('Return to main menu', pygame_menu.events.BACK)
 
         # ---------------------------------
+        # Create menus: Play Memory Game Menu
+        # ---------------------------------
+        memoryGame = pygame_menu.Menu(
+            'Memory Quiz',
+            WIDTH, HEIGHT,
+            theme = customMenu_theme
+        )
+
+        mathQuiz.add.button('Start', 
+                            memGame.play,
+                            pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30))
+        mathQuiz.add.button('Return to main menu', pygame_menu.events.BACK)
+
+
+        # ---------------------------------
         # Create menus: Sub Menus
         # ---------------------------------
         ### --> Game Selection Menu <--- ##
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
         gameMenu.add.button('Math Quiz', mathQuiz)
+        gameMenu.add.button('Memmory Game', memoryGame)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Login Menu <--- ##
