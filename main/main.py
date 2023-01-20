@@ -53,16 +53,17 @@ class main:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
 
     # login button action for account database
-    # def login():
+    def login():
     #    try:
     #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
     #        print("Account Login Success!")
     #        main.printUserEmail(main.User.Email)
     #    except:
     #        print("Invalid Credentials, try again.")
+        pass
 
     # sign up button action for account database
-    # def signup():
+    def signup():
     #    try:
     #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
     #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
@@ -70,6 +71,7 @@ class main:
     #        print("Account Registration Successful!")
     #    except:
     #        print ("Account Registration Failed: Credentials are blank or email already in use.")
+        pass
         
 
     def main_background() -> None:
