@@ -1,3 +1,4 @@
+from flask import Flask, request
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
@@ -5,12 +6,10 @@ import memoryGame as memGame
 # from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
-from firebase_admin import db
 import constants
 
 # GLOBAL VARIABLES
-global USER32, WIDTH, HEIGHT, SCREEN, FPS
-USER32 = constants.USER32
+global WIDTH, HEIGHT, SCREEN, FPS
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
@@ -129,7 +128,7 @@ class main:
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
         accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = main.setUserEmail)
         accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
-        accountLoginMenu.add.button('Login')
+        accountLoginMenu.add.button('Login', main.login)
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
 
         # sign up button action for account database

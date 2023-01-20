@@ -1,5 +1,4 @@
 import pygame_menu
-import sys
 import os
 
 # font settings
