@@ -4,7 +4,7 @@ import random, label
 import button, constants
 
 ' Global variables '
-global USER32, WIDTH, HEIGHT, SCREEN, FPS
+global WIDTH, HEIGHT, SCREEN, FPS
 # USER32 = constants.USER32
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
