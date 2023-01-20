@@ -1,4 +1,3 @@
-from flask import Flask, request
 import pygame, pygame_menu
 from customMenu_theme import *
 import MathQuiz as MQ
