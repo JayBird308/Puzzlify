@@ -1,12 +1,16 @@
 import pygame_menu
+import os
 
 # font settings
 font = pygame_menu.font.FONT_NEVIS
 widgetFontSize = 80
 titleFontSize = 100
 
+path = "main\images\puzzle1menu.png"
+relative_path = os.path.relpath(path)
+
 # set path for custom image for use in theme
-customImage = pygame_menu.baseimage.BaseImage('main\\images\\puzzle1menu.png',
+customImage = pygame_menu.baseimage.BaseImage(relative_path,
                             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
 
 # create custom theme
