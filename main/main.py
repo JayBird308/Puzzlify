@@ -13,7 +13,8 @@ SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
 
 # Math quiz
 def math_quiz():
-    
+    # initialize pygame window and use the functions in MathQuiz.py to output the questions
+    # to the GUI. Allow for user input to be read and updated.
     pass
 
 # game selection sub menu
@@ -64,12 +65,12 @@ def account_stats():
 
 # login button action for account database
 def login():
-    
+    # check for correct credentials stored in database
     pass
 
 # sign up button action for account database
 def signup():
-    
+    # submit entered credentials to database
     pass
 
 def main():
