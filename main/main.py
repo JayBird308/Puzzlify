@@ -1,68 +1,55 @@
-import pygame
-import pygame_menu
+import pygame, pygame_menu
 from customMenu_theme import *
-import ctypes
-# import MathQuiz as MQ
+import MathQuiz as MQ
+import memoryGame as memGame
+from databaseConnection import *
+from random import randrange
+from typing import Tuple, Any, List
+import constants
 
 # GLOBAL VARIABLES
-global USER32, WIDTH, HEIGHT, SCREEN
-USER32 = ctypes.windll.user32
-WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
-HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
-SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
+global WIDTH, HEIGHT, SCREEN, FPS
+# USER32 = constants.USER32
+WIDTH = constants.WIDTH
+HEIGHT = constants.HEIGHT
+SCREEN = constants.SCREEN
+FPS = constants.FPS
 
+<<<<<<< HEAD
 # Math quiz
 def math_quiz():
     # initialize pygame window and use the functions in MathQuiz.py to output the questions
     # to the GUI. Allow for user input to be read and updated.
     pass
+=======
+clock = constants.clock
+main_menu = constants.main_menu
+>>>>>>> 117a183f10efd09bea011514334160267bc01bc4
 
-# game selection sub menu
-def game_select():
-    gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
-    gameMenu.add.button('Math Quiz', math_quiz)
-    gameMenu.add.button('Back', main)
-    gameMenu.mainloop(SCREEN)
-    pass
+# User class for account information
+class User:
+    def __init__(self):
+        self.Name = None
+        self.Password = None
+        self.Email = None
 
-# account sub menu
-def account_info():
-    accountMenu = pygame_menu.Menu('Account', WIDTH, HEIGHT, theme = customMenu_theme)
-    accountMenu.add.button('Account Login', account_login)
-    accountMenu.add.button('Create an Account', account_create)
-    accountMenu.add.button('Account Statistics', account_stats)
-    accountMenu.add.button('Back', main)
-    accountMenu.mainloop(SCREEN)
-    pass
+class main:
+    User = User()
 
-# account creation sub menu
-def account_create():
-    accountMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
-    accountMenu.add.text_input('Username: ', default = 'user')
-    accountMenu.add.text_input('Password: ', default = 'password')
-    accountMenu.add.text_input('Email Address: ', default = 'user@email.com')
-    accountMenu.add.button('Submit Account', signup)
-    accountMenu.add.button('Back', account_info)
-    accountMenu.mainloop(SCREEN)
-    pass
+    def printUserEmail(USEREMAIL):
+        print("Account Email: ", main.User.Email)
 
-# account login sub menu
-def account_login():
-    accountMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
-    accountMenu.add.text_input('Username: ', default = 'user')
-    accountMenu.add.text_input('Password: ', default = 'password')
-    accountMenu.add.button('Login', login)
-    accountMenu.add.button('Back', account_info)
-    accountMenu.mainloop(SCREEN)
-    pass
+    def printUserCredentials(USERNAME, USERPASSWORD, USEREMAIL):
+        print("Account Credentials:")
+        print("USERNAME: ", USERNAME)
+        print("USERPASSWORD: ", USERPASSWORD)
+        print("USEREMAIL: ", USEREMAIL)
 
-# account statistics sub menu
-def account_stats():
-    accountMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
-    accountMenu.add.button('Back', account_info)
-    accountMenu.mainloop(SCREEN)
-    pass
+    def setUserName(username):
+        main.User.Name = username
+        return main.User.Name
 
+<<<<<<< HEAD
 # login button action for account database
 def login():
     # check for correct credentials stored in database
@@ -72,44 +59,140 @@ def login():
 def signup():
     # submit entered credentials to database
     pass
+=======
+    def setUserPass(userpassword):
+        main.User.Password = userpassword
+        return main.User.Password
 
-def main():
-    # initialize the pygame module
-    pygame.init()
+    def setUserEmail(useremail):
+        main.User.Email = useremail
+        return main.User.Email
+>>>>>>> 117a183f10efd09bea011514334160267bc01bc4
 
-    # load and set pygame window and clock
-    clock = pygame.time.Clock()
+    def random_color() -> Tuple[int, int, int]:
+        return randrange(0, 255), randrange(0, 255), randrange(0, 255)
 
-    # adds menu options
-    menu = pygame_menu.Menu('Welcome to Puzzlify!', WIDTH, HEIGHT, theme = customMenu_theme)
-    menu.add.button('Game Selection', game_select)
-    menu.add.button('Account', account_info)
-    menu.add.button('Quit', pygame_menu.events.EXIT)
+    # login button action for account database
+    def login():
+    #    try:
+    #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
+    #        print("Account Login Success!")
+    #        main.printUserEmail(main.User.Email)
+    #    except:
+    #        print("Invalid Credentials, try again.")
+        pass
 
-    #main loop run variable
-    running = True
-    
-    # main loop
-    while running:
-        # event handling, gets all event from the event queue
-        for event in pygame.event.get():
-            # only do something if the event is of type QUIT
-            if event.type == pygame.QUIT:
-                    # set running condition to false, which will exit main loop
-                    running = False
-        menu.mainloop(SCREEN)
-        pygame.display.update()
-        clock.tick(60)
+    # sign up button action for account database
+    def signup():
+    #    try:
+    #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+    #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+    #        cursor.commit()
+    #        print("Account Registration Successful!")
+    #    except:
+    #        print ("Account Registration Failed: Credentials are blank or email already in use.")
+        pass
+        
+
+    def main_background() -> None:
+        """ Function used by menus, draw on background while menu is active."""
+        SCREEN.fill((128, 0, 128))
+
+    def main(test: bool = False) -> None:
+        global clock
+        global main_menu
+
+        # initialize
+        pygame.init()
+        clock = pygame.time.Clock()
+
+        # ---------------------------------
+        # Create menus: Sub Menus
+        # ---------------------------------
+        ### --> Game Selection Menu <--- ##
+        gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
+        gameMenu.add.button('Math Quiz', MQ.quiz.play_function, pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30))
+        gameMenu.add.button('Memory Game', memGame.play)
+        gameMenu.add.button('Back', pygame_menu.events.BACK)
+
+        ### --> Account Login Menu <--- ##
+        accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
+        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = main.setUserEmail)
+        accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
+        accountLoginMenu.add.button('Login', main.login)
+        accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
+
+        # sign up button action for account database
+        def signup():
+            # cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+            # main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+            # cursor.commit()
+            # connection.close()
+            pass
+
+        ### --> Account Create Menu <--- ##
+        accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
+        accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
+        accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
+        accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
+        accountCreateMenu.add.button('Submit Account')
+        accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
+
+        ### --> Account Stats Menu <--- ##
+        accountStatsMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
+        accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
+
+        ### --> Account Info Menu <--- ##
+        accountInfoMenu = pygame_menu.Menu('Account', WIDTH, HEIGHT, theme = customMenu_theme)
+        accountInfoMenu.add.button('Account Login', accountLoginMenu)
+        accountInfoMenu.add.button('Create an Account', accountCreateMenu)
+        accountInfoMenu.add.button('Account Statistics', accountStatsMenu)
+        accountInfoMenu.add.button('Back', pygame_menu.events.BACK)
+
+        # ---------------------------------
+        # Create menus: Main
+        # ---------------------------------
+        main_menu = pygame_menu.Menu(
+            '     Welcome to Puzzlify!', 
+            WIDTH, HEIGHT, 
+            theme = customMenu_theme
+        )
+        
+        main_menu.add.button('Game Selection', gameMenu)
+        main_menu.add.button('Account', accountInfoMenu)
+        main_menu.add.button('Quit', pygame_menu.events.EXIT)
+        # ---------------------------------
+        
+        # Main Loop
+        while True:
+
+            # Tick
+            clock.tick(FPS)
+            
+            # Application Events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                        exit(0)
+
+            # Main menu
+            main_menu.enable()
+            if main_menu.is_enabled():
+                main_menu.mainloop(
+                    SCREEN, 
+                    main.main_background, 
+                    disable_loop=test, 
+                    fps_limit=FPS
+                )
+
+            # Flip surface
+            pygame.display.flip()
+
+            # At first loop returns
+            if test:
+                break
 
 if __name__ == "__main__":
-
-    # call main
-    main()
-
-    # object = MQ.quiz()
-
-    # MQ.__init__()
-
+    main.main()
 
 
 
