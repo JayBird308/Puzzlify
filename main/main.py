@@ -87,15 +87,6 @@ class main:
         clock = pygame.time.Clock()
 
         # ---------------------------------
-        # Create menus: Play Memory Game Menu
-        # ---------------------------------
-        memoryGame = pygame_menu.Menu(
-            'Memory Quiz',
-            WIDTH, HEIGHT,
-            theme = customMenu_theme
-        )
-
-        # ---------------------------------
         # Create menus: Sub Menus
         # ---------------------------------
         ### --> Game Selection Menu <--- ##
