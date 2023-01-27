@@ -1,0 +1,28 @@
+<?xml version="1.0" ?><configuration>
+	<screen height="500" width="500"/>
+	<saves/>
+	<scores>
+		<score date="27042020" value="67"/>
+		<score date="24042020" value="58"/>
+		<score date="24042020" value="58"/>
+		<score date="24042020" value="162"/>
+		<score date="27012023" value="74"/>
+		<score date="24042020" value="90"/>
+		<score date="27042020" value="66"/>
+		<score date="24042020" value="58"/>
+		<score date="24042020" value="71"/>
+		<score date="27042020" value="63"/>
+	</scores>
+	<latests>
+		<latest date="24042020" value="8"/>
+		
+		
+		
+		
+		
+		<latest date="24042020" value="6"/>
+		<latest date="24042020" value="58"/>
+		<latest date="24042020" value="71"/>
+		<latest date="24042020" value="6"/>
+	<latest date="27042020" value="67"/><latest date="27042020" value="9"/><latest value="0" date="27012023"/><latest value="54" date="27012023"/><latest value="74" date="27012023"/></latests>
+</configuration>

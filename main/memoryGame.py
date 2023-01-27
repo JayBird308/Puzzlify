@@ -324,6 +324,6 @@ prev3=[80,80]
 board3=[list('.'*8) for count in range(8)]
 quizboard3()
 
-# mainloop()
+mainloop()
 def play():
     print('test')
