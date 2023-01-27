@@ -172,7 +172,7 @@ class quiz():
         pygame.display.flip()
         questionCounter = questionCounter + 1
 
-    def play_function(font: 'pygame.font.Font', test: bool = False) -> None:
+    def play_function(test: bool = False) -> None:
         global main_menu, clock, choice_num, num1, num2, array, questionCounter
         global btn1, btn2, btn3, btn4, questionsTotal, wrong, correct
 
@@ -225,9 +225,7 @@ class quiz():
         # regenerate a question by calling overall function
         def regen():
             pygame.time.delay(1500)
-            quiz.play_function(
-                font=pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30),
-                test=False)
+            quiz.play_function(test=False)
 
         # while 1 < 4 : counter should iterate 3 times before resetting on exit
         while questionCounter < questionsTotal:

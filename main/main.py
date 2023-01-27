@@ -1,9 +1,7 @@
 import pygame, pygame_menu
-import customMenu_theme
+import customMenu_theme as ct
 import MathQuiz as MQ
 import memoryGame as memGame
-import trizzleGame as trizzle
-import Sliding_Puzzle
 from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
@@ -19,6 +17,8 @@ FPS = constants.FPS
 
 clock = constants.clock
 main_menu = constants.main_menu
+
+customMenu_theme = ct.customMenu_theme
 
 # User class for account information
 class User:
@@ -43,15 +43,16 @@ class main:
         main.User.Name = username
         return main.User.Name
 
-# login button action for account database
-def login():
-    # check for correct credentials stored in database
-    pass
+    # login button action for account database
+    def login():
+        # check for correct credentials stored in database
+        pass
 
-# sign up button action for account database
-def signup():
-    # submit entered credentials to database
-    pass
+    # sign up button action for account database
+    def signup():
+        # submit entered credentials to database
+        pass
+
     def setUserPass(userpassword):
         main.User.Password = userpassword
         return main.User.Password
@@ -83,7 +84,7 @@ def signup():
     #    except:
     #        print ("Account Registration Failed: Credentials are blank or email already in use.")
         pass
-        
+            
 
     def main_background() -> None:
         """ Function used by menus, draw on background while menu is active."""
