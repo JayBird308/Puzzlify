@@ -224,8 +224,8 @@ class quiz():
 
         # regenerate a question by calling overall function
         def regen():
-            pygame.time.delay(1500)
-            quiz.play_function(test=False)
+            pygame.time.delay(2000)
+            quiz.play_function()
 
         # while 1 < 4 : counter should iterate 3 times before resetting on exit
         while questionCounter < questionsTotal:

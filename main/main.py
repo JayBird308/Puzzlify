@@ -157,6 +157,10 @@ class main:
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
         # ---------------------------------
         
+        pygame.mixer.init()
+        pygame.mixer.music.load('main/track1.mp3')
+        pygame.mixer.music.play()
+
         # Main Loop
         while True:
 
