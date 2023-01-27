@@ -238,18 +238,7 @@ class quiz():
         pygame.time.delay(2000)
         quiz.play_function()
 
-    def play_function(test: bool = False) -> None:
-        global main_menu, clock, num1, num2, array, questionCounter
-        global questionsTotal, wrong, correct, question
-
-        # Get initial values
-        question = quiz.generate_question()
-        
-        array[0] = quiz.gen_rand_num()
-        array[1] = quiz.gen_rand_num()
-        array[2] = quiz.gen_rand_num()
-        array[3] = quiz.get_solution()
-
+    def randomize_array():
         # while loops to ensure unique values
         while True:
             if array[0] == array[1]:
@@ -280,6 +269,26 @@ class quiz():
                 array[2] = quiz.gen_rand_num()
             if array[2] != array[0] and array[2] != array[1] and array[2] != array[3]:
                 break
+
+    def gen_init_values():
+        global question
+        # Get initial values
+        question = quiz.generate_question()
+        
+        array[0] = quiz.gen_rand_num()
+        array[1] = quiz.gen_rand_num()
+        array[2] = quiz.gen_rand_num()
+        array[3] = quiz.get_solution()
+
+    def play_function(test: bool = False) -> None:
+        global main_menu, clock, num1, num2, array, questionCounter
+        global questionsTotal, wrong, correct, question
+
+        # Get initial values
+        quiz.gen_init_values()
+
+        # Check and ensure unique array values
+        quiz.randomize_array()
 
         # shuffle options
         for x in range(50):
@@ -330,7 +339,7 @@ class quiz():
             pygame.display.flip()
 
     def gen_rand_num():
-        num = random.randint(0, 10)
+        num = random.randint(0, 20)
         return num
 
     def get_num1():
@@ -353,9 +362,10 @@ class quiz():
         num2 = quiz.gen_rand_num()
         sol = num1 + num2
 
-        question = (num1.__str__() + ' + ' + num2.__str__() + ' = ?')
-        
-        print('Math Question: ', end='')
-        print(question)
-        print("Solution: " + sol.__str__())
-        return question
+        if questionCounter != questionsTotal:
+            question = (num1.__str__() + ' + ' + num2.__str__() + ' = ?')
+            
+            print('Math Question ' + questionCounter.__str__() + ': ' , end='')
+            print(question)
+            print("Solution: " + sol.__str__())
+            return question
