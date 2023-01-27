@@ -24,17 +24,127 @@ wrong = 0
 correct = 0
 
 # Choices and Solution
-global choice_num, num1, num2, sol, array, btn1, btn2
 num1 = 0
 num2 = 0
 num3 = 0
 num4 = 0
 sol = 0
+global hint_l, question_l, question, button_num1, button_num2, button_num3, button_num4
+global title_l, wrong_l, correct_l, total_l, back
 
 # create array of choices & shuffle
 array = [num1, num2, num3, num4]
 
 class quiz():
+
+    def main_create_btns_lbls():
+        global hint_l, question_l, question, button_num1, button_num2, button_num3, button_num4
+
+        hint_l = label.Label(
+            SCREEN,
+            "Hint : To go back to MAIN MENU, Hit the (ESC) key.",
+            center_w - 200,
+            center_h - 275,
+            size=20
+        )
+
+        # Math Question
+        question_l = label.Label(
+            screen=SCREEN,
+            text=question,
+            x=center_w - 100,
+            y=center_h - 200,
+            size=48
+        )
+
+        # Button 1 - num1
+        button_num1 = button.button(
+            position=(center_w - 100, center_h), 
+            size=(125, 60), 
+            clr=(220, 220, 220), 
+            cngclr=(50, 130, 255), 
+            func=quiz.set_btn1, 
+            text=array[0].__str__()
+        )
+
+        # Button 2 - num2
+        button_num2 = button.button(
+            (center_w - 100, center_h+100), 
+            (125, 60), 
+            (220, 220, 220), 
+            (50, 130, 255), 
+            func=quiz.set_btn2, 
+            text=array[1].__str__()
+        )
+
+        # Button 3 - num3
+        button_num3 = button.button(
+            position=(center_w + 100, center_h), 
+            size=(125, 60), 
+            clr=(220, 220, 220), 
+            cngclr=(50, 130, 255), 
+            func=quiz.set_btn3, 
+            text=array[2].__str__()
+        )
+
+        # Button 4 - num4
+        button_num4 = button.button(
+            (center_w + 100, center_h+100), 
+            (125, 60), 
+            (220, 220, 220), 
+            (50, 130, 255), 
+            func=quiz.set_btn4, 
+            text=array[3].__str__()
+        )
+
+    def stats_create_btns_lbls():
+        global title_l, wrong_l, correct_l, total_l, back
+
+        # Title
+        title_l = label.Label(
+            SCREEN,
+            "Statistics:",
+            center_w - 150,
+            center_h - 300,
+            size=60
+        )
+
+        # Incorrect
+        wrong_l = label.Label(
+            screen=SCREEN,
+            text="Incorrect: " + wrong.__str__(),
+            x=center_w - 150,
+            y=center_h - 200,
+            size=48
+        )
+
+        # Correct
+        correct_l = label.Label(
+            screen=SCREEN,
+            text="Correct: " + correct.__str__(),
+            x=center_w - 150,
+            y=center_h - 100,
+            size=48
+        )
+
+        # Counter
+        total_l = label.Label(
+            screen=SCREEN,
+            text="Total: " + (questionsTotal-1).__str__(),
+            x=center_w - 150,
+            y=center_h,
+            size=48
+        )
+
+        # Back to Menu
+        back = button.button(
+            (center_w, center_h+200), 
+            (125, 60), 
+            (220, 220, 220), 
+            (50, 130, 255), 
+            func=main_menu.enable, 
+            text="Back to Menu"
+        )
 
     def set_btn1():
         quiz.check_choice(array[0])
@@ -47,7 +157,7 @@ class quiz():
         
     def set_btn4():
         quiz.check_choice(array[3])
-        
+
     def reset_values():
         global questionCounter, wrong, correct
         questionCounter = 1
@@ -57,7 +167,6 @@ class quiz():
     def show_stats():
         global main_menu, clock, questionsTotal, wrong, correct
 
-        main_menu.disable()
         main_menu.full_reset()
 
         frame = 0
@@ -83,57 +192,10 @@ class quiz():
                             back.call_back()
                             return
 
-            # Pass events
-            if main_menu.is_enabled():
-                main_menu.update(events)
-
             SCREEN.fill((0, 160, 160))
 
-            # Title
-            title_l = label.Label(
-                SCREEN,
-                "Statistics:",
-                center_w - 150,
-                center_h - 300,
-                size=60
-            )
-
-            # Incorrect
-            wrong_l = label.Label(
-                screen=SCREEN,
-                text="Incorrect: " + wrong.__str__(),
-                x=center_w - 150,
-                y=center_h - 200,
-                size=48
-            )
-
-            # Correct
-            correct_l = label.Label(
-                screen=SCREEN,
-                text="Correct: " + correct.__str__(),
-                x=center_w - 150,
-                y=center_h - 100,
-                size=48
-            )
-
-            # Counter
-            total_l = label.Label(
-                screen=SCREEN,
-                text="Total: " + (questionsTotal-1).__str__(),
-                x=center_w - 150,
-                y=center_h,
-                size=48
-            )
-
-            # Back to Menu
-            back = button.button(
-                (center_w, center_h+200), 
-                (125, 60), 
-                (220, 220, 220), 
-                (50, 130, 255), 
-                func=main_menu.enable, 
-                text="Back to Menu"
-            )
+            # Create labels and buttons
+            quiz.stats_create_btns_lbls()
 
             # Draw labels and buttons
             label.Label.draw(title_l)
@@ -172,9 +234,13 @@ class quiz():
         pygame.display.flip()
         questionCounter = questionCounter + 1
 
+    def regen():
+        pygame.time.delay(2000)
+        quiz.play_function()
+
     def play_function(test: bool = False) -> None:
-        global main_menu, clock, choice_num, num1, num2, array, questionCounter
-        global btn1, btn2, btn3, btn4, questionsTotal, wrong, correct
+        global main_menu, clock, num1, num2, array, questionCounter
+        global questionsTotal, wrong, correct, question
 
         # Get initial values
         question = quiz.generate_question()
@@ -219,14 +285,6 @@ class quiz():
         for x in range(50):
             random.shuffle(array)
 
-        main_menu.disable()
-        main_menu.full_reset()
-
-        # regenerate a question by calling overall function
-        def regen():
-            pygame.time.delay(2000)
-            quiz.play_function()
-
         # while 1 < 4 : counter should iterate 3 times before resetting on exit
         while questionCounter < questionsTotal:
             # noinspection PyUnresolvedReferences
@@ -248,77 +306,18 @@ class quiz():
                         for b in button_list:
                             if (b.rect.collidepoint(pos)):
                                 b.call_back()
-                                regen()
+                                quiz.regen()
                                 # resets counter on exit
                                 if questionCounter == questionsTotal:
                                     quiz.show_stats()
                                     quiz.reset_values()
                                 return
 
-            # Pass events
-            if main_menu.is_enabled():
-                main_menu.update(events)
-
             # Continue playing
             SCREEN.fill((0, 120, 120))
 
-            # Hint Label - To Exit Game to Main Menu
-            hint_l = label.Label(
-                SCREEN,
-                "Hint : To go back to MAIN MENU, Hit the (ESC) key.",
-                center_w - 200,
-                center_h - 275,
-                size=20
-            )
-
-            # Math Question
-            question_l = label.Label(
-                screen=SCREEN,
-                text=question,
-                x=center_w - 100,
-                y=center_h - 200,
-                size=48
-            )
-
-            # Button 1 - num1
-            button_num1 = button.button(
-                position=(center_w - 100, center_h), 
-                size=(125, 60), 
-                clr=(220, 220, 220), 
-                cngclr=(50, 130, 255), 
-                func=quiz.set_btn1, 
-                text=array[0].__str__()
-            )
-
-            # Button 2 - num2
-            button_num2 = button.button(
-                (center_w - 100, center_h+100), 
-                (125, 60), 
-                (220, 220, 220), 
-                (50, 130, 255), 
-                func=quiz.set_btn2, 
-                text=array[1].__str__()
-            )
-
-            # Button 3 - num3
-            button_num3 = button.button(
-                position=(center_w + 100, center_h), 
-                size=(125, 60), 
-                clr=(220, 220, 220), 
-                cngclr=(50, 130, 255), 
-                func=quiz.set_btn3, 
-                text=array[2].__str__()
-            )
-
-            # Button 4 - num4
-            button_num4 = button.button(
-                (center_w + 100, center_h+100), 
-                (125, 60), 
-                (220, 220, 220), 
-                (50, 130, 255), 
-                func=quiz.set_btn4, 
-                text=array[3].__str__()
-            )
+            # Create labels and buttons
+            quiz.main_create_btns_lbls()
 
             # Draw labels and buttons
             label.Label.draw(question_l)
