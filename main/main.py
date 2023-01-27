@@ -1,7 +1,9 @@
 import pygame, pygame_menu
-from customMenu_theme import *
+import customMenu_theme
 import MathQuiz as MQ
 import memoryGame as memGame
+import trizzleGame as trizzle
+import Sliding_Puzzle
 from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
@@ -15,16 +17,8 @@ HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
 FPS = constants.FPS
 
-<<<<<<< HEAD
-# Math quiz
-def math_quiz():
-    # initialize pygame window and use the functions in MathQuiz.py to output the questions
-    # to the GUI. Allow for user input to be read and updated.
-    pass
-=======
 clock = constants.clock
 main_menu = constants.main_menu
->>>>>>> 117a183f10efd09bea011514334160267bc01bc4
 
 # User class for account information
 class User:
@@ -49,7 +43,6 @@ class main:
         main.User.Name = username
         return main.User.Name
 
-<<<<<<< HEAD
 # login button action for account database
 def login():
     # check for correct credentials stored in database
@@ -59,7 +52,6 @@ def login():
 def signup():
     # submit entered credentials to database
     pass
-=======
     def setUserPass(userpassword):
         main.User.Password = userpassword
         return main.User.Password
@@ -67,7 +59,6 @@ def signup():
     def setUserEmail(useremail):
         main.User.Email = useremail
         return main.User.Email
->>>>>>> 117a183f10efd09bea011514334160267bc01bc4
 
     def random_color() -> Tuple[int, int, int]:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
@@ -110,9 +101,11 @@ def signup():
         # Create menus: Sub Menus
         # ---------------------------------
         ### --> Game Selection Menu <--- ##
-        gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
-        gameMenu.add.button('Math Quiz', MQ.quiz.play_function, pygame.font.Font(pygame_menu.font.FONT_FRANCHISE, 30))
+        gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
+        gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
         gameMenu.add.button('Memory Game', memGame.play)
+        gameMenu.add.button('Trizzle')
+        gameMenu.add.button('Sliding Puzzle')
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Login Menu <--- ##

@@ -1,13 +1,8 @@
-# from firebase_admin import db
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
 
+cred = firebase_admin.credentials.credentials.Certificate('main\\puzzlify-74c00-firebase-adminsdk-27vsv-55d04e21b4.json')
+firebase_admin.initialize_app(cred)
 
-# ref = db.reference("https://puzzlify-74c00-default-rtdb.firebaseio.com/")
-# Connection String
-# connection = pyodbc.connect('DRIVER={SQL Server}; SERVER=MSI\PUZZLIFYINSTANCE;DATABASE=Puzzlify; Trusted_Connection=yes;')
-
-# cursor = connection.cursor()
-# cursor.execute("SELECT @@VERSION as version")
-
-# Print connection status
-# for i in cursor:
-#    print(i)
+ref = db.reference("https://puzzlify-74c00-default-rtdb.firebaseio.com/")
