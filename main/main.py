@@ -1,9 +1,8 @@
 import pygame, pygame_menu
 import customMenu_theme
 import MathQuiz as MQ
-import memoryGame as memGame
-import trizzleGame as trizzle
-import Sliding_Puzzle
+# import memoryGame as memGame
+# import trizzleGame as trizzle
 from databaseConnection import *
 from random import randrange
 from typing import Tuple, Any, List
@@ -20,16 +19,7 @@ FPS = constants.FPS
 clock = constants.clock
 main_menu = constants.main_menu
 
-# User class for account information
-class User:
-    def __init__(self):
-        self.Name = None
-        self.Password = None
-        self.Email = None
-
 class main:
-    User = User()
-
     def printUserEmail(USEREMAIL):
         print("Account Email: ", main.User.Email)
 
@@ -43,15 +33,6 @@ class main:
         main.User.Name = username
         return main.User.Name
 
-# login button action for account database
-def login():
-    # check for correct credentials stored in database
-    pass
-
-# sign up button action for account database
-def signup():
-    # submit entered credentials to database
-    pass
     def setUserPass(userpassword):
         main.User.Password = userpassword
         return main.User.Password
@@ -62,28 +43,6 @@ def signup():
 
     def random_color() -> Tuple[int, int, int]:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
-
-    # login button action for account database
-    def login():
-    #    try:
-    #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
-    #        print("Account Login Success!")
-    #        main.printUserEmail(main.User.Email)
-    #    except:
-    #        print("Invalid Credentials, try again.")
-        pass
-
-    # sign up button action for account database
-    def signup():
-    #    try:
-    #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
-    #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
-    #        cursor.commit()
-    #        print("Account Registration Successful!")
-    #    except:
-    #        print ("Account Registration Failed: Credentials are blank or email already in use.")
-        pass
-        
 
     def main_background() -> None:
         """ Function used by menus, draw on background while menu is active."""
@@ -110,24 +69,16 @@ def signup():
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = main.setUserEmail)
-        accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
-        accountLoginMenu.add.button('Login', main.login)
+        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com')
+        accountLoginMenu.add.text_input('Password: ', default = 'password')
+        accountLoginMenu.add.button('Login')
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
-
-        # sign up button action for account database
-        def signup():
-            # cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
-            # main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
-            # cursor.commit()
-            # connection.close()
-            pass
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
         accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
-        accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
+        accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com')
         accountCreateMenu.add.button('Submit Account')
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
@@ -155,13 +106,13 @@ def signup():
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
         # ---------------------------------
-        
+            
         # Main Loop
         while True:
 
             # Tick
             clock.tick(FPS)
-            
+                
             # Application Events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -186,7 +137,3 @@ def signup():
 
 if __name__ == "__main__":
     main.main()
-
-
-
-
