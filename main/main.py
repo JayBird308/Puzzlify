@@ -1,5 +1,5 @@
 import pygame, pygame_menu
-import customMenu_theme
+import customMenu_theme as ct
 import MathQuiz as MQ
 # import memoryGame as memGame
 # import trizzleGame as trizzle
@@ -19,6 +19,15 @@ FPS = constants.FPS
 clock = constants.clock
 main_menu = constants.main_menu
 
+customMenu_theme = ct.customMenu_theme
+
+# User class for account information
+class User:
+    def __init__(self):
+        self.Name = None
+        self.Password = None
+        self.Email = None
+
 class main:
     def printUserEmail(USEREMAIL):
         print("Account Email: ", main.User.Email)
@@ -33,6 +42,16 @@ class main:
         main.User.Name = username
         return main.User.Name
 
+    # login button action for account database
+    def login():
+        # check for correct credentials stored in database
+        pass
+
+    # sign up button action for account database
+    def signup():
+        # submit entered credentials to database
+        pass
+
     def setUserPass(userpassword):
         main.User.Password = userpassword
         return main.User.Password
@@ -43,6 +62,28 @@ class main:
 
     def random_color() -> Tuple[int, int, int]:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
+
+    # login button action for account database
+    def login():
+    #    try:
+    #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
+    #        print("Account Login Success!")
+    #        main.printUserEmail(main.User.Email)
+    #    except:
+    #        print("Invalid Credentials, try again.")
+        pass
+
+    # sign up button action for account database
+    def signup():
+    #    try:
+    #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
+    #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
+    #        cursor.commit()
+    #        print("Account Registration Successful!")
+    #    except:
+    #        print ("Account Registration Failed: Credentials are blank or email already in use.")
+        pass
+            
 
     def main_background() -> None:
         """ Function used by menus, draw on background while menu is active."""
@@ -106,7 +147,11 @@ class main:
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
         # ---------------------------------
-            
+        
+        pygame.mixer.init()
+        pygame.mixer.music.load('main/track1.mp3')
+        pygame.mixer.music.play()
+
         # Main Loop
         while True:
 
