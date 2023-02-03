@@ -235,7 +235,7 @@ class quiz():
         questionCounter = questionCounter + 1
 
     def regen():
-        pygame.time.delay(2000)
+        pygame.time.delay(1000)
         quiz.play_function()
 
     def randomize_array():
@@ -294,21 +294,22 @@ class quiz():
         for x in range(50):
             random.shuffle(array)
 
+        # Continue playing
+        SCREEN.fill((0, 120, 120))
+
+        # Create labels and buttons
+        quiz.main_create_btns_lbls()
+
         # while 1 < 4 : counter should iterate 3 times before resetting on exit
         while questionCounter < questionsTotal:
-            # noinspection PyUnresolvedReferences
             clock.tick(15)
 
             events = pygame.event.get()
             for e in events:
-                if e.type == pygame.QUIT:
-                    exit()
-                elif e.type == pygame.KEYDOWN:
+                if e.type == pygame.KEYDOWN:
                     if e.key == pygame.K_ESCAPE:
                         main_menu.enable()
                         return
-                    if e.key == pygame.K_0:
-                        exit()
                 elif e.type == pygame.MOUSEBUTTONDOWN:
                     if e.button == 1:
                         pos = pygame.mouse.get_pos()
@@ -321,12 +322,6 @@ class quiz():
                                     quiz.show_stats()
                                     quiz.reset_values()
                                 return
-
-            # Continue playing
-            SCREEN.fill((0, 120, 120))
-
-            # Create labels and buttons
-            quiz.main_create_btns_lbls()
 
             # Draw labels and buttons
             label.Label.draw(question_l)
@@ -369,3 +364,7 @@ class quiz():
             print(question)
             print("Solution: " + sol.__str__())
             return question
+        
+
+    def test():
+        print("test")

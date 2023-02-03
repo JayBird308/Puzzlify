@@ -1,11 +1,11 @@
 import pygame, pygame_menu
 import customMenu_theme as ct
 import MathQuiz as MQ
-# import memoryGame as memGame
-# import trizzleGame as trizzle
+import memoryGame as memGame
+import trizzleGame as triGame
 from databaseConnection import *
 from random import randrange
-from typing import Tuple, Any, List
+from typing import Tuple
 import constants
 
 # GLOBAL VARIABLES
@@ -18,7 +18,6 @@ FPS = constants.FPS
 
 clock = constants.clock
 main_menu = constants.main_menu
-
 customMenu_theme = ct.customMenu_theme
 
 # User class for account information
@@ -29,28 +28,11 @@ class User:
         self.Email = None
 
 class main:
-    def printUserEmail(USEREMAIL):
-        print("Account Email: ", main.User.Email)
-
-    def printUserCredentials(USERNAME, USERPASSWORD, USEREMAIL):
-        print("Account Credentials:")
-        print("USERNAME: ", USERNAME)
-        print("USERPASSWORD: ", USERPASSWORD)
-        print("USEREMAIL: ", USEREMAIL)
+    User = User()
 
     def setUserName(username):
         main.User.Name = username
         return main.User.Name
-
-    # login button action for account database
-    def login():
-        # check for correct credentials stored in database
-        pass
-
-    # sign up button action for account database
-    def signup():
-        # submit entered credentials to database
-        pass
 
     def setUserPass(userpassword):
         main.User.Password = userpassword
@@ -59,6 +41,15 @@ class main:
     def setUserEmail(useremail):
         main.User.Email = useremail
         return main.User.Email
+
+    def printUserEmail(USEREMAIL):
+        print("Account Email: ", main.User.Email)
+
+    def printUserCredentials(USERNAME, USERPASSWORD, USEREMAIL):
+        print("Account Credentials:")
+        print("USERNAME: ", USERNAME)
+        print("USERPASSWORD: ", USERPASSWORD)
+        print("USEREMAIL: ", USEREMAIL)
 
     def random_color() -> Tuple[int, int, int]:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
@@ -102,24 +93,25 @@ class main:
         # ---------------------------------
         ### --> Game Selection Menu <--- ##
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
-        gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
+        # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
+        gameMenu.add.button("Math Quiz", MQ.quiz.test)
         gameMenu.add.button('Memory Game', memGame.play)
-        gameMenu.add.button('Trizzle')
+        gameMenu.add.button('Trizzle', triGame.run)
         gameMenu.add.button('Sliding Puzzle')
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com')
-        accountLoginMenu.add.text_input('Password: ', default = 'password')
-        accountLoginMenu.add.button('Login')
+        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = main.setUserEmail)
+        accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
+        accountLoginMenu.add.button('Login', main.login)
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
         accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
-        accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com')
+        accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
         accountCreateMenu.add.button('Submit Account')
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
@@ -148,16 +140,16 @@ class main:
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
         # ---------------------------------
         
-        pygame.mixer.init()
-        pygame.mixer.music.load('main/track1.mp3')
-        pygame.mixer.music.play()
+        # pygame.mixer.init()
+        # pygame.mixer.music.load('main/track1.mp3')
+        # pygame.mixer.music.play()
 
         # Main Loop
         while True:
 
             # Tick
             clock.tick(FPS)
-                
+            
             # Application Events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -173,7 +165,6 @@ class main:
                     fps_limit=FPS
                 )
 
-            # Flip surface
             pygame.display.flip()
 
             # At first loop returns
@@ -182,3 +173,7 @@ class main:
 
 if __name__ == "__main__":
     main.main()
+
+
+
+
