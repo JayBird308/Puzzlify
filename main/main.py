@@ -29,7 +29,7 @@ class main:
         return main.User.Password
 
     def setUserEmail(useremail):
-        main.User.Email = useremail
+        user.UserLogin.email = useremail
         return main.User.Email
 
     def printUserEmail(USEREMAIL):

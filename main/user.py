@@ -27,7 +27,7 @@ class UserEncoder(JSONEncoder):
         return o.__dict__ 
     
 def UserDecoder(userDict):
-    return namedtuple('X', userDict.keys())(*userDict.values())
+    return namedtuple('Users', userDict.keys())(*userDict.values())
 
 userlogin = Userlogin("username", "password", "test@email.com")
 userstats = GameStats(10, 8, 2)
