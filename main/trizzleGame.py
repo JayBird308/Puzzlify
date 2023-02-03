@@ -1,11 +1,8 @@
-import pygame
+import pygame, constants
 from modules.render import Render
 from modules.ressources import Ressources
 import modules.eventHandler as eventHandler
 
-pygame.mixer.pre_init(44100, -16, 2, 512)
-pygame.mixer.init()
-pygame.init()
 Ressources.configFileExists = False
 Ressources.canContinue = False
 Ressources.readConfigFile()
@@ -20,49 +17,55 @@ else:
     Ressources.maxScore = {"value" : "0", "date": "00000000"}
     Ressources.minScore = {"value" : "0", "date": "00000000"}
     Ressources.scores = []
-screen = pygame.display.set_mode([screenWidth, screenHeight])
+# screen = pygame.display.set_mode([screenWidth, screenHeight])
+screen = constants.SCREEN
 
+def run():
+    pygame.mixer.pre_init(44100, -16, 2, 512)
+    pygame.mixer.init()
+    pygame.init()
 
-Ressources.running = True
-clock = pygame.time.Clock()
-rend = Render(screenWidth,screenHeight,screen)
+    Ressources.running = True
+    # clock = pygame.time.Clock()
+    # rend = Render(screenWidth,screenHeight,screen)
+    clock = constants.clock
+    rend = Render(constants.WIDTH, constants.HEIGHT, screen)
 
-if(Ressources.canContinue):
-    Render.getSave()
-    
-pygame.display.update()
+    if(Ressources.canContinue):
+        Render.getSave()
+        
+    pygame.display.update()
 
-#----gameVariables
-Ressources.selected = -1
-mousePos = pygame.mouse.get_pos()
-Ressources.selectedGameObject = 0
-Ressources.mouseOffset = (0,0)
-Ressources.screen = screen
-
-while Ressources.running:
+    #----gameVariables
+    Ressources.selected = -1
     mousePos = pygame.mouse.get_pos()
-    eventHandler.eventHandel(pygame.event,rend,mousePos)
-    if(not Ressources.running):
-        break
-    pygame.display.flip()
-    #draw background and options
-    if(Ressources.mode == 0):
-        rend.chsMenu.draw()
-    if(Ressources.mode == 1):
-        rend.background()
-        rend.blitOptions()
+    Ressources.selectedGameObject = 0
+    Ressources.mouseOffset = (0,0)
+    Ressources.screen = screen
 
-        if(Ressources.selected != -1 and rend.gameChoices[Ressources.selected].selected):
-            rend.gameChoices[Ressources.selected].selected = True
-            Ressources.selectedGameObject = rend.gameChoices[Ressources.selected]
-        elif(Ressources.selected == -1):
-            Ressources.selectedGameObject = 0
-        if(Ressources.selectedGameObject != 0):
-            Ressources.selectedGameObject.draw((mousePos[0]-Ressources.mouseOffset[0],mousePos[1]-Ressources.mouseOffset[1]))
+    while Ressources.running:
+        mousePos = pygame.mouse.get_pos()
+        eventHandler.eventHandel(pygame.event,rend,mousePos)
+        if(not Ressources.running):
+            break
+        pygame.display.flip()
+        #draw background and options
+        if(Ressources.mode == 0):
+            rend.chsMenu.draw()
+        if(Ressources.mode == 1):
+            rend.background()
+            rend.blitOptions()
 
-        rend.animations()
-    if(Ressources.mode == 2):
-        rend.lsMenu.draw()
-    if(Ressources.mode == 3):
-        rend.scoreMenu.draw()
-pygame.quit()
+            if(Ressources.selected != -1 and rend.gameChoices[Ressources.selected].selected):
+                rend.gameChoices[Ressources.selected].selected = True
+                Ressources.selectedGameObject = rend.gameChoices[Ressources.selected]
+            elif(Ressources.selected == -1):
+                Ressources.selectedGameObject = 0
+            if(Ressources.selectedGameObject != 0):
+                Ressources.selectedGameObject.draw((mousePos[0]-Ressources.mouseOffset[0],mousePos[1]-Ressources.mouseOffset[1]))
+
+            rend.animations()
+        if(Ressources.mode == 2):
+            rend.lsMenu.draw()
+        if(Ressources.mode == 3):
+            rend.scoreMenu.draw()

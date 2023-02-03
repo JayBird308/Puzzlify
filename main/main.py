@@ -2,6 +2,7 @@ import pygame, pygame_menu
 import customMenu_theme as ct
 import MathQuiz as MQ
 import memoryGame as memGame
+import trizzleGame as triGame
 from databaseConnection import *
 from random import randrange
 from typing import Tuple
@@ -95,7 +96,7 @@ class main:
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
         gameMenu.add.button("Math Quiz", MQ.quiz.test)
         gameMenu.add.button('Memory Game', memGame.play)
-        gameMenu.add.button('Trizzle')
+        gameMenu.add.button('Trizzle', triGame.run)
         gameMenu.add.button('Sliding Puzzle')
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
