@@ -232,7 +232,7 @@ class Ressources:
                 "value" : int(Ressources.scores[i].getAttribute("value")),
                 "date" : Ressources.scores[i].getAttribute("date")
             }
-            print(infos["value"])
+            # print(infos["value"])
             maxx = max(maxx, infos["value"])
             minn = min(minn, infos["value"])
             if(maxx == int(Ressources.scores[i].getAttribute("value"))):
