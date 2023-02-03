@@ -72,8 +72,8 @@ class main:
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
         gameMenu.add.button("Math Quiz", MQ.quiz.test)
-        gameMenu.add.button('Memory Game', memGame.play)
-        gameMenu.add.button('Trizzle')
+        gameMenu.add.button('Memory Game')
+        gameMenu.add.button('Trizzle', triGame.run)
         gameMenu.add.button('Sliding Puzzle')
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
@@ -86,7 +86,7 @@ class main:
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
+        # accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
         accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
         accountCreateMenu.add.button('Submit Account')
