@@ -1,10 +1,11 @@
 import pygame, pygame_menu
 import customMenu_theme as ct
 import MathQuiz as MQ
-import memoryGame as memGame
+import memory as mem
 from databaseConnection import *
 from random import randrange
 from typing import Tuple
+from user import *
 import constants
 
 # GLOBAL VARIABLES
@@ -19,19 +20,8 @@ clock = constants.clock
 main_menu = constants.main_menu
 customMenu_theme = ct.customMenu_theme
 
-# User class for account information
-class User:
-    def __init__(self):
-        self.Name = None
-        self.Password = None
-        self.Email = None
-
+# main class
 class main:
-    User = User()
-
-    def setUserName(username):
-        main.User.Name = username
-        return main.User.Name
 
     def setUserPass(userpassword):
         main.User.Password = userpassword
@@ -55,23 +45,10 @@ class main:
 
     # login button action for account database
     def login():
-    #    try:
-    #        cursor.execute("SELECT userPassword, userEmail FROM [User] WHERE userPassword = (?) AND userEmail = (?);", main.User.Email, main.User.Password)
-    #        print("Account Login Success!")
-    #        main.printUserEmail(main.User.Email)
-    #    except:
-    #        print("Invalid Credentials, try again.")
         pass
 
     # sign up button action for account database
     def signup():
-    #    try:
-    #        cursor.execute("INSERT INTO [User](userName, userPassword, userEmail) VALUES (?,?,?);", main.User.Name, main.User.Password, main.User.Email)
-    #        main.printUserCredentials(main.User.Name, main.User.Password, main.User.Email)
-    #        cursor.commit()
-    #        print("Account Registration Successful!")
-    #    except:
-    #        print ("Account Registration Failed: Credentials are blank or email already in use.")
         pass
             
 
@@ -94,7 +71,7 @@ class main:
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
         gameMenu.add.button("Math Quiz", MQ.quiz.test)
-        gameMenu.add.button('Memory Game', memGame.play)
+        gameMenu.add.button('Memory Game')
         gameMenu.add.button('Trizzle')
         gameMenu.add.button('Sliding Puzzle')
         gameMenu.add.button('Back', pygame_menu.events.BACK)
