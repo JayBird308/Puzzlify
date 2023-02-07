@@ -2,6 +2,9 @@ from __future__ import print_function
 import json
 from collections import namedtuple
 from json import JSONEncoder
+import requests
+from databaseConnection import *
+
 try:
     from types import SimpleNamespace as Namespace
 except ImportError:
@@ -33,13 +36,19 @@ userlogin = Userlogin("username", "password", "test@email.com")
 userstats = GameStats(10, 8, 2)
 user = (userlogin, userstats)
 
-# dumps() converts to json format
+# TEST: dumps() converts to json format
 userJson = json.dumps(user, indent=4, cls=UserEncoder)
 print(userJson)
 
-# Parse JSON into an object
+# TEST: Parse JSON into an object
 userObj = json.loads(userJson, object_hook=UserDecoder)
 
-# print python object
+# TEST: print python object
 print("After converting JSON Data into custom Python Object: ")
 print(userObj)
+
+try:
+    requests.put(url = jsonURL, json= userJson)
+    print ("Successful JSON File Upload.")
+except:
+    print ("Error Uploading JSON File.")
