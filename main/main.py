@@ -12,7 +12,6 @@ import constants
 
 # GLOBAL VARIABLES
 global WIDTH, HEIGHT, SCREEN, FPS
-# USER32 = constants.USER32
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
@@ -61,7 +60,7 @@ class main:
         userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
         users_ref = ref.child('users')
         users_ref.push(userJson)
-        
+
         pass
             
 
