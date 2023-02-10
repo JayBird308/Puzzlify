@@ -72,11 +72,12 @@ def main():
         # checkForQuit()
 
         for event in pygame.event.get(): # event handling loop
-            if event.key == K_ESCAPE:
-                main_menu = constants.main_menu
-                main_menu.enable()
-                pygame.display.flip()
-                loop = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_ESCAPE:
+                    main_menu = constants.main_menu
+                    main_menu.enable()
+                    pygame.display.flip()
+                    loop = False
             if event.type == MOUSEBUTTONUP:
                 spotx, spoty = getSpotClicked(mainBoard, event.pos[0], event.pos[1])
                 if (spotx, spoty) == (None, None):
