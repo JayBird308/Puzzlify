@@ -23,14 +23,18 @@ customMenu_theme = ct.customMenu_theme
 
 # main class
 class main:
+    class User:
+        username = ""
+        password = ""
+        email = ""
 
     def setUserPass(userpassword):
         main.User.Password = userpassword
         return main.User.Password
 
     def setUserEmail(useremail):
-        user.UserLogin.email = useremail
-        return main.User.Email
+        userlogin.email
+        return main.User.email
 
     def printUserEmail(USEREMAIL):
         print("Account Email: ", main.User.Email)

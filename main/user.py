@@ -31,10 +31,10 @@ def UserDecoder(userDict):
 
 userlogin = Userlogin("username", "password", "test@email.com")
 userstats = GameStats(10, 8, 2)
-user = (userlogin, userstats)
+userdata = (userlogin, userstats)
 
 # dumps() converts to json format
-userJson = json.dumps(user, indent=4, cls=UserEncoder)
+userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
 print(userJson)
 
 # Parse JSON into an object
