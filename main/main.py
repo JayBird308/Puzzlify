@@ -22,39 +22,60 @@ main_menu = constants.main_menu
 customMenu_theme = ct.customMenu_theme
 
 # main class
-class main:
-    class User:
-        username = ""
-        password = ""
-        email = ""
+class main:    
+
+    def setUserName(username):
+        UserAccount.username = username
+        return UserAccount.username
 
     def setUserPass(userpassword):
-        main.User.Password = userpassword
-        return main.User.Password
+        UserAccount.password = userpassword
+        return UserAccount.password
 
     def setUserEmail(useremail):
-        userlogin.email
-        return main.User.email
-
-    def printUserEmail(USEREMAIL):
-        print("Account Email: ", main.User.Email)
-
-    def printUserCredentials(USERNAME, USERPASSWORD, USEREMAIL):
-        print("Account Credentials:")
-        print("USERNAME: ", USERNAME)
-        print("USERPASSWORD: ", USERPASSWORD)
-        print("USEREMAIL: ", USEREMAIL)
+        UserAccount.email = useremail
+        return UserAccount.email
 
     def random_color() -> Tuple[int, int, int]:
         return randrange(0, 255), randrange(0, 255), randrange(0, 255)
 
     # login button action for account database
     def login():
+        print(UserAccount.email)
+        print(UserAccount.password)
         pass
 
     # sign up button action for account database
     def signup():
-        pass
+        UserAccount.memGamesPlayed = 0
+        UserAccount.memHighScore = 0
+        UserAccount.trizGamesPlayed = 0
+        UserAccount.trizHighScore = 0
+        UserAccount.mqGamesPlayed = 0
+        UserAccount.mqHighScore = 0
+        UserAccount.slidingGamesPlayed = 0
+        UserAccount.slidingHighScore = 0
+
+        userdata = UserAccount(UserAccount.username, UserAccount.password, UserAccount.email,UserAccount.memGamesPlayed, UserAccount.memHighScore, UserAccount.trizGamesPlayed, UserAccount.trizHighScore, UserAccount.mqGamesPlayed, UserAccount.mqHighScore, UserAccount.slidingGamesPlayed, UserAccount.slidingHighScore)
+        userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
+        users_ref = ref.child('users')
+        users_ref.push(userJson)
+        
+        # userlogin = Userlogin(Userlogin.username, Userlogin.password, Userlogin.email)
+        # userdata = (userlogin)
+        # userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
+        # print(userJson)
+        # userObj = json.loads(userJson, object_hook=UserDecoder)
+        # print("After converting JSON Data into custom Python Object: ")
+        # print(userObj)
+
+        # try:
+            # requests.put(url = jsonURL, json= userJson)
+            # print ("Successful JSON File Upload.")
+        # except:
+            # print ("Error Uploading JSON File.")
+        
+        # pass
             
 
     def main_background() -> None:
@@ -90,10 +111,10 @@ class main:
 
         ### --> Account Create Menu <--- ##
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
-        # accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
+        accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
         accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
-        accountCreateMenu.add.button('Submit Account')
+        accountCreateMenu.add.button('Submit Account', main.signup)
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Stats Menu <--- ##
