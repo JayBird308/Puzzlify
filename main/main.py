@@ -1,6 +1,7 @@
 import pygame, pygame_menu
 import customMenu_theme as ct
 import MathQuiz as MQ
+import memory as memGame
 import trizzleGame as triGame
 import Sliding_Puzzle as sliGame
 from databaseConnection import *
@@ -76,7 +77,7 @@ class main:
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
         gameMenu.add.button("Math Quiz", MQ.quiz.test)
-        gameMenu.add.button('Memory Game')
+        gameMenu.add.button('Memory Game', memGame.main)
         gameMenu.add.button('Trizzle', triGame.run)
         gameMenu.add.button('Sliding Puzzle', sliGame.main)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
