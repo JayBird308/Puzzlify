@@ -23,7 +23,7 @@ main_menu = constants.main_menu
 customMenu_theme = ct.customMenu_theme
 
 # main class
-class main:    
+class main:
 
     def setUserName(username):
         UserAccount.username = username
@@ -62,21 +62,7 @@ class main:
         users_ref = ref.child('users')
         users_ref.push(userJson)
         
-        # userlogin = Userlogin(Userlogin.username, Userlogin.password, Userlogin.email)
-        # userdata = (userlogin)
-        # userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
-        # print(userJson)
-        # userObj = json.loads(userJson, object_hook=UserDecoder)
-        # print("After converting JSON Data into custom Python Object: ")
-        # print(userObj)
-
-        # try:
-            # requests.put(url = jsonURL, json= userJson)
-            # print ("Successful JSON File Upload.")
-        # except:
-            # print ("Error Uploading JSON File.")
-        
-        # pass
+        pass
             
 
     def main_background() -> None:
