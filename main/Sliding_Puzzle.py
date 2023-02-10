@@ -1,4 +1,4 @@
-import pygame, sys, random
+import pygame, sys, random, constants
 from pygame.locals import *
 
 # Create the constants (go ahead and experiment with different values)
@@ -40,9 +40,10 @@ RIGHT = 'right'
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, RESET_SURF, RESET_RECT, NEW_SURF, NEW_RECT, SOLVE_SURF, SOLVE_RECT
 
-    pygame.init()
-    FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    # pygame.init()
+    FPSCLOCK = constants.clock
+    # DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    DISPLAYSURF = constants.SCREEN
     pygame.display.set_caption('Slide Puzzle')
     BASICFONT = pygame.font.Font('freesansbold.ttf', BASICFONTSIZE)
 
@@ -51,11 +52,14 @@ def main():
     NEW_SURF,   NEW_RECT   = makeText('New Game', TEXT, BGCOLOR, WINDOWWIDTH - 120, WINDOWHEIGHT - 280)
     SOLVE_SURF, SOLVE_RECT = makeText('Solve',    TEXT, BGCOLOR, WINDOWWIDTH - 120, WINDOWHEIGHT - 250)
 
-    mainBoard, solutionSeq = generateNewPuzzle(80)
+    # mainBoard, solutionSeq = generateNewPuzzle(80)
+    mainBoard, solutionSeq = generateNewPuzzle(30)
     SOLVEDBOARD = getStartingBoard() # a solved board is the same as the board in a start state.
     allMoves = [] # list of moves made from the solved configuration
 
-    while True: # main game loop
+    loop = True
+
+    while loop: # main game loop
         slideTo = None # the direction, if any, a tile should slide
         msg = 'Click tile or press arrow keys to slide.' # contains the message to show in the upper left corner.
         if mainBoard == SOLVEDBOARD:
@@ -63,11 +67,10 @@ def main():
 
         drawBoard(mainBoard, msg)
 
-        checkForQuit()
+        # checkForQuit()
         for event in pygame.event.get(): # event handling loop
             if event.type == MOUSEBUTTONUP:
                 spotx, spoty = getSpotClicked(mainBoard, event.pos[0], event.pos[1])
-
                 if (spotx, spoty) == (None, None):
                     # check if the user clicked on an option button
                     if RESET_RECT.collidepoint(event.pos):
@@ -81,7 +84,6 @@ def main():
                         allMoves = []
                 else:
                     # check if the clicked tile was next to the blank spot
-
                     blankx, blanky = getBlankPosition(mainBoard)
                     if spotx == blankx + 1 and spoty == blanky:
                         slideTo = LEFT
@@ -93,6 +95,13 @@ def main():
                         slideTo = DOWN
 
             elif event.type == KEYUP:
+
+                if event.key == K_0:
+                    main_menu = constants.main_menu
+                    main_menu.enable()
+                    pygame.display.flip()
+                    loop = False
+
                 # check if the user pressed a key to slide a tile
                 if event.key in (K_LEFT, K_a) and isValidMove(mainBoard, LEFT):
                     slideTo = LEFT
@@ -109,7 +118,6 @@ def main():
             allMoves.append(slideTo) # record the slide
         pygame.display.update()
         FPSCLOCK.tick(FPS)
-
 
 def terminate():
     pygame.quit()
