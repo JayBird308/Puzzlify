@@ -9,12 +9,13 @@ pygame.init()
 
 # WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
 # HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
-
 # Testing Window Dimensions
-WIDTH = 1920
-HEIGHT = 1080
 
-SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
+infoObject = pygame.display.Info()
+SCREEN = pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
+
+WIDTH = infoObject.current_w
+HEIGHT = infoObject.current_h
 FPS = 60
 
 clock: Optional['pygame.time.Clock'] = pygame.time.Clock()
