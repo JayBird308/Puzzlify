@@ -36,9 +36,13 @@ UP = 'up'
 DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
+loop = True
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT, RESET_SURF, RESET_RECT, NEW_SURF, NEW_RECT, SOLVE_SURF, SOLVE_RECT
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, loop
+    global RESET_SURF, RESET_RECT, NEW_SURF, NEW_RECT, SOLVE_SURF, SOLVE_RECT
+    loop = True
+
 
     # pygame.init()
     FPSCLOCK = constants.clock
@@ -57,7 +61,6 @@ def main():
     SOLVEDBOARD = getStartingBoard() # a solved board is the same as the board in a start state.
     allMoves = [] # list of moves made from the solved configuration
 
-    loop = True
 
     while loop: # main game loop
         slideTo = None # the direction, if any, a tile should slide
@@ -66,9 +69,14 @@ def main():
             msg = 'Solved!'
 
         drawBoard(mainBoard, msg)
-
         # checkForQuit()
+
         for event in pygame.event.get(): # event handling loop
+            if event.key == K_ESCAPE:
+                main_menu = constants.main_menu
+                main_menu.enable()
+                pygame.display.flip()
+                loop = False
             if event.type == MOUSEBUTTONUP:
                 spotx, spoty = getSpotClicked(mainBoard, event.pos[0], event.pos[1])
                 if (spotx, spoty) == (None, None):
@@ -93,15 +101,7 @@ def main():
                         slideTo = UP
                     elif spotx == blankx and spoty == blanky - 1:
                         slideTo = DOWN
-
             elif event.type == KEYUP:
-
-                if event.key == K_0:
-                    main_menu = constants.main_menu
-                    main_menu.enable()
-                    pygame.display.flip()
-                    loop = False
-
                 # check if the user pressed a key to slide a tile
                 if event.key in (K_LEFT, K_a) and isValidMove(mainBoard, LEFT):
                     slideTo = LEFT
@@ -119,18 +119,17 @@ def main():
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
-def terminate():
-    pygame.quit()
-    sys.exit()
+# def terminate():
+#     pygame.quit()
+#     sys.exit()
 
 
-def checkForQuit():
-    for event in pygame.event.get(QUIT): # get all the QUIT events
-        terminate() # terminate if any QUIT events are present
-    for event in pygame.event.get(KEYUP): # get all the KEYUP events
-        if event.key == K_ESCAPE:
-            terminate() # terminate if the KEYUP event was for the Esc key
-        pygame.event.post(event) # put the other KEYUP event objects back
+# def checkForQuit():
+#     global loop
+#     # for event in pygame.event.get(QUIT): # get all the QUIT events
+#     #     terminate() # terminate if any QUIT events are present
+#     for event in pygame.event.get(): # get all the KEYUP events
+#         pygame.event.post(event) # put the other KEYUP event objects back
 
 
 def getStartingBoard():
@@ -282,7 +281,7 @@ def slideAnimation(board, direction, message, animationSpeed):
 
     for i in range(0, TILESIZE, animationSpeed):
         # animate the tile sliding over
-        checkForQuit()
+        # checkForQuit()
         DISPLAYSURF.blit(baseSurf, (0, 0))
         if direction == UP:
             drawTile(movex, movey, board[movex][movey], 0, -i)

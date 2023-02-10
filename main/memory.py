@@ -2,17 +2,17 @@
 # @author Simran
 # Released under a "Simplified BSD" license
 
-import random, pygame, sys
+import random, pygame, sys, constants
 from pygame.locals import *
 
-FPS = 30 # frames per second, the general speed of the program
-WINDOWWIDTH = 640 # size of window's width in pixels
-WINDOWHEIGHT = 480 # size of windows' height in pixels
+FPS = constants.FPS # frames per second, the general speed of the program
+WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
+WINDOWHEIGHT = constants.HEIGHT # size of windows' height in pixels
 REVEALSPEED = 8 # speed boxes' sliding reveals and covers
 BOXSIZE = 40 # size of box height & width in pixels
 GAPSIZE = 10 # size of gap between boxes in pixels
-BOARDWIDTH = 10 # number of columns of icons
-BOARDHEIGHT = 7 # number of rows of icons
+BOARDWIDTH = 4 # number of columns of icons
+BOARDHEIGHT = 4 # number of rows of icons
 assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
 XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
 YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
@@ -48,8 +48,10 @@ assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, \
 def main():
     global FPSCLOCK, DISPLAYSURF
     pygame.init()
-    FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    # FPSCLOCK = pygame.time.Clock()
+    # DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    FPSCLOCK = constants.clock
+    DISPLAYSURF = constants.SCREEN
 
     mousex = 0 # used to store x coordinate of mouse event
     mousey = 0 # used to store y coordinate of mouse event
@@ -62,8 +64,9 @@ def main():
 
     DISPLAYSURF.fill(BGCOLOR)
     startGameAnimation(mainBoard)
+    loop = True
 
-    while True: # main game loop
+    while loop: # main game loop
         mouseClicked = False
 
         DISPLAYSURF.fill(BGCOLOR) # drawing the window
@@ -71,8 +74,10 @@ def main():
 
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
-                pygame.quit()
-                sys.exit()
+                main_menu = constants.main_menu
+                main_menu.enable()
+                pygame.display.flip()
+                loop = False
             elif event.type == MOUSEMOTION:
                 mousex, mousey = event.pos
             elif event.type == MOUSEBUTTONUP:
@@ -217,7 +222,6 @@ def drawBoxCovers(board, boxes, coverage):
         if coverage > 0: # only draw the cover if there is an coverage
             pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, coverage, BOXSIZE))
     pygame.display.update()
-    FPSCLOCK.tick(FPS)
 
 
 def revealBoxesAnimation(board, boxesToReveal):
