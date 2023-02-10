@@ -36,13 +36,8 @@ userlogin = Userlogin("username", "password", "test@email.com")
 userstats = GameStats(10, 8, 2)
 userdata = (userlogin, userstats)
 
-<<<<<<< HEAD
-# dumps() converts to json format
-userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
-=======
 # TEST: dumps() converts to json format
-userJson = json.dumps(user, indent=4, cls=UserEncoder)
->>>>>>> 50521a35f09f2490ab705bfcfb475328f00196fd
+userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
 print(userJson)
 
 # TEST: Parse JSON into an object
