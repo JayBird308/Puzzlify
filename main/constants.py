@@ -11,8 +11,8 @@ pygame.init()
 # HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
 
 # Testing Window Dimensions
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 1920
+HEIGHT = 1080
 
 SCREEN = pygame.display.set_mode((WIDTH,HEIGHT))
 FPS = 60
