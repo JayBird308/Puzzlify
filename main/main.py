@@ -60,13 +60,16 @@ class main:
         userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
         users_ref = ref.child('users')
         users_ref.push(userJson)
-
         pass
             
 
     def main_background() -> None:
         """ Function used by menus, draw on background while menu is active."""
         SCREEN.fill((128, 0, 128))
+
+    def set_difficulty_type():
+        difficulty = 0
+
 
     def main(test: bool = False) -> None:
         global clock
@@ -82,11 +85,13 @@ class main:
         ### --> Game Selection Menu <--- ##
         gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
-        gameMenu.add.button("Math Quiz", MQ.quiz.test)
-        gameMenu.add.button('Memory Game', memGame.main)
-        gameMenu.add.button('Trizzle', triGame.run)
-        gameMenu.add.button('Sliding Puzzle', sliGame.main)
-        gameMenu.add.button('Back', pygame_menu.events.BACK)
+        list = [('Easy', 0), ('Advanced', 1)]
+        selector = gameMenu.add.selector("Difficulty", list,)
+        math_button = gameMenu.add.button("Math Quiz", MQ.quiz.test)
+        memory_button = gameMenu.add.button('Memory Game', memGame.main)
+        trizzle_button = gameMenu.add.button('Trizzle', triGame.run)
+        slide_button = gameMenu.add.button('Sliding Puzzle', sliGame.main)
+        back_button = gameMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
@@ -122,39 +127,49 @@ class main:
             WIDTH, HEIGHT, 
             theme = customMenu_theme
         )
-        
+
         main_menu.add.button('Game Selection', gameMenu)
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
         # ---------------------------------
-        
         # pygame.mixer.init()
         # pygame.mixer.music.load('main/track1.mp3')
         # pygame.mixer.music.play()
         # pygame.mixer.music.set_volume(0.2)
 
+        current_menu = main_menu
+
         # Main Loop
         while True:
-
             # Tick
             clock.tick(FPS)
-            
+
+            current_menu.enable()
+            current_menu.render()
+            if current_menu != gameMenu:
+                gameMenu.disable()
+            if current_menu != accountLoginMenu:
+                accountLoginMenu.disable()
+            if current_menu != accountCreateMenu:
+                accountCreateMenu.disable()
+            if current_menu != accountStatsMenu:
+                accountStatsMenu.disable()
+            if current_menu != accountInfoMenu:
+                accountInfoMenu.disable()
+
             # Application Events
-            for event in pygame.event.get():
+            events = pygame.event.get()
+            for event in events:
                 if event.type == pygame.QUIT:
-                        exit(0)
+                    exit(0)
+                else:
+                    if current_menu.is_enabled() == False:
+                        current_menu.enable()
+                    if current_menu.is_enabled() == True:
+                        current_menu.update(events)
+                        current_menu.draw(SCREEN)
 
-            # Main menu
-            main_menu.enable()
-            if main_menu.is_enabled():
-                main_menu.mainloop(
-                    SCREEN, 
-                    main.main_background, 
-                    disable_loop=test, 
-                    fps_limit=FPS
-                )
-
-            pygame.display.flip()
+            pygame.display.update()
 
             # At first loop returns
             if test:

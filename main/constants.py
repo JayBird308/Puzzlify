@@ -5,17 +5,14 @@ from customMenu_theme import *
 
 pygame.init()
 
-# USER32 = ctypes.windll.user32
-
-# WIDTH = USER32.GetSystemMetrics(0) # Monitor Resolution Width
-# HEIGHT = USER32.GetSystemMetrics(1) # Monitor Resolution Height
-# Testing Window Dimensions
-
 infoObject = pygame.display.Info()
-SCREEN = pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
+# SCREEN = pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
-WIDTH = infoObject.current_w
-HEIGHT = infoObject.current_h
+WIDTH = 1280
+HEIGHT = 720
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+# WIDTH = infoObject.current_w
+# HEIGHT = infoObject.current_h
 FPS = 60
 
 clock: Optional['pygame.time.Clock'] = pygame.time.Clock()
