@@ -8,8 +8,8 @@ pygame.init()
 infoObject = pygame.display.Info()
 # SCREEN = pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 1600
+HEIGHT = 900
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 # WIDTH = infoObject.current_w
 # HEIGHT = infoObject.current_h

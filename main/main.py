@@ -1,4 +1,4 @@
-import pygame, pygame_menu
+import pygame, pygame_menu, pygame_menu.widgets
 import customMenu_theme as ct
 import MathQuiz as MQ
 import memory as memGame
@@ -11,11 +11,11 @@ from user import *
 import constants
 
 # GLOBAL VARIABLES
-global WIDTH, HEIGHT, SCREEN, FPS
 WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
 FPS = constants.FPS
+previous_value = 0
 
 clock = constants.clock
 main_menu = constants.main_menu
@@ -23,7 +23,6 @@ customMenu_theme = ct.customMenu_theme
 
 # main class
 class main:
-
     def setUserName(username):
         UserAccount.username = username
         return UserAccount.username
@@ -70,10 +69,15 @@ class main:
     def set_difficulty_type():
         difficulty = 0
 
+    def print_value(value):
+        global previous_value
+        if value != previous_value:
+            print(f'Value changed to {value}.')
+            previous_value = value
 
     def main(test: bool = False) -> None:
-        global clock
-        global main_menu
+        global main_menu, clock
+        global previous_value
 
         # initialize
         pygame.init()
@@ -83,15 +87,28 @@ class main:
         # Create menus: Sub Menus
         # ---------------------------------
         ### --> Game Selection Menu <--- ##
-        gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = pygame_menu.themes.THEME_BLUE)
+        gameMenu = pygame_menu.Menu('Game Selection', WIDTH, HEIGHT, theme = customMenu_theme)
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
-        list = [('Easy', 0), ('Advanced', 1)]
-        selector = gameMenu.add.selector("Difficulty", list,)
-        math_button = gameMenu.add.button("Math Quiz", MQ.quiz.test)
-        memory_button = gameMenu.add.button('Memory Game', memGame.main)
-        trizzle_button = gameMenu.add.button('Trizzle', triGame.run)
-        slide_button = gameMenu.add.button('Sliding Puzzle', sliGame.main)
-        back_button = gameMenu.add.button('Back', pygame_menu.events.BACK)
+
+        selector = pygame_menu.widgets.Selector(
+            'Select an option:',
+            [('Easy', 0), ('Advanced', 1)],
+            default=0,
+            onchange=lambda widget, value: main.print_value(value)
+        )
+        previous_value = selector.get_value()
+        gameMenu.add.generic_widget(selector)
+        gameMenu.get_selected_widget()
+        gameMenu.add.selector(selector._title, selector._items,
+                                    onchange=selector._onchange,
+                                    default=selector._default_value)
+
+        gameMenu.add.button("Math Quiz", MQ.quiz.test)
+        gameMenu.add.button('Memory Game', memGame.main)
+        gameMenu.add.button('Trizzle', triGame.run)
+        gameMenu.add.button('Sliding Puzzle', sliGame.main)
+        gameMenu.add.button('Back', pygame_menu.events.BACK)
+
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
@@ -131,6 +148,7 @@ class main:
         main_menu.add.button('Game Selection', gameMenu)
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
+
         # ---------------------------------
         # pygame.mixer.init()
         # pygame.mixer.music.load('main/track1.mp3')
