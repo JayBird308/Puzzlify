@@ -56,14 +56,16 @@ class main:
         users_ref.push(userJson)
         pass           
 
-    def set_difficulty_type():
-        difficulty = 0
+    def set_difficulty_type(num):
+        difficulty = num
+        print('Difficulty set:',difficulty)
 
     def print_value(value):
         global previous_value
         if value != previous_value:
-            print(f'Value changed to {value}.')
+            # print(f'Value changed to {value}.')
             previous_value = value
+            main.set_difficulty_type(previous_value)
 
     def main(test: bool = False) -> None:
         global main_menu, clock
@@ -157,7 +159,7 @@ class main:
                     exit(0)
             current_menu.update(events)
 
-            # Enable current menu & Force render
+            # Enable current menu
             current_menu.enable()
             if current_menu != gameMenu:
                 gameMenu.disable()
