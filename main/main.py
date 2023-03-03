@@ -1,12 +1,10 @@
-import pygame, pygame_menu, pygame_menu.widgets
+import pygame, pygame_menu, pygame_menu.widgets, pygame_menu.locals
 import customMenu_theme as ct
 import MathQuiz as MQ
 import memory as memGame
 import trizzleGame as triGame
 import Sliding_Puzzle as sliGame
 from databaseConnection import *
-from random import randrange
-from typing import Tuple
 from user import *
 import constants
 
@@ -35,9 +33,6 @@ class main:
         UserAccount.email = useremail
         return UserAccount.email
 
-    def random_color() -> Tuple[int, int, int]:
-        return randrange(0, 255), randrange(0, 255), randrange(0, 255)
-
     # login button action for account database
     def login():
         print(UserAccount.email)
@@ -59,12 +54,7 @@ class main:
         userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
         users_ref = ref.child('users')
         users_ref.push(userJson)
-        pass
-            
-
-    def main_background() -> None:
-        """ Function used by menus, draw on background while menu is active."""
-        SCREEN.fill((128, 0, 128))
+        pass           
 
     def set_difficulty_type():
         difficulty = 0
@@ -91,14 +81,13 @@ class main:
         # gameMenu.add.button('Math Quiz', MQ.quiz.play_function)
 
         selector = pygame_menu.widgets.Selector(
-            'Select an option:',
-            [('Easy', 0), ('Advanced', 1)],
+            'Difficulty:',
+            [('     Easy    ', 0), ('Advanced', 1)],
             default=0,
             onchange=lambda widget, value: main.print_value(value)
         )
         previous_value = selector.get_value()
-        gameMenu.add.generic_widget(selector)
-        gameMenu.get_selected_widget()
+
         gameMenu.add.selector(selector._title, selector._items,
                                     onchange=selector._onchange,
                                     default=selector._default_value)
@@ -108,7 +97,6 @@ class main:
         gameMenu.add.button('Trizzle', triGame.run)
         gameMenu.add.button('Sliding Puzzle', sliGame.main)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
-
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
@@ -140,7 +128,7 @@ class main:
         # Create menus: Main
         # ---------------------------------
         main_menu = pygame_menu.Menu(
-            '     Welcome to Puzzlify!', 
+            'Welcome to Puzzlify!', 
             WIDTH, HEIGHT, 
             theme = customMenu_theme
         )
@@ -155,15 +143,22 @@ class main:
         # pygame.mixer.music.play()
         # pygame.mixer.music.set_volume(0.2)
 
+        # Set the menu
         current_menu = main_menu
 
         # Main Loop
         while True:
-            # Tick
             clock.tick(FPS)
 
+            # Event Handling
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    exit(0)
+            current_menu.update(events)
+
+            # Enable current menu & Force render
             current_menu.enable()
-            current_menu.render()
             if current_menu != gameMenu:
                 gameMenu.disable()
             if current_menu != accountLoginMenu:
@@ -175,17 +170,12 @@ class main:
             if current_menu != accountInfoMenu:
                 accountInfoMenu.disable()
 
-            # Application Events
-            events = pygame.event.get()
-            for event in events:
-                if event.type == pygame.QUIT:
-                    exit(0)
-                else:
-                    if current_menu.is_enabled() == False:
-                        current_menu.enable()
-                    if current_menu.is_enabled() == True:
-                        current_menu.update(events)
-                        current_menu.draw(SCREEN)
+            # If NOT enabled, enable it
+            # If enabled, draw to SCREEN
+            if current_menu.is_enabled() == False:
+                current_menu.enable()
+            if current_menu.is_enabled() == True:
+                current_menu.draw(SCREEN)
 
             pygame.display.update()
 
