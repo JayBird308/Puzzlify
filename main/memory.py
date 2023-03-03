@@ -1,7 +1,3 @@
-# Memory Puzzle
-# @author Simran
-# Released under a "Simplified BSD" license
-
 import random, pygame, sys, constants
 from pygame.locals import *
 
@@ -11,8 +7,8 @@ WINDOWHEIGHT = constants.HEIGHT # size of windows' height in pixels
 REVEALSPEED = 8 # speed boxes' sliding reveals and covers
 BOXSIZE = 80 # size of box height & width in pixels
 GAPSIZE = 20 # size of gap between boxes in pixels
-BOARDWIDTH = 4 # number of columns of icons
-BOARDHEIGHT = 4 # number of rows of icons
+BOARDWIDTH = 2 # number of columns of icons
+BOARDHEIGHT = 2 # number of rows of icons
 assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
 XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
 YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
@@ -66,6 +62,23 @@ def main():
     startGameAnimation(mainBoard)
     loop = True
 
+    # Set up the timer
+    start_time = 0
+    duration = 90000  # 1 minute 30 in milliseconds
+    timer_running = False
+    timer_start = 0
+    minutes = 0
+    seconds = 0
+    time_elapsed = 0
+
+    # setup delay
+    def wait():
+        # Wait for approximately 2000 ticks
+        ticks_to_wait = 1000
+        runtime = pygame.time.get_ticks()
+        while pygame.time.get_ticks() < runtime + ticks_to_wait:
+            pass    
+
     while loop: # main game loop
         mouseClicked = False
 
@@ -94,6 +107,12 @@ def main():
                 revealedBoxes[boxx][boxy] = True # set the box as "revealed"
                 if firstSelection == None: # the current box was the first box clicked
                     firstSelection = (boxx, boxy)
+
+                    if (timer_start == 0):
+                        timer_start = 1
+                        start_time = pygame.time.get_ticks()
+                        timer_running = True
+
                 else: # the current box was the second box clicked
                     # Check if there is a match between the two icons.
                     icon1shape, icon1color = getShapeAndColor(mainBoard, firstSelection[0], firstSelection[1])
@@ -101,13 +120,18 @@ def main():
 
                     if icon1shape != icon2shape or icon1color != icon2color:
                         # Icons don't match. Re-cover up both selections.
-                        pygame.time.wait(1000) # 1000 milliseconds = 1 sec
+                        wait() # wait 1000 ticks
                         coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1]), (boxx, boxy)])
                         revealedBoxes[firstSelection[0]][firstSelection[1]] = False
                         revealedBoxes[boxx][boxy] = False
                     elif hasWon(revealedBoxes): # check if all pairs found
                         gameWonAnimation(mainBoard)
-                        pygame.time.wait(2000)
+                        wait() # wait 1000 ticks
+
+                        # Reset timer
+                        timer_start = 0
+                        timer_running = False
+                        start_time = 0
 
                         # Reset the board
                         mainBoard = getRandomizedBoard()
@@ -116,16 +140,35 @@ def main():
                         # Show the fully unrevealed board for a second.
                         drawBoard(mainBoard, revealedBoxes)
                         pygame.display.update()
-                        pygame.time.wait(1000)
+                        wait() # wait 1000 ticks
 
                         # Replay the start game animation.
                         startGameAnimation(mainBoard)
                     firstSelection = None # reset firstSelection variable
 
-        # Redraw the screen and wait a clock tick.
+        # Calculate the time remaining
+        if timer_running:
+            time_elapsed = pygame.time.get_ticks() - start_time
+            time_remaining = max(duration - time_elapsed, 0)
+
+            # Format the time as MM:SS
+            seconds = int(time_remaining / 1000)
+            minutes = int(seconds / 60)
+            seconds %= 60
+
+        # Draw the time on the screen
+        draw_timer(f"{minutes:01d}:{seconds:02d}")
+
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
+def draw_timer(txt):
+    # Draw the time on the screen
+    font = pygame.font.Font(None, 50)
+    text = font.render(txt, True, (230,230,230))
+    text_rect = text.get_rect()
+    text_rect.topleft = (30,30)  # Position the text in the top-left corner
+    DISPLAYSURF.blit(text, text_rect)
 
 def generateRevealedBoxesData(val):
     revealedBoxes = []

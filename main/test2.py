@@ -1,75 +1,46 @@
 import pygame
-from OpenGL.GL import *
-from OpenGL.GLU import *
 
-# initialize Pygame
 pygame.init()
-screen = pygame.display.set_mode((800, 600), pygame.OPENGL | pygame.DOUBLEBUF)
 
-# initialize OpenGL
-glClearColor(0, 0, 0, 1)
-glMatrixMode(GL_PROJECTION)
-gluPerspective(45, 800/600, 0.1, 100.0)
-glMatrixMode(GL_MODELVIEW)
-glEnable(GL_DEPTH_TEST)
+# Set up the window
+WINDOW_SIZE = (400, 300)
+screen = pygame.display.set_mode(WINDOW_SIZE)
+pygame.display.set_caption("Countdown Timer")
 
-# create the cube
-vertices = (
-    (1, -1, -1),
-    (1, 1, -1),
-    (-1, 1, -1),
-    (-1, -1, -1),
-    (1, -1, 1),
-    (1, 1, 1),
-    (-1, -1, 1),
-    (-1, 1, 1)
-)
-edges = (
-    (0, 1),
-    (0, 3),
-    (0, 4),
-    (2, 1),
-    (2, 3),
-    (2, 7),
-    (6, 3),
-    (6, 4),
-    (6, 7),
-    (5, 1),
-    (5, 4),
-    (5, 7)
-)
+# Set up the font
+font = pygame.font.Font(None, 36)
 
-def draw_cube():
-    glBegin(GL_LINES)
-    for edge in edges:
-        for vertex in edge:
-            glVertex3fv(vertices[vertex])
-    glEnd()
+# Set up the timer
+duration = 60000  # 1 minute in milliseconds
+start_time = pygame.time.get_ticks()
 
-# main loop
+# Set up the clock
+clock = pygame.time.Clock()
+
+def wait():
+    # Wait for approximately 2000 ticks
+    ticks_to_wait = 2000
+    while pygame.time.get_ticks() - start_time < ticks_to_wait:
+        clock.tick(60)  # Limit the frame rate to 60 FPS
+        print(". . .")
+
+wait_num = 0
+
+# Main loop
 while True:
-    # handle events
+    # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                glRotatef(5, 0, 1, 0)
-            elif event.key == pygame.K_RIGHT:
-                glRotatef(-5, 0, 1, 0)
-            elif event.key == pygame.K_UP:
-                glRotatef(5, 1, 0, 0)
-            elif event.key == pygame.K_DOWN:
-                glRotatef(-5, 1, 0, 0)
 
-    # clear the screen and depth buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            start_time = pygame.time.get_ticks()
 
-    # draw the cube
-    glLoadIdentity()
-    glTranslatef(0, 0, -5)
-    draw_cube()
+    if wait_num == 0:
+        wait()
+        wait_num = 1
+        print("Waiting over.")
 
-    # update the screen
-    pygame.display.flip()
+    # Calculate the time remaining
+    time_elapsed = pygame.time.get_ticks()
