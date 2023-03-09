@@ -7,4 +7,6 @@ dbURL = 'https://puzzlify-74c00-default-rtdb.firebaseio.com/'
 path = "main\\puzzlify-74c00-firebase-adminsdk-27vsv-55d04e21b4.json"
 cred = firebase_admin.credentials.Certificate(path)
 firebase_admin.initialize_app(cred, {'databaseURL': dbURL})
-ref = db.reference('puzzlify/userdata')
+refString = "puzzlify/userdata"
+ref = db.reference(refString)
+usersRef = db.reference('puzzlify/userdata/users')

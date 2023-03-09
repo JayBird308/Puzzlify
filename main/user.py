@@ -11,10 +11,11 @@ except ImportError:
     from argparse import Namespace
 
 class UserAccount:
-    def __init__(self, username, password, email, memGamesPlayed, memHighScore, trizGamesPlayed, trizHighScore, mqGamesPlayed, mqHighScore, slidingGamesPlayed, slidingHighScore):
+    def __init__(self, username, password, email, key, memGamesPlayed, memHighScore, trizGamesPlayed, trizHighScore, mqGamesPlayed, mqHighScore, slidingGamesPlayed, slidingHighScore):
         self.username = username
         self.password = password
         self.email = email
+        self.key = key
         self.memGamesPlayed = memGamesPlayed
         self.memHighScore = memHighScore
         self.trizGamesPlayed = trizGamesPlayed

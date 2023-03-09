@@ -21,6 +21,7 @@ customMenu_theme = ct.customMenu_theme
 
 # main class
 class main:
+    
     def setUserName(username):
         UserAccount.username = username
         return UserAccount.username
@@ -32,15 +33,53 @@ class main:
     def setUserEmail(useremail):
         UserAccount.email = useremail
         return UserAccount.email
+    
+    def setUserStats(user: UserAccount):
+        
+        pass
 
     # login button action for account database
     def login():
-        print(UserAccount.email)
-        print(UserAccount.password)
-        pass
+    
+        updatedUsersRefString = refString + "/" + UserAccount.username
+        userRef = db.reference(updatedUsersRefString)
+        userData = userRef.get()
+        userKeys = userData.keys()
+        userValues = userData.values()
+        userKeysString = str(userKeys)
+        userValuesString = str(userValues)
+        print(userKeysString)
+        print(userValuesString)
+        print('--------')
+        for key in userData:
+            print(key, '->', userData[key])
+        # userDataString = str(userData)
+        # userDataList = userDataString.split("    ")
+        # cleaning up the converted dictionary string
+        # print (userDataList)
+        # def cleanDataList(list: list):
+            # for i in range(len(list)):
+                # list[i] = list[i].replace('\\n','')
+                # list[i] = list[i].replace(',', '')
+                # list[i] = list[i].replace('"', '')
+                # list[i] = list[i].replace(' ', '')
+                # list[i] = list[i].replace('{', '')
+                # list[i] = list[i].replace('}', '')
+                # list[i] = list[i].replace('""', '')
+                # list[i] = list[i].replace("'", '')
+            # return list
+        # cleanDataList(userDataList)
+        # print(userDataList)
+        # i = 0
+        # print (userDataList[12])
+        # while(i<len(userDataList)):
+            # print(userDataList[i])
+            # i += 12
+        # pass
 
     # sign up button action for account database
     def signup():
+        UserAccount.key = ""
         UserAccount.memGamesPlayed = 0
         UserAccount.memHighScore = 0
         UserAccount.trizGamesPlayed = 0
@@ -50,11 +89,11 @@ class main:
         UserAccount.slidingGamesPlayed = 0
         UserAccount.slidingHighScore = 0
 
-        userdata = UserAccount(UserAccount.username, UserAccount.password, UserAccount.email,UserAccount.memGamesPlayed, UserAccount.memHighScore, UserAccount.trizGamesPlayed, UserAccount.trizHighScore, UserAccount.mqGamesPlayed, UserAccount.mqHighScore, UserAccount.slidingGamesPlayed, UserAccount.slidingHighScore)
+        userdata = UserAccount(UserAccount.username, UserAccount.password, UserAccount.email,UserAccount.key, UserAccount.memGamesPlayed, UserAccount.memHighScore, UserAccount.trizGamesPlayed, UserAccount.trizHighScore, UserAccount.mqGamesPlayed, UserAccount.mqHighScore, UserAccount.slidingGamesPlayed, UserAccount.slidingHighScore)
         userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
-        users_ref = ref.child('users')
+        users_ref = ref.child(UserAccount.username)
         users_ref.push(userJson)
-        pass           
+        pass
 
     def set_difficulty_type(num):
         difficulty = num
@@ -102,7 +141,7 @@ class main:
 
         ### --> Account Login Menu <--- ##
         accountLoginMenu = pygame_menu.Menu('Account Login', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountLoginMenu.add.text_input('E-mail: ', default = 'user@email.com', onchange = main.setUserEmail)
+        accountLoginMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
         accountLoginMenu.add.button('Login', main.login)
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
