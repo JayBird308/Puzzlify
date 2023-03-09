@@ -1,5 +1,6 @@
 import pygame, pygame_menu, pygame_menu.widgets, pygame_menu.locals
 import customMenu_theme as ct
+import json
 import MathQuiz as MQ
 import memory as memGame
 import trizzleGame as triGame
@@ -29,53 +30,33 @@ class main:
     def setUserPass(userpassword):
         UserAccount.password = userpassword
         return UserAccount.password
-
-    def setUserEmail(useremail):
-        UserAccount.email = useremail
-        return UserAccount.email
     
     def setUserStats(user: UserAccount):
-        
         pass
 
     # login button action for account database
     def login():
-    
         updatedUsersRefString = refString + "/" + UserAccount.username
         userRef = db.reference(updatedUsersRefString)
         userData = userRef.get()
-        userKeys = userData.keys()
-        userValues = userData.values()
-        userKeysString = str(userKeys)
-        userValuesString = str(userValues)
-        print(userKeysString)
-        print(userValuesString)
-        print('--------')
-        for key in userData:
-            print(key, '->', userData[key])
-        # userDataString = str(userData)
-        # userDataList = userDataString.split("    ")
-        # cleaning up the converted dictionary string
-        # print (userDataList)
-        # def cleanDataList(list: list):
-            # for i in range(len(list)):
-                # list[i] = list[i].replace('\\n','')
-                # list[i] = list[i].replace(',', '')
-                # list[i] = list[i].replace('"', '')
-                # list[i] = list[i].replace(' ', '')
-                # list[i] = list[i].replace('{', '')
-                # list[i] = list[i].replace('}', '')
-                # list[i] = list[i].replace('""', '')
-                # list[i] = list[i].replace("'", '')
-            # return list
-        # cleanDataList(userDataList)
-        # print(userDataList)
-        # i = 0
-        # print (userDataList[12])
-        # while(i<len(userDataList)):
-            # print(userDataList[i])
-            # i += 12
-        # pass
+        userKeys = list(userData.keys())
+        json_key = userData[userKeys[0]]
+        user_data_dict = json.loads(json_key)
+        UserAccount.username = user_data_dict['username']
+        UserAccount.password = user_data_dict['password']
+        UserAccount.key = userKeys[0]
+        UserAccount.memGamesPlayed = user_data_dict['memGamesPlayed']
+        UserAccount.memHighScore = user_data_dict['memHighScore']
+        UserAccount.trizGamesPlayed = user_data_dict['trizGamesPlayed']
+        UserAccount.trizHighScore = user_data_dict['trizHighScore']
+        UserAccount.mqGamesPlayed = user_data_dict['mqGamesPlayed']
+        UserAccount.mqHighScore = user_data_dict['mqHighScore']
+        UserAccount.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
+        UserAccount.slidingHighScore = user_data_dict['slidingHighScore']
+        print(UserAccount.username)
+        print(UserAccount.password)
+        print(UserAccount.key)
+        return UserAccount
 
     # sign up button action for account database
     def signup():
@@ -89,7 +70,7 @@ class main:
         UserAccount.slidingGamesPlayed = 0
         UserAccount.slidingHighScore = 0
 
-        userdata = UserAccount(UserAccount.username, UserAccount.password, UserAccount.email,UserAccount.key, UserAccount.memGamesPlayed, UserAccount.memHighScore, UserAccount.trizGamesPlayed, UserAccount.trizHighScore, UserAccount.mqGamesPlayed, UserAccount.mqHighScore, UserAccount.slidingGamesPlayed, UserAccount.slidingHighScore)
+        userdata = UserAccount(UserAccount.username, UserAccount.password, UserAccount.key, UserAccount.memGamesPlayed, UserAccount.memHighScore, UserAccount.trizGamesPlayed, UserAccount.trizHighScore, UserAccount.mqGamesPlayed, UserAccount.mqHighScore, UserAccount.slidingGamesPlayed, UserAccount.slidingHighScore)
         userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
         users_ref = ref.child(UserAccount.username)
         users_ref.push(userJson)
@@ -97,7 +78,7 @@ class main:
 
     def set_difficulty_type(num):
         difficulty = num
-        print('Difficulty set:',difficulty)
+        print('Difficulty set:', difficulty)
 
     def print_value(value):
         global previous_value
@@ -107,6 +88,18 @@ class main:
             main.set_difficulty_type(previous_value)
 
     def main(test: bool = False) -> None:
+        UserAccount.username = ""
+        UserAccount.password = ""
+        UserAccount.key = ""
+        UserAccount.memGamesPlayed = 0
+        UserAccount.memHighScore = 0
+        UserAccount.trizGamesPlayed = 0
+        UserAccount.trizHighScore = 0
+        UserAccount.mqGamesPlayed = 0
+        UserAccount.mqHighScore = 0
+        UserAccount.slidingGamesPlayed = 0
+        UserAccount.slidingHighScore = 0
+
         global main_menu, clock
         global previous_value
 
@@ -150,12 +143,15 @@ class main:
         accountCreateMenu = pygame_menu.Menu('Account Creation', WIDTH, HEIGHT, theme = customMenu_theme)
         accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
-        accountCreateMenu.add.text_input('Email Address: ', default = 'user@email.com', onchange = main.setUserEmail)
         accountCreateMenu.add.button('Submit Account', main.signup)
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Stats Menu <--- ##
         accountStatsMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
+        accountStatsMenu.add.label('Memory Game High Schore: ' + str(UserAccount.memHighScore))
+        accountStatsMenu.add.label('Trizzle High Score: ' + str(UserAccount.trizHighScore))
+        accountStatsMenu.add.label('Math Quiz High Score: ' + str(UserAccount.mqHighScore))
+        accountStatsMenu.add.label('Sliding Game High Score: ' + str(UserAccount.slidingHighScore))
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Info Menu <--- ##
@@ -169,7 +165,7 @@ class main:
         # Create menus: Main
         # ---------------------------------
         main_menu = pygame_menu.Menu(
-            'Welcome to Puzzlify!', 
+            'Welcome to Puzzlify' + UserAccount.username + "!", 
             WIDTH, HEIGHT, 
             theme = customMenu_theme
         )
