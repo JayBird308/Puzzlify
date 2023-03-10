@@ -22,7 +22,7 @@ WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
 FPS = constants.FPS
-previous_value = 0
+diff_value = 0
 
 clock = constants.clock
 main_menu = constants.main_menu
@@ -165,16 +165,16 @@ class main:
         print('Difficulty set:', difficulty)
 
     def print_value(value):
-        global previous_value
-        if value != previous_value:
+        global diff_value
+        if value != diff_value:
             # print(f'Value changed to {value}.')
-            previous_value = value
-            main.set_difficulty_type(previous_value)
+            diff_value = value
+            main.set_difficulty_type(diff_value)
 
     def main(test: bool = False) -> None:
         
         global main_menu, clock
-        global previous_value
+        global diff_value
 
         # initialize
         pygame.init()
@@ -188,7 +188,7 @@ class main:
             default=0,
             onchange=lambda widget, value: main.print_value(value)
         )
-        previous_value = selector.get_value()
+        diff_value = selector.get_value()
         gameMenu.add.selector(selector._title, selector._items,
                                     onchange=selector._onchange,
                                     default=selector._default_value)
