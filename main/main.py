@@ -90,15 +90,16 @@ class main:
                 currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
                 currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
                 main_menu.set_title('Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
-                print("Account Credentials Correct. Welcome, " + currentLoggedInUser.username)
+                print(currentLoggedInUser.memHighScore)
                 main.good_login_popup()
+                return currentLoggedInUser
             else:
                 main.bad_pass_popup()
                 print("Incorrect Password")
-            pass
         except:
             main.bad_user_popup()
             print("Incorrect Username")
+        return currentLoggedInUser
 
     # sign up button action for account database
     def signup():
@@ -183,14 +184,14 @@ class main:
         accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Account Info Menu <--- ##
+        ### --> Account Menu <--- ##
         accountInfoMenu = pygame_menu.Menu('Account', WIDTH, HEIGHT, theme = customMenu_theme)
         accountInfoMenu.add.button('Account Login', accountLoginMenu)
         accountInfoMenu.add.button('Create an Account', accountCreateMenu)
         accountInfoMenu.add.button('Account Statistics', accountStatsMenu)
         accountInfoMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> MAIN Menu <--- ##
+        ### --> Main Menu <--- ##
         main_menu.add.button('Game Selection', gameMenu)
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
