@@ -30,4 +30,4 @@ def UserDecoder(userDict):
     return namedtuple('Users', userDict.keys())(*userDict.values())
 
 currentLoggedInUser = UserAccount()
-tempLoggedInUser = UserAccount()
+tempUser = UserAccount()
