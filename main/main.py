@@ -211,10 +211,19 @@ class main:
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Stats Buttons <--- ##
-        accountStatsMenu.add.label('Memory Game High Schore: ' + str(currentLoggedInUser.memHighScore))
-        accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
-        accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
-        accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
+
+        def refresh_stats():
+            memLabel.set_title('Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
+            triLabel.set_title('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+            mathLabel.set_title('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
+            sliLabel.set_title('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
+            accountStatsMenu.render()
+
+        memLabel = accountStatsMenu.add.label('Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
+        triLabel = accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+        mathLabel = accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
+        sliLabel = accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
+        accountStatsMenu.add.button('Refresh Info', refresh_stats)
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Menu Buttons <--- ##
@@ -247,18 +256,6 @@ class main:
                 if event.type == pygame.QUIT:
                     exit(0)
             current_menu.update(events)
-
-            # Enable current menu
-            if current_menu != gameMenu:
-                gameMenu.disable()
-            if current_menu != accountLoginMenu:
-                accountLoginMenu.disable()
-            if current_menu != accountCreateMenu:
-                accountCreateMenu.disable()
-            if current_menu != accountStatsMenu:
-                accountStatsMenu.disable()
-            if current_menu != accountInfoMenu:
-                accountInfoMenu.disable()
                 
             # If NOT enabled, enable it
             # If enabled, draw to SCREEN
