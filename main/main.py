@@ -9,7 +9,13 @@ from databaseConnection import *
 from user import *
 import constants
 from tkinter import *
-from tkinter import ttk
+
+#-----------------------------
+# FOR TESTING ACCOUNT STUFF USE:
+# username: Jay
+# password: pass
+# memHighScore should be = 100
+#-----------------------------
 
 # GLOBAL VARIABLES
 WIDTH = constants.WIDTH
