@@ -125,6 +125,7 @@ class main:
                 currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
                 currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
                 main_menu.set_title('Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
+                accountStatsMenu.set_title(currentLoggedInUser.username + "'s" + 'Account')
                 print("Memory High Score: " + str(currentLoggedInUser.memHighScore))
                 main.good_login_popup()
                 return currentLoggedInUser
