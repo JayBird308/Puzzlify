@@ -73,7 +73,7 @@ class main:
         window.title('Incorrect Username Warning')
         msg = Label(window, text="Incorrect Username", fg='red', font=("Helvetica", 16))
         msg.place(x=60, y=50)
-        window.geometry("300x200+10+10")
+        window.geometry("300x200+700+400")
         window.mainloop()
         pass
 
@@ -82,7 +82,7 @@ class main:
         window.title('Incorrect Password Warning')
         msg = Label(window, text="Incorrect Password", fg='red', font=("Helvetica", 16))
         msg.place(x=60, y=50)
-        window.geometry("300x200+10+10")
+        window.geometry("300x200+700+400")
         window.mainloop()
         pass
 
@@ -91,7 +91,7 @@ class main:
         window.title('Log In Success')
         msg = Label(window, text="Successful Log In!", fg='green', font=("Helvetica", 16))
         msg.place(x=60, y=50)
-        window.geometry("300x200+500+700")
+        window.geometry("300x200+700+400")
         window.mainloop()
         pass
 
