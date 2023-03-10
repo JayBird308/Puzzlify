@@ -20,59 +20,65 @@ clock = constants.clock
 main_menu = constants.main_menu
 customMenu_theme = ct.customMenu_theme
 
+# ---------------------------------
+# Create menus: Main
+# ---------------------------------
+main_menu = pygame_menu.Menu(
+    'Welcome to Puzzlify!',
+    WIDTH, HEIGHT,
+    theme = customMenu_theme
+    )
+
 # main class
 class main:
     
     def setUserName(username):
-        UserAccount.username = username
-        return UserAccount.username
+        currentLoggedInUser.username = username
+        return currentLoggedInUser.username
 
     def setUserPass(userpassword):
-        UserAccount.password = userpassword
-        return UserAccount.password
-    
-    def setUserStats(user: UserAccount):
-        pass
+        currentLoggedInUser.password = userpassword
+        return currentLoggedInUser.password
 
     # login button action for account database
     def login():
-        updatedUsersRefString = refString + "/" + UserAccount.username
+        updatedUsersRefString = refString + "/" + currentLoggedInUser.username
         userRef = db.reference(updatedUsersRefString)
         userData = userRef.get()
         userKeys = list(userData.keys())
         json_key = userData[userKeys[0]]
         user_data_dict = json.loads(json_key)
-        UserAccount.username = user_data_dict['username']
-        UserAccount.password = user_data_dict['password']
-        UserAccount.key = userKeys[0]
-        UserAccount.memGamesPlayed = user_data_dict['memGamesPlayed']
-        UserAccount.memHighScore = user_data_dict['memHighScore']
-        UserAccount.trizGamesPlayed = user_data_dict['trizGamesPlayed']
-        UserAccount.trizHighScore = user_data_dict['trizHighScore']
-        UserAccount.mqGamesPlayed = user_data_dict['mqGamesPlayed']
-        UserAccount.mqHighScore = user_data_dict['mqHighScore']
-        UserAccount.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
-        UserAccount.slidingHighScore = user_data_dict['slidingHighScore']
-        print(UserAccount.username)
-        print(UserAccount.password)
-        print(UserAccount.key)
-        return UserAccount
+        currentLoggedInUser.username = user_data_dict['username']
+        currentLoggedInUser.password = user_data_dict['password']
+        currentLoggedInUser.key = userKeys[0]
+        currentLoggedInUser.memGamesPlayed = user_data_dict['memGamesPlayed']
+        currentLoggedInUser.memHighScore = user_data_dict['memHighScore']
+        currentLoggedInUser.trizGamesPlayed = user_data_dict['trizGamesPlayed']
+        currentLoggedInUser.trizHighScore = user_data_dict['trizHighScore']
+        currentLoggedInUser.mqGamesPlayed = user_data_dict['mqGamesPlayed']
+        currentLoggedInUser.mqHighScore = user_data_dict['mqHighScore']
+        currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
+        currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
+        
+        main_menu.set_title('Welcome to Puzzlify' + currentLoggedInUser.username + "!")
+        print(currentLoggedInUser.username)
+        print(currentLoggedInUser.password)
+        print(currentLoggedInUser.key)
+        pass
 
     # sign up button action for account database
     def signup():
-        UserAccount.key = ""
-        UserAccount.memGamesPlayed = 0
-        UserAccount.memHighScore = 0
-        UserAccount.trizGamesPlayed = 0
-        UserAccount.trizHighScore = 0
-        UserAccount.mqGamesPlayed = 0
-        UserAccount.mqHighScore = 0
-        UserAccount.slidingGamesPlayed = 0
-        UserAccount.slidingHighScore = 0
-
-        userdata = UserAccount(UserAccount.username, UserAccount.password, UserAccount.key, UserAccount.memGamesPlayed, UserAccount.memHighScore, UserAccount.trizGamesPlayed, UserAccount.trizHighScore, UserAccount.mqGamesPlayed, UserAccount.mqHighScore, UserAccount.slidingGamesPlayed, UserAccount.slidingHighScore)
-        userJson = json.dumps(userdata, indent=4, cls=UserEncoder)
-        users_ref = ref.child(UserAccount.username)
+        currentLoggedInUser.key = ""
+        currentLoggedInUser.memGamesPlayed = 0
+        currentLoggedInUser.memHighScore = 0
+        currentLoggedInUser.trizGamesPlayed = 0
+        currentLoggedInUser.trizHighScore = 0
+        currentLoggedInUser.mqGamesPlayed = 0
+        currentLoggedInUser.mqHighScore = 0
+        currentLoggedInUser.slidingGamesPlayed = 0
+        currentLoggedInUser.slidingHighScore = 0
+        userJson = json.dumps(currentLoggedInUser, indent=4, cls=UserEncoder)
+        users_ref = ref.child(currentLoggedInUser.username)
         users_ref.push(userJson)
         pass
 
@@ -88,18 +94,7 @@ class main:
             main.set_difficulty_type(previous_value)
 
     def main(test: bool = False) -> None:
-        UserAccount.username = ""
-        UserAccount.password = ""
-        UserAccount.key = ""
-        UserAccount.memGamesPlayed = 0
-        UserAccount.memHighScore = 0
-        UserAccount.trizGamesPlayed = 0
-        UserAccount.trizHighScore = 0
-        UserAccount.mqGamesPlayed = 0
-        UserAccount.mqHighScore = 0
-        UserAccount.slidingGamesPlayed = 0
-        UserAccount.slidingHighScore = 0
-
+        
         global main_menu, clock
         global previous_value
 
@@ -148,10 +143,10 @@ class main:
 
         ### --> Account Stats Menu <--- ##
         accountStatsMenu = pygame_menu.Menu('Account Statistics', WIDTH, HEIGHT, theme = customMenu_theme)
-        accountStatsMenu.add.label('Memory Game High Schore: ' + str(UserAccount.memHighScore))
-        accountStatsMenu.add.label('Trizzle High Score: ' + str(UserAccount.trizHighScore))
-        accountStatsMenu.add.label('Math Quiz High Score: ' + str(UserAccount.mqHighScore))
-        accountStatsMenu.add.label('Sliding Game High Score: ' + str(UserAccount.slidingHighScore))
+        accountStatsMenu.add.label('Memory Game High Schore: ' + str(currentLoggedInUser.memHighScore))
+        accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+        accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
+        accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Info Menu <--- ##
@@ -161,15 +156,7 @@ class main:
         accountInfoMenu.add.button('Account Statistics', accountStatsMenu)
         accountInfoMenu.add.button('Back', pygame_menu.events.BACK)
 
-        # ---------------------------------
-        # Create menus: Main
-        # ---------------------------------
-        main_menu = pygame_menu.Menu(
-            'Welcome to Puzzlify' + UserAccount.username + "!", 
-            WIDTH, HEIGHT, 
-            theme = customMenu_theme
-        )
-
+        ### --> MAIN Menu <--- ##
         main_menu.add.button('Game Selection', gameMenu)
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
@@ -195,7 +182,6 @@ class main:
             current_menu.update(events)
 
             # Enable current menu
-            current_menu.enable()
             if current_menu != gameMenu:
                 gameMenu.disable()
             if current_menu != accountLoginMenu:
@@ -206,7 +192,7 @@ class main:
                 accountStatsMenu.disable()
             if current_menu != accountInfoMenu:
                 accountInfoMenu.disable()
-
+                
             # If NOT enabled, enable it
             # If enabled, draw to SCREEN
             if current_menu.is_enabled() == False:

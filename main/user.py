@@ -1,8 +1,6 @@
 from __future__ import print_function
-import json
 from collections import namedtuple
 from json import JSONEncoder
-import requests
 from databaseConnection import *
 
 try:
@@ -11,18 +9,18 @@ except ImportError:
     from argparse import Namespace
 
 class UserAccount:
-    def __init__(self, username, password, key, memGamesPlayed, memHighScore, trizGamesPlayed, trizHighScore, mqGamesPlayed, mqHighScore, slidingGamesPlayed, slidingHighScore):
-        self.username = username
-        self.password = password
-        self.key = key
-        self.memGamesPlayed = memGamesPlayed
-        self.memHighScore = memHighScore
-        self.trizGamesPlayed = trizGamesPlayed
-        self.trizHighScore = trizHighScore
-        self.mqGamesPlayed = mqGamesPlayed
-        self.mqHighScore = mqHighScore
-        self.slidingGamesPlayed = slidingGamesPlayed
-        self.slidingHighScore = slidingHighScore
+    def __init__(self):
+        self.username = ""
+        self.password = ""
+        self.key = ""
+        self.memGamesPlayed = 0
+        self.memHighScore = 0
+        self.trizGamesPlayed = 0
+        self.trizHighScore = 0
+        self.mqGamesPlayed = 0
+        self.mqHighScore = 0
+        self.slidingGamesPlayed = 0
+        self.slidingHighScore = 0
 
 class UserEncoder(JSONEncoder):
     def default(self, o):
@@ -30,3 +28,5 @@ class UserEncoder(JSONEncoder):
     
 def UserDecoder(userDict):
     return namedtuple('Users', userDict.keys())(*userDict.values())
+
+currentLoggedInUser = UserAccount()
