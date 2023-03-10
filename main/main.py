@@ -166,7 +166,7 @@ class main:
 
     def main(test: bool = False) -> None:
         
-        global main_menu, clock
+        global main_menu, accountStatsMenu, clock
         global previous_value
 
         # initialize

@@ -21,3 +21,7 @@ main_menu = pygame_menu.Menu(
     WIDTH, HEIGHT, 
     theme = customMenu_theme.customMenu_theme
 )
+accountStatsMenu = pygame_menu.Menu(
+    'Account Statistics', 
+    WIDTH, HEIGHT, 
+    theme = customMenu_theme.customMenu_theme)
