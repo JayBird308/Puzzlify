@@ -8,6 +8,8 @@ import Sliding_Puzzle as sliGame
 from databaseConnection import *
 from user import *
 import constants
+from tkinter import *
+from tkinter import ttk
 
 # GLOBAL VARIABLES
 WIDTH = constants.WIDTH
@@ -31,7 +33,33 @@ main_menu = pygame_menu.Menu(
 
 # main class
 class main:
-    
+    def bad_user_popup():
+        window = Tk()
+        window.title('Incorrect Username Warning')
+        msg = Label(window, text="Incorrect Username", fg='red', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+10+10")
+        window.mainloop()
+        pass
+
+    def bad_pass_popup():
+        window = Tk()
+        window.title('Incorrect Password Warning')
+        msg = Label(window, text="Incorrect Password", fg='red', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+10+10")
+        window.mainloop()
+        pass
+
+    def good_login_popup():
+        window = Tk()
+        window.title('Log In Success')
+        msg = Label(window, text="Successful Log In!", fg='green', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+500+700")
+        window.mainloop()
+        pass
+
     def setUserName(username):
         tempLoggedInUser.username = username
         return tempLoggedInUser.username
@@ -43,28 +71,34 @@ class main:
     # login button action for account database
     def login():
         updatedUsersRefString = refString + "/" + tempLoggedInUser.username
-        userRef = db.reference(updatedUsersRefString)
-        userData = userRef.get()
-        userKeys = list(userData.keys())
-        json_key = userData[userKeys[0]]
-        user_data_dict = json.loads(json_key)
-        currentLoggedInUser.username = user_data_dict['username']
-        currentLoggedInUser.password = user_data_dict['password']
-        if currentLoggedInUser.username == tempLoggedInUser.username and currentLoggedInUser.password == tempLoggedInUser.password:
-            currentLoggedInUser.key = userKeys[0]
-            currentLoggedInUser.memGamesPlayed = user_data_dict['memGamesPlayed']
-            currentLoggedInUser.memHighScore = user_data_dict['memHighScore']
-            currentLoggedInUser.trizGamesPlayed = user_data_dict['trizGamesPlayed']
-            currentLoggedInUser.trizHighScore = user_data_dict['trizHighScore']
-            currentLoggedInUser.mqGamesPlayed = user_data_dict['mqGamesPlayed']
-            currentLoggedInUser.mqHighScore = user_data_dict['mqHighScore']
-            currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
-            currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
-            main_menu.set_title('Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
-            print("Account Credentials Correct. Welcome, " + currentLoggedInUser.username)
-        else:
-            print("Account Credentials Incorrect.")
-        pass
+        try:
+            userRef = db.reference(updatedUsersRefString)
+            userData = userRef.get()
+            userKeys = list(userData.keys())
+            json_key = userData[userKeys[0]]
+            user_data_dict = json.loads(json_key)
+            currentLoggedInUser.username = user_data_dict['username']
+            currentLoggedInUser.password = user_data_dict['password']
+            if currentLoggedInUser.username == tempLoggedInUser.username and currentLoggedInUser.password == tempLoggedInUser.password:
+                currentLoggedInUser.key = userKeys[0]
+                currentLoggedInUser.memGamesPlayed = user_data_dict['memGamesPlayed']
+                currentLoggedInUser.memHighScore = user_data_dict['memHighScore']
+                currentLoggedInUser.trizGamesPlayed = user_data_dict['trizGamesPlayed']
+                currentLoggedInUser.trizHighScore = user_data_dict['trizHighScore']
+                currentLoggedInUser.mqGamesPlayed = user_data_dict['mqGamesPlayed']
+                currentLoggedInUser.mqHighScore = user_data_dict['mqHighScore']
+                currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
+                currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
+                main_menu.set_title('Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
+                print("Account Credentials Correct. Welcome, " + currentLoggedInUser.username)
+                main.good_login_popup()
+            else:
+                main.bad_pass_popup()
+                print("Incorrect Password")
+            pass
+        except:
+            main.bad_user_popup()
+            print("Incorrect Username")
 
     # sign up button action for account database
     def signup():
