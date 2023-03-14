@@ -223,7 +223,7 @@ class main:
         triLabel = accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
         mathLabel = accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
         sliLabel = accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
-        accountStatsMenu.add.button('Refresh Info', refresh_stats)
+        # accountStatsMenu.add.button('Refresh Info', refresh_stats)
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Menu Buttons <--- ##
@@ -263,6 +263,9 @@ class main:
                 current_menu.enable()
             if current_menu.is_enabled() == True:
                 current_menu.draw(SCREEN)
+
+            if accountStatsMenu.is_enabled() == True:
+                refresh_stats()
 
             pygame.display.update()
 
