@@ -1,35 +1,163 @@
-import pygame
-import pygame_menu
+
+# Author: Chris Aromando - s1171536
+
+import pygame, pygame.locals
+import pygame_menu, pygame_menu.font, pygame_menu.themes, pygame_menu.widgets, pygame_menu.locals
+import random
 
 # Define constants
-SCREEN_WIDTH = 640
-SCREEN_HEIGHT = 480
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 900
+POINTS = 0
 
-# Initialize Pygame
-pygame.init()
-surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Simple Word Unscramble Test")
+# Main play method to drive the program
+def play():
+    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS
 
-# Create a menu
-menu = pygame_menu.Menu('Word Unscramble', SCREEN_WIDTH, SCREEN_HEIGHT, theme=pygame_menu.themes.THEME_DEFAULT)
+    # Initialize Pygame
+    pygame.init()
+    surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Simple Word Unscramble Test")
+    FPSCLOCK = pygame.time.Clock()
 
-# Create a list of words according to letters for the user to guess
+    # Create a menu
+    menu = pygame_menu.Menu('Word Unscramble', SCREEN_WIDTH, SCREEN_HEIGHT, theme=pygame_menu.themes.THEME_SOLARIZED)
 
-# add the 5 hidden words to the screen
+    # ensure menu is reset and clear
+    menu.clear()
 
-# add the letters at the bottom
+    # Lists and Dictionary
+    words = ["orange", "apple", "banana", "peach", "grape"]
+    words_dict = {}
+    scrambled_words_widgets = [0,1,2,3,4]
 
-# add the input box + guess button
+    for word in words:
+        # Shuffle the letters of the fruit name
+        shuffled = list(word)
+        random.shuffle(shuffled)
+        # Join the shuffled letters into a string
+        scrambled = "".join(shuffled)
+        # Add the fruit name and the scrambled name as a key value pair to the dictionary
+        words_dict[word] = scrambled
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
+    # Points Label
+    points = menu.add.label('Points:' + str(POINTS))
 
-    # Draw the menu on the surface
-    menu.draw(surface)
-    menu.update(pygame.event.get())
+    # add the 5 hidden words to the screen
+    instructions = menu.add.label('Unscramble these words (Fruits): ')
+    num = 0
+    for scrambled in words_dict:
+        # add scrambled word values
+        widget = menu.add.label(words_dict[scrambled])
+        # add the widgets to a scrambled_words_widgets list
+        scrambled_words_widgets[num] = widget
+        num = num + 1
 
-    # Update the display
-    pygame.display.update()
+    # functions to check guess
+    def check_guess(value):
+        global POINTS
+
+        widgets = menu.get_widgets()
+        answer = False
+        for name, scrambled in words_dict.items():
+            if name == value:
+                
+                # Used for debug
+                print(f"Correct! {value} matches with {name}")
+
+                # If the guessed word was correct,
+                # Change to correct spelling & GREEN
+                for widget in widgets:
+                    # Check if guessed already for loopholes
+                    if widget.get_font_color_status(check_selection=True) == (0, 120, 30, 255) and widget.get_title() == name:
+                        print("BREAKING OUT! ALREADY GUESSED")
+                        break
+                    elif isinstance(widget, pygame_menu.widgets.Label) and scrambled == widget.get_title():
+                        widget.set_title(name)
+                        widget.update_font({'color': (0, 120, 30)})
+                
+                        # Add the points and update the Points label
+                        POINTS = POINTS + 100
+                        print(f"Points: {POINTS}")
+                        points.set_title('Points:' + str(POINTS))
+                    input.set_value('')
+                    menu.select_widget(input)
+                    menu.render()
+                    answer = True
+                break
+
+        for name, scrambled in words_dict.items():
+            if name != value and answer != True:
+                # Used for debug
+                # print(f"Wrong! {value} + Should be {name}")
+                POINTS = POINTS - 10
+                print(f"Points: {POINTS}")
+                points.set_title('Points:' + str(POINTS))
+                input.set_value('')
+                menu.select_widget(input)
+                menu.render()
+                break
+        check_end_game()
+
+    # --- ADD INPUT BOX AND BUTTONS ---
+    input = menu.add.text_input(
+        'Enter your guess: ', 
+        default='',
+        input_type=pygame_menu.locals.INPUT_TEXT,
+        maxchar=6
+    )
+    input.set_onreturn(lambda value='': check_guess(value))
+    # Add a Back button
+    menu.add.button('Back', pygame_menu.events.BACK)
+
+    # Add a Quit button
+    menu.add.button('Quit', pygame_menu.events.EXIT)  
+
+    def check_end_game():
+        guessed_correct = 0
+        widgets = menu.get_widgets()
+        for widget in widgets:
+            if isinstance(widget, pygame_menu.widgets.Label) and widget.get_font_color_status(check_selection=True) == (0, 120, 30, 255):
+                guessed_correct += 1
+        # print("Guessed Correct:" + str(guessed_correct))
+
+        if guessed_correct == 5:
+            # If all words are used up, then remove them...
+            for name, scrambled in words_dict.items():
+                for widget in scrambled_words_widgets:
+                    if name == widget.get_title():
+                        menu.remove_widget(widget)
+            menu.remove_widget(instructions)
+            menu.remove_widget(input)
+            menu.render()
+                                
+            # Show a statistics page...
+            ## COMING SOON... Maybe ##
+            
+            # Show Congratulations for Completion
+            menu.add.label('Congratulation! You\'ve completed the game!', 'congrats_id')
+            widget = menu.get_widget('congrats_id')
+            widget.update_font({'color': (0, 120, 30), 'size': 32})
+
+            # Add a Replay button & Focus
+            play_again = menu.add.button('Play Again', play)
+            menu.select_widget(play_again)
+            menu.render()
+
+    while True:
+        FPSCLOCK.tick(15)
+
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        menu.update(events)
+
+        # Draw the menu on the surface
+        menu.draw(surface)
+
+        # Update the display
+        pygame.display.flip()
+
+play()
