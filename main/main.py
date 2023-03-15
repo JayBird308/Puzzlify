@@ -264,6 +264,8 @@ class main:
             if current_menu.is_enabled() == True:
                 current_menu.draw(SCREEN)
 
+            # If accountStatsMenu is called,
+            # Refresh the stats for the user that logged in
             if accountStatsMenu.is_enabled() == True:
                 refresh_stats()
 
