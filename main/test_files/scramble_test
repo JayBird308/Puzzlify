@@ -9,10 +9,88 @@ import random
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 900
 POINTS = 0
+LIST_TITLE = ''
+LIST_SELECTED = []
+LAST_LIST = []
+FIRST_RUN = 0
+
+def random_small_list():
+    global LIST_SELECTED, LIST_TITLE, LAST_LIST, FIRST_RUN
+
+    list_titles = ['animals', 'fruits', 'colors', 'countries', 'drinks', 'planets', 'sports', 'vehicles', 'flowers', 'jobs']
+
+    animals = ['lion', 'tiger', 'leopard', 'gazelle', 'monkey']
+    fruits = ['apple', 'pear', 'peach', 'kiwi', 'mango']
+    colors = ['red', 'blue', 'green', 'yellow', 'pink']
+    countries = ['italy', 'japan', 'brazil', 'india', 'china']
+    drinks = ['coffee', 'tea', 'juice', 'soda', 'water']
+    planets = ['venus', 'mars', 'jupiter', 'neptune', 'saturn']
+    sports = ['soccer', 'tennis', 'boxing', 'golf', 'hockey']
+    vehicles = ['car', 'truck', 'bus', 'bike', 'boat']
+    flowers = ['tulip', 'rose', 'daisy', 'lily', 'lotus']
+    jobs = ['doctor', 'teacher', 'engineer', 'chef', 'writer']
+
+    while LAST_LIST == LIST_SELECTED or FIRST_RUN == 0:
+        if FIRST_RUN == 0:
+            LIST_TITLE = random.choice(list_titles)
+            if LIST_TITLE == 'animals':
+                LIST_SELECTED = animals
+            elif LIST_TITLE == 'fruits':
+                LIST_SELECTED = fruits
+            elif LIST_TITLE == 'colors':
+                LIST_SELECTED = colors
+            elif LIST_TITLE == 'countries':
+                LIST_SELECTED = countries
+            elif LIST_TITLE == 'drinks':
+                LIST_SELECTED = drinks
+            elif LIST_TITLE == 'planets':
+                LIST_SELECTED = planets
+            elif LIST_TITLE == 'sports':
+                LIST_SELECTED = sports
+            elif LIST_TITLE == 'vehicles':
+                LIST_SELECTED = vehicles
+            elif LIST_TITLE == 'flowers':
+                LIST_SELECTED = flowers
+            elif LIST_TITLE == 'jobs':
+                LIST_SELECTED = jobs
+            else:
+                print ('Error: list_titles is not defined')
+            break
+
+        LIST_TITLE = random.choice(list_titles)
+
+        if LIST_TITLE == 'animals':
+            LIST_SELECTED = animals
+        elif LIST_TITLE == 'fruits':
+            LIST_SELECTED = fruits
+        elif LIST_TITLE == 'colors':
+            LIST_SELECTED = colors
+        elif LIST_TITLE == 'countries':
+            LIST_SELECTED = countries
+        elif LIST_TITLE == 'drinks':
+            LIST_SELECTED = drinks
+        elif LIST_TITLE == 'planets':
+            LIST_SELECTED = planets
+        elif LIST_TITLE == 'sports':
+            LIST_SELECTED = sports
+        elif LIST_TITLE == 'vehicles':
+            LIST_SELECTED = vehicles
+        elif LIST_TITLE == 'flowers':
+            LIST_SELECTED = flowers
+        elif LIST_TITLE == 'jobs':
+            LIST_SELECTED = jobs
+        else:
+            print ('Error: list_titles is not defined')
+
+    print(LAST_LIST)
+    LAST_LIST = LIST_SELECTED
+    print(LIST_SELECTED)
+
 
 # Main play method to drive the program
 def play():
-    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS
+    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS, LIST_TITLE, LIST_SELECTED
+    POINTS = 0
 
     # Initialize Pygame
     pygame.init()
@@ -26,25 +104,38 @@ def play():
     # ensure menu is reset and clear
     menu.clear()
 
+    # Generate and set the list
+    random_small_list()
+
     # Lists and Dictionary
-    words = ["orange", "apple", "banana", "peach", "grape"]
+    words = LIST_SELECTED
     words_dict = {}
     scrambled_words_widgets = [0,1,2,3,4]
 
     for word in words:
-        # Shuffle the letters of the fruit name
-        shuffled = list(word)
-        random.shuffle(shuffled)
-        # Join the shuffled letters into a string
-        scrambled = "".join(shuffled)
-        # Add the fruit name and the scrambled name as a key value pair to the dictionary
-        words_dict[word] = scrambled
+        retrieved_word = list(word)                 # Retrieves each word by its letters as a list ['c', 'a', 'r']
+        regular_spelling = "".join(retrieved_word)
+
+        random.shuffle(retrieved_word)      # Shuffles the list of letters of the word
+        scrambled = "".join(retrieved_word) # Join the shuffled letters into a string
+
+        print(regular_spelling)
+        print(scrambled)
+
+        # If the scrambled word was the same as it was,
+        # Attempt to shuffle the letters again
+        if scrambled == regular_spelling:
+            
+            random.shuffle(retrieved_word)
+            scrambled = "".join(retrieved_word)
+            
+        words_dict[word] = scrambled    # Add the scrambled word as a key value pair to a dictionary
 
     # Points Label
     points = menu.add.label('Points:' + str(POINTS))
 
     # add the 5 hidden words to the screen
-    instructions = menu.add.label('Unscramble these words (Fruits): ')
+    instructions = menu.add.label(f'Unscramble these words ({LIST_TITLE}): ')
     num = 0
     for scrambled in words_dict:
         # add scrambled word values
@@ -75,7 +166,7 @@ def play():
                     elif isinstance(widget, pygame_menu.widgets.Label) and scrambled == widget.get_title():
                         widget.set_title(name)
                         widget.update_font({'color': (0, 120, 30)})
-                
+
                         # Add the points and update the Points label
                         POINTS = POINTS + 100
                         print(f"Points: {POINTS}")
@@ -90,7 +181,7 @@ def play():
             if name != value and answer != True:
                 # Used for debug
                 # print(f"Wrong! {value} + Should be {name}")
-                POINTS = POINTS - 10
+                POINTS = POINTS - 25
                 print(f"Points: {POINTS}")
                 points.set_title('Points:' + str(POINTS))
                 input.set_value('')
@@ -104,7 +195,7 @@ def play():
         'Enter your guess: ', 
         default='',
         input_type=pygame_menu.locals.INPUT_TEXT,
-        maxchar=6
+        maxchar=8
     )
     input.set_onreturn(lambda value='': check_guess(value))
     # Add a Back button
@@ -114,6 +205,9 @@ def play():
     menu.add.button('Quit', pygame_menu.events.EXIT)  
 
     def check_end_game():
+        global FIRST_RUN
+        FIRST_RUN += 1
+
         guessed_correct = 0
         widgets = menu.get_widgets()
         for widget in widgets:

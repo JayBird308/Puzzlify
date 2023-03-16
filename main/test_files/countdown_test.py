@@ -1,46 +1,65 @@
 import pygame
+import pygame_menu
+import pygame_menu._widgetmanager
+import pygame_menu.themes
+import pygame_menu.events
 
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+# Initialize Pygame
 pygame.init()
+surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+FPSCLOCK = pygame.time.Clock()
+TIMEOUT = True
 
-# Set up the window
-WINDOW_SIZE = (400, 300)
-screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("Countdown Timer")
+# Define the function to be called on timeout
+def on_timeout():
+    global TIMEOUT
+    if TIMEOUT == True:
+        print('Countdown timer has finished!')
+        TIMEOUT = False
 
-# Set up the font
-font = pygame.font.Font(None, 36)
 
-# Set up the timer
-duration = 60000  # 1 minute in milliseconds
-start_time = pygame.time.get_ticks()
+# Create the menu
+menu = pygame_menu.Menu('Countdown Clock Example', SCREEN_WIDTH, SCREEN_HEIGHT, theme=pygame_menu.themes.THEME_BLUE)
+WidgetManager = pygame_menu._widgetmanager.WidgetManager(menu)
 
-# Set up the clock
-clock = pygame.time.Clock()
+# Define the countdown timer update function
+def update_countdown_timer():
+    # Calculate the time remaining
+    remaining_time = max(0, countdown_end_time - pygame.time.get_ticks())
+    minutes = remaining_time // 60000
+    seconds = (remaining_time // 1000) % 60
 
-def wait():
-    # Wait for approximately 2000 ticks
-    ticks_to_wait = 2000
-    while pygame.time.get_ticks() - start_time < ticks_to_wait:
-        clock.tick(60)  # Limit the frame rate to 60 FPS
-        print(". . .")
+    # Update the countdown timer label
+    countdown_timer.set_title('{:01d}:{:02d}'.format(minutes, seconds))
 
-wait_num = 0
+    # If the time has run out, call the on_timeout function
+    if remaining_time == 0:
+        on_timeout()
 
-# Main loop
+# Create the countdown timer label and add it to the menu
+countdown_timer = WidgetManager.label('00:00', font_size=50, font_color=(0,0,0))
+
+# Set the end time for the countdown timer
+countdown_end_time = pygame.time.get_ticks() + 91000 # 1 second = 1000 ticks
+
 while True:
+    FPSCLOCK.tick(60)
+    update_countdown_timer()
+
     # Handle events
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            start_time = pygame.time.get_ticks()
+    menu.update(events)
 
-    if wait_num == 0:
-        wait()
-        wait_num = 1
-        print("Waiting over.")
+    # Draw the menu on the surface
+    menu.draw(surface)
 
-    # Calculate the time remaining
-    time_elapsed = pygame.time.get_ticks()
+    # Update the display
+    pygame.display.flip()
