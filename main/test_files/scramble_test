@@ -2,7 +2,8 @@
 # Author: Chris Aromando - s1171536
 
 import pygame, pygame.locals
-import pygame_menu, pygame_menu.font, pygame_menu.themes, pygame_menu.widgets, pygame_menu.locals
+import pygame_menu, pygame_menu.font, pygame_menu.themes, pygame_menu.widgets
+import pygame_menu.locals, pygame_menu.widgets.core.selection, pygame_menu.baseimage
 import random
 
 # Define constants
@@ -13,6 +14,8 @@ LIST_TITLE = ''
 LIST_SELECTED = []
 LAST_LIST = []
 FIRST_RUN = 0
+HINT_VALUE = 0
+HINT_COUNTER = 5
 
 def random_small_list():
     global LIST_SELECTED, LIST_TITLE, LAST_LIST, FIRST_RUN
@@ -82,15 +85,17 @@ def random_small_list():
         else:
             print ('Error: list_titles is not defined')
 
-    print(LAST_LIST)
+    # print(LAST_LIST)
     LAST_LIST = LIST_SELECTED
-    print(LIST_SELECTED)
+    # print(LIST_SELECTED)
 
 
 # Main play method to drive the program
 def play():
-    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS, LIST_TITLE, LIST_SELECTED
+    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS, LIST_TITLE, LIST_SELECTED, HINT_VALUE, HINT_COUNTER
     POINTS = 0
+    HINT_VALUE = 0
+    HINT_COUNTER = 5
 
     # Initialize Pygame
     pygame.init()
@@ -100,6 +105,7 @@ def play():
 
     # Create a menu
     menu = pygame_menu.Menu('Word Unscramble', SCREEN_WIDTH, SCREEN_HEIGHT, theme=pygame_menu.themes.THEME_SOLARIZED)
+    menu.set_attribute('widget_selection_effect', pygame_menu.widgets.RightArrowSelection)
 
     # ensure menu is reset and clear
     menu.clear()
@@ -119,8 +125,8 @@ def play():
         random.shuffle(retrieved_word)      # Shuffles the list of letters of the word
         scrambled = "".join(retrieved_word) # Join the shuffled letters into a string
 
-        print(regular_spelling)
-        print(scrambled)
+        # print(regular_spelling)
+        # print(scrambled)
 
         # If the scrambled word was the same as it was,
         # Attempt to shuffle the letters again
@@ -134,8 +140,49 @@ def play():
     # Points Label
     points = menu.add.label('Points:' + str(POINTS))
 
+    def hint_button_action():
+        global HINT_VALUE, HINT_COUNTER, POINTS
+
+        name_list = list(words_dict.keys())
+        scrambled_list = list(words_dict.values())
+
+        choice = random.choice(scrambled_list)
+
+        loop = True
+        while loop:
+            for widget in menu.get_widgets():
+                print(f'Checking for {choice}')
+                index = scrambled_list.index(choice)
+                name = name_list[index]
+
+                if name == widget.get_title() and widget.get_font_color_status(check_selection=True) == (220, 30, 30, 255):
+                    print('PREVIOUSLY: ', name, ', ', choice)
+                    choice = random.choice(scrambled_list)
+                    print('Reshuffled to: ', name, ', ', choice)
+
+                elif choice == widget.get_title() and widget.get_font_color_status(check_selection=True) != (220, 30, 30, 255):
+                    widget.set_title(name)
+                    widget.update_font({'color': (220, 30, 30)})
+                    POINTS = POINTS - 50
+                    points.set_title('Points:' + str(POINTS))
+                    menu.render()
+                    HINT_COUNTER = HINT_COUNTER - 1
+                    HINT_VALUE = 0
+                    use_hint.set_title(f'Reveal a Word (-50 pts) {HINT_COUNTER}')
+                    loop = False
+                    break
+                else:
+                    print(f'Skipping this widget: {widget.get_title()}')
+
+    use_hint = menu.add.button(title=f'Reveal a Word (-50 pts) {HINT_COUNTER}', action=hint_button_action, button_id='hint_id')
+    use_hint.set_border(2, (25, 25, 25), position=(pygame_menu.locals.POSITION_NORTH, pygame_menu.locals.POSITION_SOUTH,
+                                                    pygame_menu.locals.POSITION_EAST, pygame_menu.locals.POSITION_WEST))
+
     # add the 5 hidden words to the screen
-    instructions = menu.add.label(f'Unscramble these words ({LIST_TITLE}): ')
+    instructions = menu.add.label('Correct -> +100 pts! Wrong -> -20 pts!')
+    instructions1 = menu.add.label(f'Unscramble these words ({LIST_TITLE}): ')
+    instructions1.set_border(2, (25, 25, 25), position=pygame_menu.locals.POSITION_SOUTH)
+
     num = 0
     for scrambled in words_dict:
         # add scrambled word values
@@ -181,23 +228,25 @@ def play():
             if name != value and answer != True:
                 # Used for debug
                 # print(f"Wrong! {value} + Should be {name}")
-                POINTS = POINTS - 25
+                POINTS = POINTS - 20
                 print(f"Points: {POINTS}")
                 points.set_title('Points:' + str(POINTS))
                 input.set_value('')
                 menu.select_widget(input)
                 menu.render()
                 break
-        check_end_game()
 
     # --- ADD INPUT BOX AND BUTTONS ---
     input = menu.add.text_input(
         'Enter your guess: ', 
         default='',
         input_type=pygame_menu.locals.INPUT_TEXT,
-        maxchar=8
+        maxchar=8,
+        textinput_id='input_id'
     )
     input.set_onreturn(lambda value='': check_guess(value))
+    input.set_border(4, (50, 50, 50), position=(pygame_menu.locals.POSITION_NORTH, pygame_menu.locals.POSITION_SOUTH))
+
     # Add a Back button
     menu.add.button('Back', pygame_menu.events.BACK)
 
@@ -209,19 +258,21 @@ def play():
         FIRST_RUN += 1
 
         guessed_correct = 0
-        widgets = menu.get_widgets()
-        for widget in widgets:
-            if isinstance(widget, pygame_menu.widgets.Label) and widget.get_font_color_status(check_selection=True) == (0, 120, 30, 255):
-                guessed_correct += 1
+        for name, scrambled in words_dict.items():
+            for widget in menu.get_widgets():
+                if widget.get_title() == name:
+                    guessed_correct += 1
         # print("Guessed Correct:" + str(guessed_correct))
 
         if guessed_correct == 5:
+            pygame.time.delay(3000)
             # If all words are used up, then remove them...
             for name, scrambled in words_dict.items():
                 for widget in scrambled_words_widgets:
                     if name == widget.get_title():
                         menu.remove_widget(widget)
             menu.remove_widget(instructions)
+            menu.remove_widget(instructions1)
             menu.remove_widget(input)
             menu.render()
                                 
@@ -238,8 +289,13 @@ def play():
             menu.select_widget(play_again)
             menu.render()
 
+
+    menu.select_widget('input_id')
+
     while True:
         FPSCLOCK.tick(15)
+
+        check_end_game()
 
         events = pygame.event.get()
         for event in events:
