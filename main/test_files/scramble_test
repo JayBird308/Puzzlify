@@ -155,10 +155,12 @@ def play():
                 index = scrambled_list.index(choice)
                 name = name_list[index]
 
-                if name == widget.get_title() and widget.get_font_color_status(check_selection=True) == (220, 30, 30, 255):
-                    print('PREVIOUSLY: ', name, ', ', choice)
+                if widget.get_title() == name and widget.get_font_color_status(check_selection=True) == (220, 30, 30, 255) or widget.get_font_color_status(check_selection=True) == (0, 120, 30, 255):
+                    # print('PREVIOUSLY: ', name, ', ', choice)
                     choice = random.choice(scrambled_list)
-                    print('Reshuffled to: ', name, ', ', choice)
+                    index = scrambled_list.index(choice)
+                    name = name_list[index]
+                    # print('Reshuffled to: ', name, ', ', choice)
 
                 elif choice == widget.get_title() and widget.get_font_color_status(check_selection=True) != (220, 30, 30, 255):
                     widget.set_title(name)
@@ -170,6 +172,7 @@ def play():
                     HINT_VALUE = 0
                     use_hint.set_title(f'Reveal a Word (-50 pts) {HINT_COUNTER}')
                     loop = False
+                    print('CHANGED LABEL ON THE MENU: ', choice)
                     break
                 else:
                     print(f'Skipping this widget: {widget.get_title()}')
