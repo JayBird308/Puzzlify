@@ -22,7 +22,7 @@ WIDTH = constants.WIDTH
 HEIGHT = constants.HEIGHT
 SCREEN = constants.SCREEN
 FPS = constants.FPS
-previous_value = 0
+diff_value = 0
 
 clock = constants.clock
 main_menu = constants.main_menu
@@ -168,16 +168,16 @@ class main:
         print('Difficulty set:', difficulty)
 
     def print_value(value):
-        global previous_value
-        if value != previous_value:
+        global diff_value
+        if value != diff_value:
             # print(f'Value changed to {value}.')
-            previous_value = value
-            main.set_difficulty_type(previous_value)
+            diff_value = value
+            main.set_difficulty_type(diff_value)
 
     def main(test: bool = False) -> None:
         
         global main_menu, clock
-        global previous_value
+        global diff_value
 
         # initialize
         pygame.init()
@@ -191,7 +191,7 @@ class main:
             default=0,
             onchange=lambda widget, value: main.print_value(value)
         )
-        previous_value = selector.get_value()
+        diff_value = selector.get_value()
         gameMenu.add.selector(selector._title, selector._items,
                                     onchange=selector._onchange,
                                     default=selector._default_value)
@@ -213,11 +213,20 @@ class main:
         accountCreateMenu.add.button('Submit Account', main.signup)
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Account Stats Buttons <-- ###
-        accountStatsMenu.add.label('Memory Game High Schore: ' + str(currentLoggedInUser.memHighScore), '1')
-        accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore), '2')
-        accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore), '3')
-        accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore), '4')
+        ### --> Account Stats Buttons <--- ##
+
+        def refresh_stats():
+            memLabel.set_title('Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
+            triLabel.set_title('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+            mathLabel.set_title('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
+            sliLabel.set_title('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
+            accountStatsMenu.render()
+
+        memLabel = accountStatsMenu.add.label('Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
+        triLabel = accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+        mathLabel = accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
+        sliLabel = accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
+        # accountStatsMenu.add.button('Refresh Info', refresh_stats)
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Menu Buttons <-- ###
@@ -250,18 +259,6 @@ class main:
                 if event.type == pygame.QUIT:
                     exit(0)
             current_menu.update(events)
-
-            # Enable current menu
-            if current_menu != gameMenu:
-                gameMenu.disable()
-            if current_menu != accountLoginMenu:
-                accountLoginMenu.disable()
-            if current_menu != accountCreateMenu:
-                accountCreateMenu.disable()
-            if current_menu != accountStatsMenu:
-                accountStatsMenu.disable()
-            if current_menu != accountInfoMenu:
-                accountInfoMenu.disable()
                 
             # If NOT enabled, enable it
             # If enabled, draw to SCREEN
@@ -269,6 +266,11 @@ class main:
                 current_menu.enable()
             if current_menu.is_enabled() == True:
                 current_menu.draw(SCREEN)
+
+            # If accountStatsMenu is called,
+            # Refresh the stats for the user that logged in
+            if accountStatsMenu.is_enabled() == True:
+                refresh_stats()
 
             pygame.display.update()
 
