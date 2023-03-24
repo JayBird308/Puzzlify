@@ -73,6 +73,10 @@ gameMenu = pygame_menu.Menu(
 
 # main class
 class main:
+
+    def close_window(root, event):
+        root.destroy()
+
     # pop up window for bad username
     def bad_user_popup():
         window = Tk()
@@ -80,6 +84,7 @@ class main:
         msg = Label(window, text="Incorrect Username", fg='red', font=("Helvetica", 16))
         msg.place(x=60, y=50)
         window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
         pass
 
@@ -90,6 +95,7 @@ class main:
         msg = Label(window, text="Incorrect Password", fg='red', font=("Helvetica", 16))
         msg.place(x=60, y=50)
         window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
         pass
 
@@ -100,6 +106,7 @@ class main:
         msg = Label(window, text="Successful Log In!", fg='green', font=("Helvetica", 16))
         msg.place(x=60, y=50)
         window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
         pass
 
