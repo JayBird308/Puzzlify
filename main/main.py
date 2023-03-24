@@ -4,7 +4,7 @@ import json
 import unscramble
 import memory as memGame
 import Sliding_Puzzle as sliGame
-# import Minesweeper as MS
+import Minesweeper as MS
 from databaseConnection import *
 from user import *
 import constants
@@ -196,7 +196,7 @@ class main:
                                     default=selector._default_value)
         gameMenu.add.button("Unscramble Game", unscramble.play)
         gameMenu.add.button('Memory Game', memGame.main)
-        gameMenu.add.button('Minesweeper') #MS.main
+        gameMenu.add.button('Minesweeper', MS.gameLoop) #MS.main
         gameMenu.add.button('Sliding Puzzle', sliGame.main)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 

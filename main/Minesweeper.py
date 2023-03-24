@@ -1,5 +1,5 @@
-import pygame
-import random
+import pygame, pygame_menu
+import random, constants
 pygame.init()
 
 bg_color = (192, 192, 192)
@@ -13,8 +13,10 @@ border = 16  # Top border
 top_border = 100  # Left, Right, Bottom border
 display_width = grid_size * game_width + border * 2  # Display width
 display_height = grid_size * game_height + border + top_border  # Display height
-gameDisplay = pygame.display.set_mode((display_width, display_height))  # Create display
-timer = pygame.time.Clock()  # Create timer
+# gameDisplay = pygame.display.set_mode((display_width, display_height))  
+gameDisplay = constants.SCREEN
+# timer = pygame.time.Clock()  # Create timer
+timer = constants.clock
 pygame.display.set_caption("Minesweeper")  # S Set the caption of window
 
 # Import files
@@ -171,10 +173,20 @@ def gameLoop():
         gameDisplay.fill(bg_color)
 
         # User inputs
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             # Check if player close window
             if event.type == pygame.QUIT:
                 gameState = "Exit"
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.key == pygame.K_ESCAPE:
+                # main_menu.enable()
+                pygame_menu.events.BACK
+                return
+            
             # Check if play restart
             if gameState == "Game Over" or gameState == "Win":
                 if event.type == pygame.KEYDOWN:
@@ -242,6 +254,6 @@ def gameLoop():
 
         timer.tick(15)  # Tick fps
 
-gameLoop()
-pygame.quit()
-quit()
+# gameLoop()
+# pygame.quit()
+# quit()
