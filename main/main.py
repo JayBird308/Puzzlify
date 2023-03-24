@@ -60,8 +60,8 @@ accountCreateMenu = pygame_menu.Menu(
 # Create menus: Account Login
 # ---------------------------------
 accountLoginMenu = pygame_menu.Menu(
-    'Account Login', 
-    WIDTH, HEIGHT, 
+    'Account Login',
+    WIDTH, HEIGHT,
     theme = customMenu_theme)
 # ---------------------------------
 # Create menus: Game Selection
@@ -71,9 +71,9 @@ gameMenu = pygame_menu.Menu(
     WIDTH, HEIGHT, 
     theme = customMenu_theme)
 
-
 # main class
 class main:
+    # pop up window for bad username
     def bad_user_popup():
         window = Tk()
         window.title('Incorrect Username Warning')
@@ -83,6 +83,7 @@ class main:
         window.mainloop()
         pass
 
+    # pop up window for good username but bad password credentials
     def bad_pass_popup():
         window = Tk()
         window.title('Incorrect Password Warning')
@@ -92,6 +93,7 @@ class main:
         window.mainloop()
         pass
 
+    # pop up window for good login credentials 
     def good_login_popup():
         window = Tk()
         window.title('Log In Success')
@@ -132,6 +134,7 @@ class main:
                 currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
                 main_menu.set_title('Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
                 accountInfoMenu.set_title(currentLoggedInUser.username + "'s" + ' Account')
+                accountStatsMenu.set_onwidgetchange(accountStatsMenu, '1')
                 print("Memory High Score: " + str(currentLoggedInUser.memHighScore))
                 main.good_login_popup()
                 return currentLoggedInUser
@@ -181,7 +184,7 @@ class main:
         clock = pygame.time.Clock()
 
         
-        ### --> Game Select Buttons <--- ##
+        ### --> Game Select Buttons <-- ###
         selector = pygame_menu.widgets.Selector(
             'Difficulty:',
             [('     Easy    ', 0), ('Advanced', 1)],
@@ -198,32 +201,32 @@ class main:
         gameMenu.add.button('Sliding Puzzle', sliGame.main)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Account Login Buttons <--- ##
+        ### --> Account Login Buttons <-- ###
         accountLoginMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountLoginMenu.add.text_input('Password: ', default = 'password', onchange= main.setUserPass)
         accountLoginMenu.add.button('Login', main.login)
         accountLoginMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Account Create Buttons <--- ##
+        ### --> Account Create Buttons <-- ###
         accountCreateMenu.add.text_input('Username: ', default = 'user', onchange = main.setUserName)
         accountCreateMenu.add.text_input('Password: ', default = 'password', onchange = main.setUserPass)
         accountCreateMenu.add.button('Submit Account', main.signup)
         accountCreateMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Account Stats Buttons <--- ##
-        accountStatsMenu.add.label('Memory Game High Schore: ' + str(currentLoggedInUser.memHighScore))
-        accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
-        accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
-        accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
+        ### --> Account Stats Buttons <-- ###
+        accountStatsMenu.add.label('Memory Game High Schore: ' + str(currentLoggedInUser.memHighScore), '1')
+        accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore), '2')
+        accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore), '3')
+        accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore), '4')
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Account Menu Buttons <--- ##
+        ### --> Account Menu Buttons <-- ###
         accountInfoMenu.add.button('Account Login', accountLoginMenu)
         accountInfoMenu.add.button('Create an Account', accountCreateMenu)
         accountInfoMenu.add.button('Account Statistics', accountStatsMenu)
         accountInfoMenu.add.button('Back', pygame_menu.events.BACK)
 
-        ### --> Main Menu Buttons <--- ##
+        ### --> Main Menu Buttons <--- ###
         main_menu.add.button('Game Selection', gameMenu)
         main_menu.add.button('Account', accountInfoMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
