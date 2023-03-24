@@ -242,7 +242,6 @@ def gameLoop():
 
         timer.tick(15)  # Tick fps
 
-
 gameLoop()
 pygame.quit()
 quit()

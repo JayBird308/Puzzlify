@@ -15,8 +15,8 @@ class UserAccount:
         self.key = ""
         self.memGamesPlayed = 0
         self.memHighScore = 0
-        self.trizGamesPlayed = 0
-        self.trizHighScore = 0
+        self.msGamesPlayed = 0
+        self.msHighScore = 0
         self.mqGamesPlayed = 0
         self.mqHighScore = 0
         self.slidingGamesPlayed = 0

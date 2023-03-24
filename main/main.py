@@ -3,8 +3,8 @@ import customMenu_theme as ct
 import json
 import MathQuiz as MQ
 import memory as memGame
-import trizzleGame as triGame
 import Sliding_Puzzle as sliGame
+# import Minesweeper as MS
 from databaseConnection import *
 from user import *
 import constants
@@ -126,15 +126,14 @@ class main:
                 currentLoggedInUser.key = userKeys[0]
                 currentLoggedInUser.memGamesPlayed = user_data_dict['memGamesPlayed']
                 currentLoggedInUser.memHighScore = user_data_dict['memHighScore']
-                currentLoggedInUser.trizGamesPlayed = user_data_dict['trizGamesPlayed']
-                currentLoggedInUser.trizHighScore = user_data_dict['trizHighScore']
+                currentLoggedInUser.msGamesPlayed = user_data_dict['msGamesPlayed']
+                currentLoggedInUser.msHighScore = user_data_dict['msHighScore']
                 currentLoggedInUser.mqGamesPlayed = user_data_dict['mqGamesPlayed']
                 currentLoggedInUser.mqHighScore = user_data_dict['mqHighScore']
                 currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
                 currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
                 main_menu.set_title('Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
                 accountInfoMenu.set_title(currentLoggedInUser.username + "'s" + ' Account')
-                accountStatsMenu.set_onwidgetchange(accountStatsMenu, '1')
                 print("Memory High Score: " + str(currentLoggedInUser.memHighScore))
                 main.good_login_popup()
                 return currentLoggedInUser
@@ -152,8 +151,8 @@ class main:
         tempUser.key = ""
         tempUser.memGamesPlayed = 0
         tempUser.memHighScore = 0
-        tempUser.trizGamesPlayed = 0
-        tempUser.trizHighScore = 0
+        tempUser.msGamesPlayed = 0
+        tempUser.msHighScore = 0
         tempUser.mqGamesPlayed = 0
         tempUser.mqHighScore = 0
         tempUser.slidingGamesPlayed = 0
@@ -197,7 +196,7 @@ class main:
                                     default=selector._default_value)
         gameMenu.add.button("Math Quiz", MQ.quiz.test)
         gameMenu.add.button('Memory Game', memGame.main)
-        gameMenu.add.button('Trizzle', triGame.run)
+        gameMenu.add.button('Minesweeper') #MS.main
         gameMenu.add.button('Sliding Puzzle', sliGame.main)
         gameMenu.add.button('Back', pygame_menu.events.BACK)
 
@@ -217,13 +216,13 @@ class main:
 
         def refresh_stats():
             memLabel.set_title('Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
-            triLabel.set_title('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+            msLabel.set_title('Minesweeper High Score: ' + str(currentLoggedInUser.msHighScore))
             mathLabel.set_title('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
             sliLabel.set_title('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
             accountStatsMenu.render()
 
         memLabel = accountStatsMenu.add.label('Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
-        triLabel = accountStatsMenu.add.label('Trizzle High Score: ' + str(currentLoggedInUser.trizHighScore))
+        msLabel = accountStatsMenu.add.label('Minesweeper High Score: ' + str(currentLoggedInUser.msHighScore))
         mathLabel = accountStatsMenu.add.label('Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
         sliLabel = accountStatsMenu.add.label('Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
         # accountStatsMenu.add.button('Refresh Info', refresh_stats)
