@@ -1,7 +1,7 @@
 import pygame, pygame_menu, pygame_menu.widgets, pygame_menu.locals
 import customMenu_theme as ct
 import json
-import MathQuiz as MQ
+import unscramble
 import memory as memGame
 import Sliding_Puzzle as sliGame
 # import Minesweeper as MS
@@ -194,7 +194,7 @@ class main:
         gameMenu.add.selector(selector._title, selector._items,
                                     onchange=selector._onchange,
                                     default=selector._default_value)
-        gameMenu.add.button("Math Quiz", MQ.quiz.test)
+        gameMenu.add.button("Unscramble Game", unscramble.play)
         gameMenu.add.button('Memory Game', memGame.main)
         gameMenu.add.button('Minesweeper') #MS.main
         gameMenu.add.button('Sliding Puzzle', sliGame.main)
