@@ -4,7 +4,7 @@
 import pygame, pygame.locals
 import pygame_menu, pygame_menu.font, pygame_menu.themes, pygame_menu.widgets
 import pygame_menu.locals, pygame_menu.widgets.core.selection, pygame_menu.baseimage
-import random
+import random, constants
 
 # Define constants
 SCREEN_WIDTH = 1600
@@ -16,6 +16,8 @@ LAST_LIST = []
 FIRST_RUN = 0
 HINT_VALUE = 0
 HINT_COUNTER = 5
+main_menu = constants.main_menu
+main_menu.disable()
 
 def random_small_list():
     global LIST_SELECTED, LIST_TITLE, LAST_LIST, FIRST_RUN
@@ -92,7 +94,8 @@ def random_small_list():
 
 # Main play method to drive the program
 def play():
-    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS, LIST_TITLE, LIST_SELECTED, HINT_VALUE, HINT_COUNTER
+    global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS, main_menu
+    global LIST_TITLE, LIST_SELECTED, HINT_VALUE, HINT_COUNTER
     POINTS = 0
     HINT_VALUE = 0
     HINT_COUNTER = 5
@@ -251,10 +254,10 @@ def play():
     input.set_border(4, (50, 50, 50), position=(pygame_menu.locals.POSITION_NORTH, pygame_menu.locals.POSITION_SOUTH))
 
     # Add a Back button
-    menu.add.button('Back', pygame_menu.events.BACK)
+    menu.add.label('To go back to game selection, hit ESC.', label_id='back_id')
 
     # Add a Quit button
-    menu.add.button('Quit', pygame_menu.events.EXIT)  
+    menu.add.button('Exit (Closes Application)', pygame_menu.events.EXIT)  
 
     def check_end_game():
         global FIRST_RUN
@@ -305,6 +308,9 @@ def play():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.key == pygame.K_ESCAPE:
+                        main_menu.enable()
+                        return
         menu.update(events)
 
         # Draw the menu on the surface
@@ -313,4 +319,4 @@ def play():
         # Update the display
         pygame.display.flip()
 
-play()
+# play()
