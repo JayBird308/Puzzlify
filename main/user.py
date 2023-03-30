@@ -8,8 +8,12 @@ try:
 except ImportError:
     from argparse import Namespace
 
+
 class UserAccount:
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.username = ""
         self.password = ""
         self.key = ""
@@ -22,12 +26,15 @@ class UserAccount:
         self.slidingGamesPlayed = 0
         self.slidingHighScore = 0
 
+
 class UserEncoder(JSONEncoder):
     def default(self, o):
-        return o.__dict__ 
-    
+        return o.__dict__
+
+
 def UserDecoder(userDict):
     return namedtuple('Users', userDict.keys())(*userDict.values())
+
 
 currentLoggedInUser = UserAccount()
 tempUser = UserAccount()
