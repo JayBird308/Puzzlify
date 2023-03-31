@@ -5,6 +5,7 @@ import pygame, pygame.locals
 import pygame_menu, pygame_menu.font, pygame_menu.themes, pygame_menu.widgets
 import pygame_menu.locals, pygame_menu.widgets.core.selection, pygame_menu.baseimage
 import random, constants
+from user import *
 
 # Define constants
 SCREEN_WIDTH = 1600
@@ -368,6 +369,14 @@ def play():
             hint_widget.hide()
             hint_num = 5 - HINT_COUNTER
             menu.add.label(title=('You completed the game with ' + str(hint_num) + ' reveals used!'))
+
+            # Push stats
+            if POINTS > tempUser.unscrambleHighScore:
+                tempUser.unscrambleHighScore = POINTS
+                currentLoggedInUser.unscrambleGamesPlayed = tempUser.unscrambleGamesPlayed
+                currentLoggedInUser.unscrambleHighScore = tempUser.unscrambleHighScore
+            tempUser.unscrambleGamesPlayed += 1
+            currentLoggedInUser.unscrambleGamesPlayed = tempUser.unscrambleGamesPlayed
 
             # Show Congratulations for Completion
             menu.add.label('Congratulation! You\'ve completed the game!', 'congrats_id')
