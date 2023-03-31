@@ -3,32 +3,16 @@ import sys
 import random
 import constants
 from pygame.locals import *
-from main import diff_value
 
-while True:
-    if diff_value == 0:
-        # Create the constants (go ahead and experiment with different values)
-        BOARDWIDTH = 3  # number of columns in the board
-        BOARDHEIGHT = 3  # number of rows in the board
-        TILESIZE = 240
-        # 640, 480
-        WINDOWWIDTH = constants.WIDTH
-        WINDOWHEIGHT = constants.HEIGHT
-        FPS = 60
-        BLANK = None
-        pass
-    else:
-        # Create the constants (go ahead and experiment with different values)
-        BOARDWIDTH = 4  # number of columns in the board
-        BOARDHEIGHT = 4  # number of rows in the board
-        TILESIZE = 240
-        # 640, 480
-        WINDOWWIDTH = constants.WIDTH
-        WINDOWHEIGHT = constants.HEIGHT
-        FPS = 60
-        BLANK = None
-        pass
-    break
+# Create the constants (go ahead and experiment with different values)
+BOARDWIDTH = 3  # number of columns in the board
+BOARDHEIGHT = 3  # number of rows in the board
+TILESIZE = 240
+# 640, 480
+WINDOWWIDTH = constants.WIDTH
+WINDOWHEIGHT = constants.HEIGHT
+FPS = 60
+BLANK = None
 
 #        R    G    B
 BLACK = (0,   0,   0)
