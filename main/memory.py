@@ -42,7 +42,33 @@ assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, \
     "Board is too big for the number of shapes/colors defined."
 
 def main():
-    global FPSCLOCK, DISPLAYSURF
+    global FPSCLOCK, DISPLAYSURF, REVEALSPEED, XMARGIN, YMARGIN, BOARDWIDTH, BOARDHEIGHT, GAPSIZE, BOXSIZE, WINDOWHEIGHT, WINDOWWIDTH
+
+    # easy mode:
+    if constants.DIFFICULTY == 0:
+        WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
+        WINDOWHEIGHT = constants.HEIGHT # size of windows' height in pixels
+        REVEALSPEED = 8 # speed boxes' sliding reveals and covers
+        BOXSIZE = 80 # size of box height & width in pixels
+        GAPSIZE = 20 # size of gap between boxes in pixels
+        BOARDWIDTH = 4 # number of columns of icons
+        BOARDHEIGHT = 3 # number of rows of icons
+        assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
+        XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
+        YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
+    # advanced mode:
+    elif constants.DIFFICULTY == 1:
+        WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
+        WINDOWHEIGHT = constants.HEIGHT # size of windows' height in pixels
+        REVEALSPEED = 8 # speed boxes' sliding reveals and covers
+        BOXSIZE = 80 # size of box height & width in pixels
+        GAPSIZE = 20 # size of gap between boxes in pixels
+        BOARDWIDTH = 5 # number of columns of icons
+        BOARDHEIGHT = 4 # number of rows of icons
+        assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
+        XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
+        YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
+
     pygame.init()
     # FPSCLOCK = pygame.time.Clock()
     # DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))

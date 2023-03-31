@@ -35,6 +35,7 @@ class UserEncoder(JSONEncoder):
 def UserDecoder(userDict):
     return namedtuple('Users', userDict.keys())(*userDict.values())
 
-
+# currentLoggedInUser holds the latest, up to date information of the user's LOCAL data (retrieved when signed in from firebase)
 currentLoggedInUser = UserAccount()
+#tempUser can use to hold temporary data for the user before pushing it to the currentLoggedInUser object
 tempUser = UserAccount()
