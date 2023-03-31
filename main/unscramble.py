@@ -18,26 +18,54 @@ HINT_VALUE = 0
 HINT_COUNTER = 5
 main_menu = constants.main_menu
 main_menu.disable()
+DIFFICULTY = constants.DIFFICULTY
 
-def random_small_list():
+def random_small_list(difficulty_value):
     global LIST_SELECTED, LIST_TITLE, LAST_LIST, FIRST_RUN
 
-    list_titles = ['animals', 'fruits', 'colors', 'countries', 'drinks', 'planets', 'sports', 'vehicles', 'flowers', 'jobs']
+    if (difficulty_value == 0):
+        list_titles = ['animals', 'fruits', 'colors', 'countries', 'drinks', 'planets', 'sports', 'vehicles', 'flowers', 'jobs']
 
-    animals = ['lion', 'tiger', 'leopard', 'gazelle', 'monkey']
-    fruits = ['apple', 'pear', 'peach', 'kiwi', 'mango']
-    colors = ['red', 'blue', 'green', 'yellow', 'pink']
-    countries = ['italy', 'japan', 'brazil', 'india', 'china']
-    drinks = ['coffee', 'tea', 'juice', 'soda', 'water']
-    planets = ['venus', 'mars', 'jupiter', 'neptune', 'saturn']
-    sports = ['soccer', 'tennis', 'boxing', 'golf', 'hockey']
-    vehicles = ['car', 'truck', 'bus', 'bike', 'boat']
-    flowers = ['tulip', 'rose', 'daisy', 'lily', 'lotus']
-    jobs = ['doctor', 'teacher', 'engineer', 'chef', 'writer']
+        animals = ['lion', 'tiger', 'leopard', 'gazelle', 'monkey']
+        fruits = ['apple', 'pear', 'peach', 'kiwi', 'mango']
+        colors = ['red', 'blue', 'green', 'yellow', 'pink']
+        countries = ['italy', 'japan', 'brazil', 'india', 'china']
+        drinks = ['coffee', 'tea', 'juice', 'soda', 'water']
+        planets = ['venus', 'mars', 'jupiter', 'neptune', 'saturn']
+        sports = ['soccer', 'tennis', 'boxing', 'golf', 'hockey']
+        vehicles = ['car', 'truck', 'bus', 'bike', 'boat']
+        flowers = ['tulip', 'rose', 'daisy', 'lily', 'lotus']
+        jobs = ['doctor', 'teacher', 'engineer', 'chef', 'writer']
 
-    while LAST_LIST == LIST_SELECTED or FIRST_RUN == 0:
-        if FIRST_RUN == 0:
+        while LAST_LIST == LIST_SELECTED or FIRST_RUN == 0:
+            if FIRST_RUN == 0:
+                LIST_TITLE = random.choice(list_titles)
+                if LIST_TITLE == 'animals':
+                    LIST_SELECTED = animals
+                elif LIST_TITLE == 'fruits':
+                    LIST_SELECTED = fruits
+                elif LIST_TITLE == 'colors':
+                    LIST_SELECTED = colors
+                elif LIST_TITLE == 'countries':
+                    LIST_SELECTED = countries
+                elif LIST_TITLE == 'drinks':
+                    LIST_SELECTED = drinks
+                elif LIST_TITLE == 'planets':
+                    LIST_SELECTED = planets
+                elif LIST_TITLE == 'sports':
+                    LIST_SELECTED = sports
+                elif LIST_TITLE == 'vehicles':
+                    LIST_SELECTED = vehicles
+                elif LIST_TITLE == 'flowers':
+                    LIST_SELECTED = flowers
+                elif LIST_TITLE == 'jobs':
+                    LIST_SELECTED = jobs
+                else:
+                    print ('Error: list_titles is not defined')
+                break
+
             LIST_TITLE = random.choice(list_titles)
+
             if LIST_TITLE == 'animals':
                 LIST_SELECTED = animals
             elif LIST_TITLE == 'fruits':
@@ -60,42 +88,87 @@ def random_small_list():
                 LIST_SELECTED = jobs
             else:
                 print ('Error: list_titles is not defined')
-            break
 
-        LIST_TITLE = random.choice(list_titles)
+        # print(LAST_LIST)
+        LAST_LIST = LIST_SELECTED
+        # print(LIST_SELECTED)
+    else:
+        # Difficult Mode!
+        list_titles = ['cities', 'desserts', 'languages', 'instruments', ' vegetables',
+                       'landmarks', 'art styles', 'oceans', 'dog breeds', 'cat breeds']
 
-        if LIST_TITLE == 'animals':
-            LIST_SELECTED = animals
-        elif LIST_TITLE == 'fruits':
-            LIST_SELECTED = fruits
-        elif LIST_TITLE == 'colors':
-            LIST_SELECTED = colors
-        elif LIST_TITLE == 'countries':
-            LIST_SELECTED = countries
-        elif LIST_TITLE == 'drinks':
-            LIST_SELECTED = drinks
-        elif LIST_TITLE == 'planets':
-            LIST_SELECTED = planets
-        elif LIST_TITLE == 'sports':
-            LIST_SELECTED = sports
-        elif LIST_TITLE == 'vehicles':
-            LIST_SELECTED = vehicles
-        elif LIST_TITLE == 'flowers':
-            LIST_SELECTED = flowers
-        elif LIST_TITLE == 'jobs':
-            LIST_SELECTED = jobs
-        else:
-            print ('Error: list_titles is not defined')
+        cities = ['new york', 'chicago', 'tokyo', 'sydney', 'paris']
+        desserts = ['pastries', 'ice cream', 'brownies', 'cheesecake', 'cupcakes']
+        languages = ['english', 'spanish', 'french', 'german', 'chinese']
+        instruments = ['guitar', 'piano', 'violin', 'drums', 'trumpet']
+        vegetables = ['carrots', 'broccoli', 'zucchini', 'spinach', 'tomatoes']
+        landmarks = ['taj mahal', 'eiffel tower', 'great wall of china', 'statue of liberty', 'washington monument']
+        art_styles = ['impressionism', 'cubism', 'surrealism', 'realism', 'abstract']
+        oceans = ['atlantic', 'pacific', 'indian', 'arctic', 'southern']
+        dog_breeds = ['bulldog', 'beagle', 'golden retriever', 'german shepard', 'poodle']
+        cat_breeds = ['calico' , 'siamese', 'tabby', 'persian', 'bengal']
 
-    # print(LAST_LIST)
-    LAST_LIST = LIST_SELECTED
-    # print(LIST_SELECTED)
+        while LAST_LIST == LIST_SELECTED or FIRST_RUN == 0:
+            if FIRST_RUN == 0:
+                LIST_TITLE = random.choice(list_titles)
+                if LIST_TITLE == 'cities':
+                    LIST_SELECTED = cities
+                elif LIST_TITLE == 'desserts':
+                    LIST_SELECTED = desserts
+                elif LIST_TITLE == 'languages':
+                    LIST_SELECTED = languages
+                elif LIST_TITLE == 'instruments':
+                    LIST_SELECTED = instruments
+                elif LIST_TITLE == 'vegetables':
+                    LIST_SELECTED = vegetables
+                elif LIST_TITLE == 'landmarks':
+                    LIST_SELECTED = landmarks
+                elif LIST_TITLE == 'art styles':
+                    LIST_SELECTED = art_styles
+                elif LIST_TITLE == 'oceans':
+                    LIST_SELECTED = oceans
+                elif LIST_TITLE == 'dog breeds':
+                    LIST_SELECTED = dog_breeds
+                elif LIST_TITLE == 'cat breeds':
+                    LIST_SELECTED = cat_breeds
+                else:
+                    print ('Error: list_titles is not defined')
+                break
+
+            LIST_TITLE = random.choice(list_titles)
+
+            if LIST_TITLE == 'cities':
+                LIST_SELECTED = cities
+            elif LIST_TITLE == 'desserts':
+                LIST_SELECTED = desserts
+            elif LIST_TITLE == 'languages':
+                LIST_SELECTED = languages
+            elif LIST_TITLE == 'instruments':
+                LIST_SELECTED = instruments
+            elif LIST_TITLE == 'vegetables':
+                LIST_SELECTED = vegetables
+            elif LIST_TITLE == 'landmarks':
+                LIST_SELECTED = landmarks
+            elif LIST_TITLE == 'art styles':
+                LIST_SELECTED = art_styles
+            elif LIST_TITLE == 'oceans':
+                LIST_SELECTED = oceans
+            elif LIST_TITLE == 'dog breeds':
+                LIST_SELECTED = dog_breeds
+            elif LIST_TITLE == 'cat breeds':
+                LIST_SELECTED = cat_breeds
+            else:
+                print ('Error: list_titles is not defined')
+
+        # print(LAST_LIST)
+        LAST_LIST = LIST_SELECTED
+        # print(LIST_SELECTED)
 
 
 # Main play method to drive the program
 def play():
     global SCREEN_WIDTH, SCREEN_HEIGHT, POINTS, main_menu
-    global LIST_TITLE, LIST_SELECTED, HINT_VALUE, HINT_COUNTER
+    global LIST_TITLE, LIST_SELECTED, HINT_VALUE, HINT_COUNTER, DIFFICULTY
     POINTS = 0
     HINT_VALUE = 0
     HINT_COUNTER = 5
@@ -103,7 +176,7 @@ def play():
     # Initialize Pygame
     pygame.init()
     surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Simple Word Unscramble Test")
+    pygame.display.set_caption("")
     FPSCLOCK = pygame.time.Clock()
 
     # Create a menu
@@ -113,8 +186,10 @@ def play():
     # ensure menu is reset and clear
     menu.clear()
 
+    DIFFICULTY = constants.DIFFICULTY
+    # print(f'Generating game... Difficulty: {DIFFICULTY}')
     # Generate and set the list
-    random_small_list()
+    random_small_list(DIFFICULTY)
 
     # Lists and Dictionary
     words = LIST_SELECTED
@@ -141,7 +216,12 @@ def play():
         words_dict[word] = scrambled    # Add the scrambled word as a key value pair to a dictionary
 
     # Points Label
-    points = menu.add.label('Points:' + str(POINTS))
+    diff_label = ''
+    if DIFFICULTY == 0:
+        diff_label = 'Easy'
+    elif DIFFICULTY == 1:
+        diff_label = 'Advanced'
+    points = menu.add.label(f'Difficulty: {diff_label} | Points: {POINTS}')
 
     def hint_button_action():
         global HINT_VALUE, HINT_COUNTER, POINTS
@@ -247,7 +327,7 @@ def play():
         'Enter your guess: ', 
         default='',
         input_type=pygame_menu.locals.INPUT_TEXT,
-        maxchar=8,
+        maxchar=20,
         textinput_id='input_id'
     )
     input.set_onreturn(lambda value='': check_guess(value))
@@ -281,20 +361,23 @@ def play():
             menu.remove_widget(instructions1)
             menu.remove_widget(input)
             menu.render()
-                                
+
             # Show a statistics page...
-            ## COMING SOON... Maybe ##
-            
+            # Show Total Points & How many Reveals used.
+            hint_widget = menu.get_widget('hint_id')
+            hint_widget.hide()
+            hint_num = 5 - HINT_COUNTER
+            menu.add.label(title=('You completed the game with ' + str(hint_num) + ' reveals used!'))
+
             # Show Congratulations for Completion
             menu.add.label('Congratulation! You\'ve completed the game!', 'congrats_id')
             widget = menu.get_widget('congrats_id')
             widget.update_font({'color': (0, 120, 30), 'size': 32})
 
             # Add a Replay button & Focus
-            play_again = menu.add.button('Play Again', play)
-            menu.select_widget(play_again)
+            menu.add.button('Play Again', play, button_id = 'play_again')
+            menu.select_widget('play_again')
             menu.render()
-
 
     menu.select_widget('input_id')
 
@@ -308,9 +391,10 @@ def play():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.key == pygame.K_ESCAPE:
-                        main_menu.enable()
-                        return
+            elif event.type == pygame.KEYDOWN:    
+                if event.key == pygame.K_ESCAPE:
+                            main_menu.enable()
+                            return
         menu.update(events)
 
         # Draw the menu on the surface

@@ -14,6 +14,7 @@ HEIGHT = 900
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 FPS = 60
+DIFFICULTY = 0
 
 clock = pygame.time.Clock()
 main_menu = pygame_menu.Menu(

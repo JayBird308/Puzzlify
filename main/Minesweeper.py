@@ -182,10 +182,11 @@ def gameLoop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.key == pygame.K_ESCAPE:
-                # main_menu.enable()
-                pygame_menu.events.BACK
-                return
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    # main_menu.enable()
+                    pygame_menu.events.BACK
+                    return
             
             # Check if play restart
             if gameState == "Game Over" or gameState == "Win":

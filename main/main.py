@@ -143,8 +143,8 @@ class main:
                 currentLoggedInUser.memHighScore = user_data_dict['memHighScore']
                 currentLoggedInUser.msGamesPlayed = user_data_dict['msGamesPlayed']
                 currentLoggedInUser.msHighScore = user_data_dict['msHighScore']
-                currentLoggedInUser.mqGamesPlayed = user_data_dict['mqGamesPlayed']
-                currentLoggedInUser.mqHighScore = user_data_dict['mqHighScore']
+                currentLoggedInUser.unscrambleGamesPlayed = user_data_dict['unscrambleGamesPlayed']
+                currentLoggedInUser.unscrambleHighScore = user_data_dict['unscrambleHighScore']
                 currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
                 currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
                 main_menu.set_title(
@@ -205,8 +205,8 @@ class main:
         tempUser.memHighScore = 0
         tempUser.msGamesPlayed = 0
         tempUser.msHighScore = 0
-        tempUser.mqGamesPlayed = 0
-        tempUser.mqHighScore = 0
+        tempUser.unscrambleGamesPlayed = 0
+        tempUser.unscrambleHighScore = 0
         tempUser.slidingGamesPlayed = 0
         tempUser.slidingHighScore = 0
         userJson = json.dumps(tempUser, indent=4, cls=UserEncoder)
@@ -223,6 +223,7 @@ class main:
         if value != diff_value:
             # print(f'Value changed to {value}.')
             diff_value = value
+            constants.DIFFICULTY = diff_value
             main.set_difficulty_type(diff_value)
 
     def main(test: bool = False) -> None:
@@ -274,8 +275,8 @@ class main:
                                str(currentLoggedInUser.memHighScore))
             msLabel.set_title('Minesweeper High Score: ' +
                               str(currentLoggedInUser.msHighScore))
-            mathLabel.set_title('Math Quiz High Score: ' +
-                                str(currentLoggedInUser.mqHighScore))
+            unscrambleLabel.set_title('Unscramble High Score: ' +
+                                str(currentLoggedInUser.unscrambleHighScore))
             sliLabel.set_title('Sliding Game High Score: ' +
                                str(currentLoggedInUser.slidingHighScore))
             accountStatsMenu.render()
@@ -284,8 +285,8 @@ class main:
             'Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
         msLabel = accountStatsMenu.add.label(
             'Minesweeper High Score: ' + str(currentLoggedInUser.msHighScore))
-        mathLabel = accountStatsMenu.add.label(
-            'Math Quiz High Score: ' + str(currentLoggedInUser.mqHighScore))
+        unscrambleLabel = accountStatsMenu.add.label(
+            'Unscramble High Score: ' + str(currentLoggedInUser.unscrambleHighScore))
         sliLabel = accountStatsMenu.add.label(
             'Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
         # accountStatsMenu.add.button('Refresh Info', refresh_stats)

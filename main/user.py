@@ -21,8 +21,8 @@ class UserAccount:
         self.memHighScore = 0
         self.msGamesPlayed = 0
         self.msHighScore = 0
-        self.mqGamesPlayed = 0
-        self.mqHighScore = 0
+        self.unscrambleGamesPlayed = 0
+        self.unscrambleHighScore = 0
         self.slidingGamesPlayed = 0
         self.slidingHighScore = 0
 
