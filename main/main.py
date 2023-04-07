@@ -92,7 +92,6 @@ class main:
         window.geometry("300x200+700+400")
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
-        pass
 
     # pop up window for good username but bad password credentials
     def bad_pass_popup():
@@ -104,7 +103,6 @@ class main:
         window.geometry("300x200+700+400")
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
-        pass
 
     # pop up window for good login credentials
     def good_login_popup():
@@ -116,7 +114,6 @@ class main:
         window.geometry("300x200+700+400")
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
-        pass
 
     def setUserName(username):
         tempUser.username = username
@@ -176,7 +173,6 @@ class main:
             window.bind(
                 "<Escape>", lambda event: main.close_window(window, event))
             window.mainloop()
-            pass
 
         def sign_out_popup():
             window = Tk()
@@ -188,7 +184,6 @@ class main:
             window.bind(
                 "<Escape>", lambda event: main.close_window(window, event))
             window.mainloop()
-            pass
 
         if currentLoggedInUser.username == "":
             bad_sign_out_popup()
@@ -212,7 +207,6 @@ class main:
         userJson = json.dumps(tempUser, indent=4, cls=UserEncoder)
         users_ref = ref.child(tempUser.username)
         users_ref.push(userJson)
-        pass
 
     def set_difficulty_type(num):
         difficulty = num

@@ -46,4 +46,3 @@ def updateUser():
         update_ref = db.reference('userdata/' + currentLoggedInUser.username)
         users_reference = update_ref.child(currentLoggedInUser.key)
         users_reference.set(userJson_var)
-        pass
