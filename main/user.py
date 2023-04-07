@@ -1,5 +1,6 @@
 from __future__ import print_function
 from collections import namedtuple
+import json
 from json import JSONEncoder
 from databaseConnection import *
 
@@ -39,3 +40,10 @@ def UserDecoder(userDict):
 currentLoggedInUser = UserAccount()
 #tempUser can use to hold temporary data for the user before pushing it to the currentLoggedInUser object
 tempUser = UserAccount()
+
+def updateUser():
+        userJson_var = json.dumps(currentLoggedInUser, indent=4, cls=UserEncoder)
+        update_ref = db.reference('userdata/' + currentLoggedInUser.username)
+        users_reference = update_ref.child(currentLoggedInUser.key)
+        users_reference.set(userJson_var)
+        pass
