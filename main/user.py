@@ -49,3 +49,4 @@ def updateUser():
             users_reference.set(userJson_var)
         except:
             print('No user signed in')
+
