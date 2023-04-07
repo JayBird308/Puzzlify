@@ -42,7 +42,10 @@ currentLoggedInUser = UserAccount()
 tempUser = UserAccount()
 
 def updateUser():
-        userJson_var = json.dumps(currentLoggedInUser, indent=4, cls=UserEncoder)
-        update_ref = db.reference('userdata/' + currentLoggedInUser.username)
-        users_reference = update_ref.child(currentLoggedInUser.key)
-        users_reference.set(userJson_var)
+        try:
+            userJson_var = json.dumps(currentLoggedInUser, indent=4, cls=UserEncoder)
+            update_ref = db.reference('userdata/' + currentLoggedInUser.username)
+            users_reference = update_ref.child(currentLoggedInUser.key)
+            users_reference.set(userJson_var)
+        except:
+            print('No user signed in')
