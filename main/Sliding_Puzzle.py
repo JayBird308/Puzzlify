@@ -54,7 +54,7 @@ def main():
     if constants.DIFFICULTY == 0:
         # Create the constants (go ahead and experiment with different values)
         # number of columns in the board
-        BOARDWIDTH = 3
+        BOARDWIDTH = 4
         BOARDHEIGHT = 3
         TILESIZE = 240
         # 640, 480
@@ -65,7 +65,7 @@ def main():
     # advanced mode
     elif constants.DIFFICULTY == 1:
         # Create the constants (go ahead and experiment with different values)
-        BOARDWIDTH = 4  # number of columns in the board
+        BOARDWIDTH = 5  # number of columns in the board
         BOARDHEIGHT = 4  # number of rows in the board
         TILESIZE = 200
         # 640, 480

@@ -7,10 +7,13 @@ grid_color = (128, 128, 128)
 
 game_width = 10  # Change this to increase size
 game_height = 10  # Change this to increase size
-numMine = 9  # Number of mines
-grid_size = 32  # Size of grid (WARNING: macke sure to change the images dimension as well)
-border = 16  # Top border
-top_border = 100  # Left, Right, Bottom border
+numMine = 10  # Number of mines
+# grid_size = 32  # Size of grid (WARNING: macke sure to change the images dimension as well)
+grid_size = 32
+# border = 16  # Top border
+# top_border = 100  # Left, Right, Bottom border
+border = 128
+top_border = constants.WIDTH/6
 display_width = grid_size * game_width + border * 2  # Display width
 display_height = grid_size * game_height + border + top_border  # Display height
 # gameDisplay = pygame.display.set_mode((display_width, display_height))  
@@ -46,7 +49,9 @@ mines = []  # Pos of the mines
 def drawText(txt, s, yOff=0):
     screen_text = pygame.font.SysFont("Calibri", s, True).render(txt, True, (0, 0, 0))
     rect = screen_text.get_rect()
-    rect.center = (game_width * grid_size / 2 + border, game_height * grid_size / 2 + top_border + yOff)
+    rect.center = (
+        (constants.WIDTH/3) + game_width * grid_size / 2 + border, 
+        (constants.HEIGHT/3) + game_height * grid_size / 2 + top_border + yOff)
     gameDisplay.blit(screen_text, rect)
 
 
@@ -60,7 +65,17 @@ class Grid:
         self.mineFalse = False  # Bool var to check if the player flagged the wrong grid
         self.flag = False  # Bool var to check if player flagged the grid
         # Create rectObject to handle drawing and collisions
-        self.rect = pygame.Rect(border + self.xGrid * grid_size, top_border + self.yGrid * grid_size, grid_size, grid_size)
+        # self.rect = pygame.Rect(
+        #     border + self.xGrid * grid_size, 
+        #     top_border + self.yGrid * grid_size, 
+        #     grid_size, 
+        #     grid_size)
+        self.rect = pygame.Rect(
+            (constants.WIDTH/3) + border + self.xGrid * grid_size, 
+            top_border + self.yGrid * grid_size, 
+            grid_size, 
+            grid_size)
+        
         self.val = type  # Value of the grid, -1 is mine
 
     def drawGrid(self):
@@ -128,6 +143,21 @@ class Grid:
 
 
 def gameLoop():
+    global numMine, game_width, game_height
+    DIFFICULTY = constants.DIFFICULTY
+
+    if DIFFICULTY == 0:
+        game_width = 10  # Change this to increase size
+        game_height = 10  # Change this to increase size
+        numMine = 10  # Number of mines
+    elif DIFFICULTY == 1:
+        game_width = 14
+        game_height = 14
+        numMine = 32
+    else:
+        print('Minesweeper - Difficulty Error~!')
+        exit(-1)
+
     gameState = "Playing"  # Game state
     mineLeft = numMine  # Number of mine left
     global grid  # Access global var
@@ -246,10 +276,10 @@ def gameLoop():
         # Draw time
         s = str(t // 15)
         screen_text = pygame.font.SysFont("Calibri", 50).render(s, True, (0, 0, 0))
-        gameDisplay.blit(screen_text, (border, border))
+        gameDisplay.blit(screen_text, ((constants.WIDTH/3) + border, border))
         # Draw mine left
         screen_text = pygame.font.SysFont("Calibri", 50).render(mineLeft.__str__(), True, (0, 0, 0))
-        gameDisplay.blit(screen_text, (display_width - border - 50, border))
+        gameDisplay.blit(screen_text, ((constants.WIDTH/3) + display_width - border - 50, border))
 
         pygame.display.update()  # Update screen
 
