@@ -214,6 +214,20 @@ class main:
         users_ref.push(userJson)
         pass
 
+    def updateUser():
+        userJson_var = json.dumps(currentLoggedInUser, indent=4, cls=UserEncoder)
+        update_ref = db.reference('userdata/' + currentLoggedInUser.username)
+        users_reference = update_ref.child(currentLoggedInUser.key)
+        users_reference.set(userJson_var)
+        pass
+
+    def givePoints():
+        currentLoggedInUser.memHighScore = currentLoggedInUser.memHighScore + 100
+        currentLoggedInUser.slidingHighScore = currentLoggedInUser.slidingHighScore + 100
+        currentLoggedInUser.msHighScore = currentLoggedInUser.msHighScore + 100
+        print ('Points Added')
+        return currentLoggedInUser
+
     def set_difficulty_type(num):
         difficulty = num
         print('Difficulty set:', difficulty)
