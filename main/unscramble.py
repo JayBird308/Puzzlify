@@ -377,6 +377,7 @@ def play():
                 currentLoggedInUser.unscrambleHighScore = tempUser.unscrambleHighScore
             tempUser.unscrambleGamesPlayed += 1
             currentLoggedInUser.unscrambleGamesPlayed = tempUser.unscrambleGamesPlayed
+            updateUser()
 
             # Show Congratulations for Completion
             menu.add.label('Congratulation! You\'ve completed the game!', 'congrats_id')
