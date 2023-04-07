@@ -48,7 +48,7 @@ def main():
     if constants.DIFFICULTY == 0:
         WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
         WINDOWHEIGHT = constants.HEIGHT # size of windows' height in pixels
-        REVEALSPEED = 8 # speed boxes' sliding reveals and covers
+        REVEALSPEED = 3 # speed boxes' sliding reveals and covers
         BOXSIZE = 80 # size of box height & width in pixels
         GAPSIZE = 20 # size of gap between boxes in pixels
         BOARDWIDTH = 4 # number of columns of icons
@@ -60,7 +60,7 @@ def main():
     elif constants.DIFFICULTY == 1:
         WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
         WINDOWHEIGHT = constants.HEIGHT # size of windows' height in pixels
-        REVEALSPEED = 8 # speed boxes' sliding reveals and covers
+        REVEALSPEED = 7 # speed boxes' sliding reveals and covers
         BOXSIZE = 80 # size of box height & width in pixels
         GAPSIZE = 20 # size of gap between boxes in pixels
         BOARDWIDTH = 5 # number of columns of icons
