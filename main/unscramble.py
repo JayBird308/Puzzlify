@@ -175,14 +175,15 @@ def play():
     HINT_COUNTER = 5
 
     # Initialize Pygame
-    pygame.init()
-    surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    # pygame.init()
+    # surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    surface = constants.SCREEN
     pygame.display.set_caption("")
     FPSCLOCK = pygame.time.Clock()
 
     # Create a menu
     menu = pygame_menu.Menu('Word Unscramble', SCREEN_WIDTH, SCREEN_HEIGHT, theme=pygame_menu.themes.THEME_SOLARIZED)
-    menu.set_attribute('widget_selection_effect', pygame_menu.widgets.RightArrowSelection)
+    # menu.set_attribute('widget_selection_effect', pygame_menu.widgets.RightArrowSelection)
 
     # ensure menu is reset and clear
     menu.clear()
@@ -235,7 +236,7 @@ def play():
         loop = True
         while loop:
             for widget in menu.get_widgets():
-                print(f'Checking for {choice}')
+                # print(f'Checking for {choice}')
                 index = scrambled_list.index(choice)
                 name = name_list[index]
 
@@ -256,10 +257,10 @@ def play():
                     HINT_VALUE = 0
                     use_hint.set_title(f'Reveal a Word (-50 pts) {HINT_COUNTER}')
                     loop = False
-                    print('CHANGED LABEL ON THE MENU: ', choice)
+                    # print('CHANGED LABEL ON THE MENU: ', choice)
                     break
-                else:
-                    print(f'Skipping this widget: {widget.get_title()}')
+                # else:
+                #     print(f'Skipping this widget: {widget.get_title()}')
 
     use_hint = menu.add.button(title=f'Reveal a Word (-50 pts) {HINT_COUNTER}', action=hint_button_action, button_id='hint_id')
     use_hint.set_border(2, (25, 25, 25), position=(pygame_menu.locals.POSITION_NORTH, pygame_menu.locals.POSITION_SOUTH,
@@ -288,14 +289,14 @@ def play():
             if name == value:
                 
                 # Used for debug
-                print(f"Correct! {value} matches with {name}")
+                # print(f"Correct! {value} matches with {name}")
 
                 # If the guessed word was correct,
                 # Change to correct spelling & GREEN
                 for widget in widgets:
                     # Check if guessed already for loopholes
                     if widget.get_font_color_status(check_selection=True) == (0, 120, 30, 255) and widget.get_title() == name:
-                        print("BREAKING OUT! ALREADY GUESSED")
+                        # print("BREAKING OUT! ALREADY GUESSED")
                         break
                     elif isinstance(widget, pygame_menu.widgets.Label) and scrambled == widget.get_title():
                         widget.set_title(name)
@@ -316,7 +317,7 @@ def play():
                 # Used for debug
                 # print(f"Wrong! {value} + Should be {name}")
                 POINTS = POINTS - 20
-                print(f"Points: {POINTS}")
+                # print(f"Points: {POINTS}")
                 points.set_title('Points:' + str(POINTS))
                 input.set_value('')
                 menu.select_widget(input)
