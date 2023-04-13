@@ -175,8 +175,9 @@ def play():
     HINT_COUNTER = 5
 
     # Initialize Pygame
-    pygame.init()
-    surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    # pygame.init()
+    # surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    surface = constants.SCREEN
     pygame.display.set_caption("")
     FPSCLOCK = pygame.time.Clock()
 
