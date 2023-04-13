@@ -73,6 +73,13 @@ gameMenu = pygame_menu.Menu(
     'Game Selection',
     WIDTH, HEIGHT,
     theme=customMenu_theme)
+# ---------------------------------
+# Create menus: Leaderboards
+# ---------------------------------
+leaderboardMenu = pygame_menu.Menu(
+    'Puzzle Leaderboards',
+    WIDTH, HEIGHT,
+    theme=customMenu_theme)
 
 # main class
 
@@ -270,7 +277,7 @@ class main:
             msLabel.set_title('Minesweeper High Score: ' +
                               str(currentLoggedInUser.msHighScore))
             unscrambleLabel.set_title('Unscramble High Score: ' +
-                                str(currentLoggedInUser.unscrambleHighScore))
+                                      str(currentLoggedInUser.unscrambleHighScore))
             sliLabel.set_title('Sliding Game High Score: ' +
                                str(currentLoggedInUser.slidingHighScore))
             accountStatsMenu.render()
@@ -293,9 +300,31 @@ class main:
         accountInfoMenu.add.button('Sign Out', main.signout)
         accountInfoMenu.add.button('Back', pygame_menu.events.BACK)
 
+        ### --> Leaderboard Menu labels <-- ###
+        def refresh_lb_stats():
+            memLBLabel.set_title(
+                'Memory Game Highest Score and Leader: ' + str(memHighestScore) + ' - ' + memHighestScorePlayer)
+            msLBLabel.set_title(
+                'Minesweeper Highest Score and Leader: ' + str(msHighestScore) + ' - ' + msHighestScorePlayer)
+            unscrambleLBLabel.set_title(
+                'Unscramble Highest Score and Leader: ' + str(unscrambleHighestScore) + ' - ' + unscrambleHighestScorePlayer)
+            sliLBLabel.set_title(
+                'Sliding Game Highest Score and Leader: ' + str(slidingHighestScore) + ' - ' + slidingHighestScorePlayer)
+            leaderboardMenu.render()
+
+        memLBLabel = leaderboardMenu.add.label(
+            'Memory Game Highest Score and Leader: ' + str(memHighestScore) + ' - ' + memHighestScorePlayer)
+        msLBLabel = leaderboardMenu.add.label(
+            'Minesweeper Highest Score and Leader: ' + str(msHighestScore) + ' - ' + msHighestScorePlayer)
+        unscrambleLBLabel = leaderboardMenu.add.label(
+            'Unscramble Highest Score and Leader: ' + str(unscrambleHighestScore) + ' - ' + unscrambleHighestScorePlayer)
+        sliLBLabel = leaderboardMenu.add.label(
+            'Sliding Game Highest Score and Leader: ' + str(slidingHighestScore) + ' - ' + slidingHighestScorePlayer)
+
         ### --> Main Menu Buttons <--- ###
         main_menu.add.button('Game Selection', gameMenu)
         main_menu.add.button('Account', accountInfoMenu)
+        main_menu.add.button('Leaderboards', leaderboardMenu)
         main_menu.add.button('Quit', pygame_menu.events.EXIT)
 
         # ---------------------------------
@@ -329,6 +358,8 @@ class main:
             # Refresh the stats for the user that logged in
             if accountStatsMenu.is_enabled() == True:
                 refresh_stats()
+            if leaderboardMenu.is_enabled() == True:
+                refresh_lb_stats()
 
             pygame.display.update()
 
