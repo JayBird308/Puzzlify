@@ -202,6 +202,31 @@ class main:
 
     # sign up button action for account database
     def signup():
+
+        # pop up window for successful signup
+        def good_signup():
+            window = Tk()
+            window.title('Sign up Success')
+            msg = Label(window, text="Sign up Successful!",
+                        fg='green', font=("Helvetica", 16))
+            msg.place(x=60, y=50)
+            window.geometry("300x200+700+400")
+            window.bind(
+                "<Escape>", lambda event: main.close_window(window, event))
+            window.mainloop()
+
+        # pop up window for successful signup
+        def bad_signup():
+            window = Tk()
+            window.title('Sign up Warning')
+            msg = Label(window, text="Sign up Failed, Please Try Again.",
+                        fg='red', font=("Helvetica", 16))
+            msg.place(x=60, y=50)
+            window.geometry("300x200+700+400")
+            window.bind(
+                "<Escape>", lambda event: main.close_window(window, event))
+            window.mainloop()
+
         tempUser.key = ""
         tempUser.memGamesPlayed = 0
         tempUser.memHighScore = 0
@@ -211,9 +236,13 @@ class main:
         tempUser.unscrambleHighScore = 0
         tempUser.slidingGamesPlayed = 0
         tempUser.slidingHighScore = 0
-        userJson = json.dumps(tempUser, indent=4, cls=UserEncoder)
-        users_ref = ref.child(tempUser.username)
-        users_ref.push(userJson)
+        try:
+            userJson = json.dumps(tempUser, indent=4, cls=UserEncoder)
+            users_ref = ref.child(tempUser.username)
+            users_ref.push(userJson)
+            good_signup()
+        except:
+            bad_signup()
 
     def set_difficulty_type(num):
         difficulty = num
@@ -304,22 +333,38 @@ class main:
         def refresh_lb_stats():
             memLBLabel.set_title(
                 'Memory Game Highest Score and Leader: ' + str(memHighestScore) + ' - ' + memHighestScorePlayer)
+            avgMemLBLabel.set_title(
+                'Memory Game Avg. Score: ' + str(avg_memScore))
             msLBLabel.set_title(
                 'Minesweeper Highest Score and Leader: ' + str(msHighestScore) + ' - ' + msHighestScorePlayer)
+            avgMsLBLabel.set_title(
+                'Minesweeper Avg. Score: ' + str(avg_msScore))
             unscrambleLBLabel.set_title(
                 'Unscramble Highest Score and Leader: ' + str(unscrambleHighestScore) + ' - ' + unscrambleHighestScorePlayer)
+            avgUnscrambleLBLabel.set_title(
+                'Unscramble Avg. Score: ' + str(avg_unscrambleScore))
             sliLBLabel.set_title(
                 'Sliding Game Highest Score and Leader: ' + str(slidingHighestScore) + ' - ' + slidingHighestScorePlayer)
+            avgSlidingLBLabel.set_title(
+                'Sliding Game Avg. Score: ' + str(avg_slidingScore))
             leaderboardMenu.render()
 
         memLBLabel = leaderboardMenu.add.label(
             'Memory Game Highest Score and Leader: ' + str(memHighestScore) + ' - ' + memHighestScorePlayer)
+        avgMemLBLabel = leaderboardMenu.add.label(
+            'Memory Game Avg. Score: ' + str(avg_memScore))
         msLBLabel = leaderboardMenu.add.label(
             'Minesweeper Highest Score and Leader: ' + str(msHighestScore) + ' - ' + msHighestScorePlayer)
+        avgMsLBLabel = leaderboardMenu.add.label(
+            'Minesweeper Avg. Score: ' + str(avg_msScore))
         unscrambleLBLabel = leaderboardMenu.add.label(
             'Unscramble Highest Score and Leader: ' + str(unscrambleHighestScore) + ' - ' + unscrambleHighestScorePlayer)
+        avgUnscrambleLBLabel = leaderboardMenu.add.label(
+            'Unscramble Avg. Score: ' + str(avg_unscrambleScore))
         sliLBLabel = leaderboardMenu.add.label(
             'Sliding Game Highest Score and Leader: ' + str(slidingHighestScore) + ' - ' + slidingHighestScorePlayer)
+        avgSlidingLBLabel = leaderboardMenu.add.label(
+            'Sliding Game Avg. Score: ' + str(avg_slidingScore))
 
         ### --> Main Menu Buttons <--- ###
         main_menu.add.button('Game Selection', gameMenu)

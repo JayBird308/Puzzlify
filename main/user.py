@@ -67,6 +67,7 @@ memHighestScore = 0
 memHighestScorePlayer = None
 total_memScore = 0
 mem_count = 0
+avg_memScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
@@ -80,49 +81,41 @@ for player, stats in DB_Data.items():
                 memHighestScorePlayer = player_data["username"]
 
 if mem_count > 0:
-    average_score = total_memScore / mem_count
-    average_score = int(average_score)
+    avg_memScore = total_memScore / mem_count
+    avg_memScore = int(avg_memScore)
 else:
-    average_score = 0
-
-print("The highest Memory score is:", memHighestScore)
-print("The player with the highest score is:", memHighestScorePlayer)
-print("The average Memory High Score is:", average_score)
-print('==================================================')
+    avg_memScore = 0
 
 # Retrieve Highest and Average Minesweeper Score
 msHighestScore = 0
 msHighestScorePlayer = None
 total_msScore = 0
 ms_count = 0
+avg_msScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
         player_data = json.loads(value)
         if "msHighScore" in player_data:
             score = player_data["msHighScore"]
-            total_memScore += score
-            mem_count += 1
+            total_msScore += score
+            ms_count += 1
             if score > msHighestScore:
                 msHighestScore = score
                 msHighestScorePlayer = player_data["username"]
 
-if mem_count > 0:
-    average_score = total_memScore / mem_count
-    average_score = int(average_score)
+if ms_count > 0:
+    avg_msScore = total_msScore / ms_count
+    avg_msScore = int(avg_msScore)
 else:
-    average_score = 0
-
-print("The highest Minesweeper score is:", msHighestScore)
-print("The player with the highest Minesweeper score is:", msHighestScorePlayer)
-print("The average Minesweeper High Score is:", average_score)
-print('==================================================')
+    avg_msScore = 0
 
 # Retrieve Highest Unscramble Score
 unscrambleHighestScore = 0
 unscrambleHighestScorePlayer = None
 total_unscrambleScore = 0
 unscramble_count = 0
+avg_unscrambleScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
@@ -136,21 +129,17 @@ for player, stats in DB_Data.items():
                 unscrambleHighestScorePlayer = player_data["username"]
 
 if unscramble_count > 0:
-    average_score = total_unscrambleScore / unscramble_count
-    average_score = int(average_score)
+    avg_unscrambleScore = total_unscrambleScore / unscramble_count
+    avg_unscrambleScore = int(avg_unscrambleScore)
 else:
-    average_score = 0
-
-print("The highest Unscramble score is:", unscrambleHighestScore)
-print("The player with the highest score is:", unscrambleHighestScorePlayer)
-print("The average unscramble High Score is:", average_score)
-print('==================================================')
+    avg_unscrambleScore = 0
 
 # Retrieve Highest and Average Sliding Score
 slidingHighestScore = 0
 slidingHighestScorePlayer = None
 total_slidingScore = 0
 sliding_count = 0
+avg_slidingScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
@@ -164,12 +153,7 @@ for player, stats in DB_Data.items():
                 slidingHighestScorePlayer = player_data["username"]
 
 if mem_count > 0:
-    average_score = total_memScore / mem_count
-    average_score = int(average_score)
+    avg_slidingScore = total_memScore / mem_count
+    avg_slidingScore = int(avg_slidingScore)
 else:
-    average_score = 0
-
-print("The highest Sliding score is:", slidingHighestScore)
-print("The player with the highest Sliding score is:", slidingHighestScorePlayer)
-print("The average Sliding High Score is:", average_score)
-print('==================================================')
+    avg_slidingScore = 0
