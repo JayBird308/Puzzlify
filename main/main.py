@@ -81,6 +81,29 @@ leaderboardMenu = pygame_menu.Menu(
     WIDTH, HEIGHT,
     theme=customMenu_theme)
 
+# widget manager for buttons
+WidgetManager = pygame_menu._widgetmanager.WidgetManager(gameMenu)
+# loads in images for each game's button:
+# memory game image
+memory_image_file = 'main\\images\\memory.png'
+memory_image = pygame_menu.baseimage.BaseImage(memory_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+memory_image.scale(0.30, 0.30, True)
+
+# unscramble game image
+unscramble_image_file = 'main\\images\\unscramble.png'
+unscramble_image = pygame_menu.baseimage.BaseImage(unscramble_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+unscramble_image.scale(0.30, 0.30, True)
+
+# minesweeper game image
+minesweeper_image_file = 'main\\images\\minesweeper.png'
+minesweeper_image = pygame_menu.baseimage.BaseImage(minesweeper_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+minesweeper_image.scale(0.30, 0.30, True)
+
+# sliding game image
+sliding_image_file = 'main\\images\\sliding.png'
+sliding_image = pygame_menu.baseimage.BaseImage(sliding_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+sliding_image.scale(0.15, 0.15, True)
+
 # main class
 
 
@@ -276,11 +299,73 @@ class main:
         gameMenu.add.selector(selector._title, selector._items,
                               onchange=selector._onchange,
                               default=selector._default_value)
-        gameMenu.add.button("Unscramble Game", unscramble.play)
-        gameMenu.add.button('Memory Game', memGame.main)
-        gameMenu.add.button('Minesweeper', MS.gameLoop)  # MS.main
-        gameMenu.add.button('Sliding Puzzle', sliGame.main)
+        
+        # game buttons with images:
+        #memory button
+        memory_banner = WidgetManager.banner(
+        image=memory_image,
+        action=memGame.main,
+        align=pygame_menu.locals.ALIGN_CENTER,
+        border_inflate=(5,5),
+        button_id='memory_banner_id',
+	    float=True,
+        selection_color=[125,0,0,255],
+        padding=(0,25,0,25),
+        shadow_type='rectangular',
+        shadow_radius=100,
+        shadow_width=25
+    )
+        # unscramble button
+        unscramble_banner = WidgetManager.banner(
+        image=unscramble_image,
+        action=unscramble.play,
+        align=pygame_menu.locals.ALIGN_CENTER,
+        border_inflate=(5,5),
+        button_id='unscramble_banner_id',
+	    float=True,
+        selection_color=[125,0,0,255],
+        padding=(0,25,0,25),
+        shadow_type='rectangular',
+        shadow_radius=100,
+        shadow_width=25
+    )
+        #minesweeper button
+        minesweeper_banner = WidgetManager.banner(
+        image=minesweeper_image,
+        action=MS.gameLoop,
+        align=pygame_menu.locals.ALIGN_CENTER,
+        border_inflate=(5,5),
+        button_id='minesweeper_banner_id',
+	    float=True,
+        selection_color=[125,0,0,255],
+        padding=(0,25,0,25),
+        shadow_type='rectangular',
+        shadow_radius=100,
+        shadow_width=25
+    )
+         #sliding puzzle button
+        sliding_banner = WidgetManager.banner(
+        image=sliding_image,
+        action=sliGame.main,
+        align=pygame_menu.locals.ALIGN_CENTER,
+        border_inflate=(5,5),
+        button_id='sliding_banner_id',
+	    float=True,
+        selection_color=[125,0,0,255],
+        padding=(0,25,0,25),
+        shadow_type='rectangular',
+        shadow_radius=100,
+        shadow_width=25
+    )
+
         gameMenu.add.button('Back', pygame_menu.events.BACK)
+
+        # positions the picture along the banner
+        memory_banner.translate(-350,250)
+        unscramble_banner.translate(-150,250)
+        minesweeper_banner.translate(100,250)
+        sliding_banner.translate(350,250)
+        
 
         ### --> Account Login Buttons <-- ###
         accountLoginMenu.add.text_input(
