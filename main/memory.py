@@ -1,5 +1,7 @@
-import random, pygame, sys, constants
+import random, pygame, sys, constants, time
 from pygame.locals import *
+from tkinter import *
+from user import *
 
 FPS = constants.FPS # frames per second, the general speed of the program
 WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
@@ -42,8 +44,28 @@ assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, \
     "Board is too big for the number of shapes/colors defined."
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, REVEALSPEED, XMARGIN, YMARGIN, BOARDWIDTH, BOARDHEIGHT, GAPSIZE, BOXSIZE, WINDOWHEIGHT, WINDOWWIDTH
+    global FPSCLOCK, DISPLAYSURF, REVEALSPEED, XMARGIN, YMARGIN, BOARDWIDTH, BOARDHEIGHT, GAPSIZE, BOXSIZE, WINDOWHEIGHT, WINDOWWIDTH, EASYSCORE, HARDSCORE
 
+    def easy_score_popup():
+        window = Tk()
+        window.title('Game Score')
+        msg = Label(window, text="Easy Score: " + str(EASYSCORE),
+                    fg='black', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
+        window.mainloop()
+    
+    def hard_score_popup():
+        window = Tk()
+        window.title('Game Score')
+        msg = Label(window, text="Advanced Score: " + str(HARDSCORE),
+                    fg='black', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
+        window.mainloop()
+    
     # easy mode:
     if constants.DIFFICULTY == 0:
         WINDOWWIDTH = constants.WIDTH # size of window's width in pixels
@@ -51,8 +73,8 @@ def main():
         REVEALSPEED = 3 # speed boxes' sliding reveals and covers
         BOXSIZE = 80 # size of box height & width in pixels
         GAPSIZE = 20 # size of gap between boxes in pixels
-        BOARDWIDTH = 4 # number of columns of icons
-        BOARDHEIGHT = 3 # number of rows of icons
+        BOARDWIDTH = 2 # number of columns of icons
+        BOARDHEIGHT = 2 # number of rows of icons
         assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
         XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
         YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
@@ -105,6 +127,8 @@ def main():
         while pygame.time.get_ticks() < runtime + ticks_to_wait:
             pass    
 
+    startTime = time.time()
+
     while loop: # main game loop
         mouseClicked = False
 
@@ -151,8 +175,32 @@ def main():
                         revealedBoxes[firstSelection[0]][firstSelection[1]] = False
                         revealedBoxes[boxx][boxy] = False
                     elif hasWon(revealedBoxes): # check if all pairs found
+                        endTime = time.time()
+                        elapsedTime = endTime - startTime
+
                         gameWonAnimation(mainBoard)
                         wait() # wait 1000 ticks
+
+                        # push easy mode stats
+                        if constants.DIFFICULTY == 0:
+                            EASYSCORE = int(10000/elapsedTime)
+                            print(f"Time elapsed: {elapsedTime}")
+                            print(f"Your EASY score is: {EASYSCORE}")
+                            if EASYSCORE > currentLoggedInUser.slidingHighScore:
+                                currentLoggedInUser.slidingHighScore = EASYSCORE
+                                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+                            updateUser()
+                            easy_score_popup()
+                        # push advanced mode stats
+                        elif constants.DIFFICULTY == 1:
+                            HARDSCORE = int(10000/elapsedTime)
+                            print(f"Time elapsed: {elapsedTime}")
+                            print(f"Your EASY score is: {HARDSCORE}")
+                            if HARDSCORE > currentLoggedInUser.advSlidingHighScore:
+                                currentLoggedInUser.advSlidingHighScore = HARDSCORE
+                                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+                            updateUser()
+                            hard_score_popup()
 
                         # Reset timer
                         timer_start = 0

@@ -1,5 +1,9 @@
 import pygame, pygame_menu
 import random, constants
+import time
+from tkinter import *
+from user import *
+from main import main
 pygame.init()
 
 bg_color = (192, 192, 192)
@@ -143,17 +147,19 @@ class Grid:
 
 
 def gameLoop():
-    global numMine, game_width, game_height
+    global numMine, game_width, game_height, EASYSCORE, HARDSCORE
     DIFFICULTY = constants.DIFFICULTY
 
     if DIFFICULTY == 0:
         game_width = 10  # Change this to increase size
         game_height = 10  # Change this to increase size
         numMine = 10  # Number of mines
+        EASYSCORE = 0
     elif DIFFICULTY == 1:
         game_width = 14
         game_height = 14
         numMine = 32
+        HARDSCORE = 0
     else:
         print('Minesweeper - Difficulty Error~!')
         exit(-1)
@@ -196,6 +202,8 @@ def gameLoop():
     for i in grid:
         for j in i:
             j.updateValue()
+
+    start_time = time.time()
 
     # Main Loop
     while gameState != "Exit":
@@ -263,6 +271,7 @@ def gameLoop():
         # Draw Texts
         if gameState != "Game Over" and gameState != "Win":
             t += 1
+            end_time = time.time()
         elif gameState == "Game Over":
             drawText("Game Over!", 50)
             drawText("R to restart", 35, 50)
@@ -284,6 +293,51 @@ def gameLoop():
         pygame.display.update()  # Update screen
 
         timer.tick(15)  # Tick fps
+    
+    elapsed_time = end_time - start_time
+
+    # pop up window for score finish
+    def easy_score_popup():
+        window = Tk()
+        window.title('Game Score')
+        msg = Label(window, text="Easy Score: " + str(EASYSCORE),
+                    fg='black', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
+        window.mainloop()
+    
+    def hard_score_popup():
+        window = Tk()
+        window.title('Game Score')
+        msg = Label(window, text="Advanced Score: " + str(HARDSCORE),
+                    fg='black', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
+        window.mainloop()
+
+    if gameState == "Win":
+        # push easy mode stats
+        if constants.DIFFICULTY == 0:
+            EASYSCORE = int(10000/elapsed_time)
+            print(f"Time elapsed: {elapsed_time}")
+            print(f"Your EASY score is: {EASYSCORE}")
+            if EASYSCORE > currentLoggedInUser.slidingHighScore:
+                currentLoggedInUser.slidingHighScore = EASYSCORE
+                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+            updateUser()
+            easy_score_popup()
+        # push advanced mode stats
+        elif constants.DIFFICULTY == 1:
+            HARDSCORE = int(10000/elapsed_time)
+            print(f"Time elapsed: {elapsed_time}")
+            print(f"Your EASY score is: {HARDSCORE}")
+            if HARDSCORE > currentLoggedInUser.advSlidingHighScore:
+                currentLoggedInUser.advSlidingHighScore = HARDSCORE
+                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+            updateUser()
+            hard_score_popup()
 
 # gameLoop()
 # pygame.quit()
