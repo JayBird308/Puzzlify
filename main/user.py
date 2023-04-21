@@ -65,95 +65,102 @@ DB_Data = DB_Ref.get()
 # Retrieve Highest and Average Memory Score
 memHighestScore = 0
 memHighestScorePlayer = None
-total_memScore = 0
-mem_count = 0
-avg_memScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
         player_data = json.loads(value)
         if "memHighScore" in player_data:
             score = player_data["memHighScore"]
-            total_memScore += score
-            mem_count += 1
             if score > memHighestScore:
                 memHighestScore = score
                 memHighestScorePlayer = player_data["username"]
 
-if mem_count > 0:
-    avg_memScore = total_memScore / mem_count
-    avg_memScore = int(avg_memScore)
-else:
-    avg_memScore = 0
+advMemHighestScore = 0
+advMemHighestScorePlayer = None
+
+# advanced mem stats
+for player, stats in DB_Data.items():
+    for key, value in stats.items():
+        player_data = json.loads(value)
+        if "advMemHighScore" in player_data:
+            score = player_data["advMemHighScore"]
+            if score > advMemHighestScore:
+                advMemHighestScore = score
+                advMemHighestScorePlayer = player_data["username"]
 
 # Retrieve Highest and Average Minesweeper Score
 msHighestScore = 0
 msHighestScorePlayer = None
-total_msScore = 0
-ms_count = 0
-avg_msScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
         player_data = json.loads(value)
         if "msHighScore" in player_data:
             score = player_data["msHighScore"]
-            total_msScore += score
-            ms_count += 1
             if score > msHighestScore:
                 msHighestScore = score
                 msHighestScorePlayer = player_data["username"]
 
-if ms_count > 0:
-    avg_msScore = total_msScore / ms_count
-    avg_msScore = int(avg_msScore)
-else:
-    avg_msScore = 0
+advMsHighestScore = 0
+advMsHighestScorePlayer = None
+
+for player, stats in DB_Data.items():
+    for key, value in stats.items():
+        player_data = json.loads(value)
+        if "advMsHighScore" in player_data:
+            score = player_data["advMsHighScore"]
+            if score > advMsHighestScore:
+                advMsHighestScore = score
+                advMsHighestScorePlayer = player_data["username"]
 
 # Retrieve Highest Unscramble Score
 unscrambleHighestScore = 0
 unscrambleHighestScorePlayer = None
-total_unscrambleScore = 0
-unscramble_count = 0
-avg_unscrambleScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
         player_data = json.loads(value)
         if "unscrambleHighScore" in player_data:
             score = player_data["unscrambleHighScore"]
-            total_unscrambleScore += score
-            unscramble_count += 1
             if score > unscrambleHighestScore:
                 unscrambleHighestScore = score
                 unscrambleHighestScorePlayer = player_data["username"]
 
-if unscramble_count > 0:
-    avg_unscrambleScore = total_unscrambleScore / unscramble_count
-    avg_unscrambleScore = int(avg_unscrambleScore)
-else:
-    avg_unscrambleScore = 0
+advUnscrambleHighestScore = 0
+advUnscrambleHighestScorePlayer = None
+
+for player, stats in DB_Data.items():
+    for key, value in stats.items():
+        player_data = json.loads(value)
+        if "advUnscrambleHighScore" in player_data:
+            score = player_data["advUnscrambleHighScore"]
+            if score > advUnscrambleHighestScore:
+                advUnscrambleHighestScore = score
+                advUnscrambleHighestScorePlayer = player_data["username"]
+
+
 
 # Retrieve Highest and Average Sliding Score
 slidingHighestScore = 0
 slidingHighestScorePlayer = None
-total_slidingScore = 0
-sliding_count = 0
-avg_slidingScore = 0
 
 for player, stats in DB_Data.items():
     for key, value in stats.items():
         player_data = json.loads(value)
         if "slidingHighScore" in player_data:
             score = player_data["slidingHighScore"]
-            total_memScore += score
-            mem_count += 1
             if score > slidingHighestScore:
                 slidingHighestScore = score
                 slidingHighestScorePlayer = player_data["username"]
 
-if mem_count > 0:
-    avg_slidingScore = total_memScore / mem_count
-    avg_slidingScore = int(avg_slidingScore)
-else:
-    avg_slidingScore = 0
+advSlidingHighestScore = 0
+advSlidingHighestScorePlayer = None
+
+for player, stats in DB_Data.items():
+    for key, value in stats.items():
+        player_data = json.loads(value)
+        if "advSlidingHighScore" in player_data:
+            score = player_data["advSlidingHighScore"]
+            if score > advSlidingHighestScore:
+                advSlidingHighestScore = score
+                advSlidingHighestScorePlayer = player_data["username"]
