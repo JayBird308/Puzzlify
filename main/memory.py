@@ -186,9 +186,9 @@ def main():
                             EASYSCORE = int(10000/elapsedTime)
                             print(f"Time elapsed: {elapsedTime}")
                             print(f"Your EASY score is: {EASYSCORE}")
-                            if EASYSCORE > currentLoggedInUser.slidingHighScore:
-                                currentLoggedInUser.slidingHighScore = EASYSCORE
-                                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+                            if EASYSCORE > currentLoggedInUser.memHighScore:
+                                currentLoggedInUser.memHighScore = EASYSCORE
+                                currentLoggedInUser.memGamesPlayed = currentLoggedInUser.memGamesPlayed + 1
                             updateUser()
                             easy_score_popup()
                         # push advanced mode stats
@@ -196,9 +196,9 @@ def main():
                             HARDSCORE = int(10000/elapsedTime)
                             print(f"Time elapsed: {elapsedTime}")
                             print(f"Your EASY score is: {HARDSCORE}")
-                            if HARDSCORE > currentLoggedInUser.advSlidingHighScore:
-                                currentLoggedInUser.advSlidingHighScore = HARDSCORE
-                                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+                            if HARDSCORE > currentLoggedInUser.advMemHighScore:
+                                currentLoggedInUser.advMemHighScore = HARDSCORE
+                                currentLoggedInUser.memGamesPlayed = currentLoggedInUser.memGamesPlayed + 1
                             updateUser()
                             hard_score_popup()
 

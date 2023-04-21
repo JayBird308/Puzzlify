@@ -168,18 +168,20 @@ class main:
                 currentLoggedInUser.key = userKeys[0]
                 currentLoggedInUser.memGamesPlayed = user_data_dict['memGamesPlayed']
                 currentLoggedInUser.memHighScore = user_data_dict['memHighScore']
+                currentLoggedInUser.advMemHighScore = user_data_dict['advMemHighScore']
                 currentLoggedInUser.msGamesPlayed = user_data_dict['msGamesPlayed']
                 currentLoggedInUser.msHighScore = user_data_dict['msHighScore']
+                currentLoggedInUser.advMsHighScore = user_data_dict['advMsHighScore']
                 currentLoggedInUser.unscrambleGamesPlayed = user_data_dict['unscrambleGamesPlayed']
                 currentLoggedInUser.unscrambleHighScore = user_data_dict['unscrambleHighScore']
+                currentLoggedInUser.advUnscrambleHighScore = user_data_dict['advUnscrambleHighScore']
                 currentLoggedInUser.slidingGamesPlayed = user_data_dict['slidingGamesPlayed']
                 currentLoggedInUser.slidingHighScore = user_data_dict['slidingHighScore']
+                currentLoggedInUser.advSlidingHighScore = user_data_dict['advSlidingHighScore']
                 main_menu.set_title(
                     'Welcome to Puzzlify, ' + currentLoggedInUser.username + "!")
                 accountInfoMenu.set_title(
                     currentLoggedInUser.username + "'s" + ' Account')
-                print("Memory High Score: " +
-                      str(currentLoggedInUser.memHighScore))
                 main.good_login_popup()
                 return currentLoggedInUser
             else:

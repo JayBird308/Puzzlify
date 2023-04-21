@@ -323,9 +323,9 @@ def gameLoop():
             EASYSCORE = int(10000/elapsed_time)
             print(f"Time elapsed: {elapsed_time}")
             print(f"Your EASY score is: {EASYSCORE}")
-            if EASYSCORE > currentLoggedInUser.slidingHighScore:
-                currentLoggedInUser.slidingHighScore = EASYSCORE
-                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+            if EASYSCORE > currentLoggedInUser.msHighScore:
+                currentLoggedInUser.msHighScore = EASYSCORE
+                currentLoggedInUser.msGamesPlayed = currentLoggedInUser.msGamesPlayed + 1
             updateUser()
             easy_score_popup()
         # push advanced mode stats
@@ -333,9 +333,9 @@ def gameLoop():
             HARDSCORE = int(10000/elapsed_time)
             print(f"Time elapsed: {elapsed_time}")
             print(f"Your EASY score is: {HARDSCORE}")
-            if HARDSCORE > currentLoggedInUser.advSlidingHighScore:
-                currentLoggedInUser.advSlidingHighScore = HARDSCORE
-                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+            if HARDSCORE > currentLoggedInUser.advMsHighScore:
+                currentLoggedInUser.advMsHighScore = HARDSCORE
+                currentLoggedInUser.msGamesPlayed = currentLoggedInUser.msGamesPlayed + 1
             updateUser()
             hard_score_popup()
 
