@@ -9,8 +9,8 @@ infoObject = pygame.display.Info()
 # SCREEN = pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
 # Test Variables
-WIDTH = 1600
-HEIGHT = 900
+WIDTH = 1920
+HEIGHT = 1080
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 FPS = 60

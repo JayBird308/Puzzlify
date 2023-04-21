@@ -17,7 +17,6 @@ from tkinter import *
 # FOR TESTING ACCOUNT STUFF USE:
 # username: Jay
 # password: pass
-# memHighScore should be = 100
 # -----------------------------
 
 # GLOBAL VARIABLES
@@ -30,6 +29,8 @@ diff_value = 0
 clock = constants.clock
 main_menu = constants.main_menu
 customMenu_theme = ct.customMenu_theme
+customStats_theme = ct.customStats_theme
+customLb_theme = ct.customLB_theme
 
 # ---------------------------------
 # Create menus: Main Menu
@@ -44,7 +45,7 @@ main_menu = pygame_menu.Menu(
 accountStatsMenu = pygame_menu.Menu(
     'Account Statistics',
     WIDTH, HEIGHT,
-    theme=customMenu_theme)
+    theme=customStats_theme)
 # ---------------------------------
 # Create menus: Account
 # ---------------------------------
@@ -79,7 +80,7 @@ gameMenu = pygame_menu.Menu(
 leaderboardMenu = pygame_menu.Menu(
     'Puzzle Leaderboards',
     WIDTH, HEIGHT,
-    theme=customMenu_theme)
+    theme=customLb_theme)
 
 # widget manager for buttons
 WidgetManager = pygame_menu._widgetmanager.WidgetManager(gameMenu)
@@ -105,7 +106,6 @@ sliding_image = pygame_menu.baseimage.BaseImage(sliding_image_file, drawing_mode
 sliding_image.scale(0.15, 0.15, True)
 
 # main class
-
 
 class main:
 
@@ -301,7 +301,7 @@ class main:
                               default=selector._default_value)
         
         # game buttons with images:
-        #memory button
+        # memory button
         memory_banner = WidgetManager.banner(
         image=memory_image,
         action=memGame.main,
@@ -386,25 +386,41 @@ class main:
         ### --> Account Stats Buttons <--- ##
 
         def refresh_stats():
-            memLabel.set_title('Memory Game High Score: ' +
+            memLabel.set_title('Easy Memory Game High Score: ' +
                                str(currentLoggedInUser.memHighScore))
-            msLabel.set_title('Minesweeper High Score: ' +
+            advMemLabel.set_title('Advanced Memory Game High Score: ' +
+                               str(currentLoggedInUser.advMemHighScore))
+            msLabel.set_title('Easy Minesweeper High Score: ' +
                               str(currentLoggedInUser.msHighScore))
-            unscrambleLabel.set_title('Unscramble High Score: ' +
+            advMsLabel.set_title('Advanced Minesweeper High Score: ' +
+                              str(currentLoggedInUser.advMsHighScore))
+            unscrambleLabel.set_title('Easy Unscramble High Score: ' +
                                       str(currentLoggedInUser.unscrambleHighScore))
-            sliLabel.set_title('Sliding Game High Score: ' +
+            advUnscrambleLabel.set_title('Advanced Unscramble High Score: ' +
+                                      str(currentLoggedInUser.advUnscrambleHighScore))
+            sliLabel.set_title('Easy Sliding Game High Score: ' +
                                str(currentLoggedInUser.slidingHighScore))
+            advSliLabel.set_title('Advanced Sliding Game High Score: ' +
+                               str(currentLoggedInUser.advSlidingHighScore))
             accountStatsMenu.render()
 
         memLabel = accountStatsMenu.add.label(
-            'Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
+            'Easy Memory Game High Score: ' + str(currentLoggedInUser.memHighScore))
+        advMemLabel = accountStatsMenu.add.label(
+            'Advanced Memory Game High Score: ' + str(currentLoggedInUser.advMemHighScore))
         msLabel = accountStatsMenu.add.label(
             'Minesweeper High Score: ' + str(currentLoggedInUser.msHighScore))
+        advMsLabel = accountStatsMenu.add.label(
+            'Advanced Minesweeper High Score: ' + str(currentLoggedInUser.advMsHighScore))
         unscrambleLabel = accountStatsMenu.add.label(
             'Unscramble High Score: ' + str(currentLoggedInUser.unscrambleHighScore))
+        advUnscrambleLabel = accountStatsMenu.add.label(
+            'Advanced Unscramble High Score: ' + str(currentLoggedInUser.advUnscrambleHighScore))
         sliLabel = accountStatsMenu.add.label(
             'Sliding Game High Score: ' + str(currentLoggedInUser.slidingHighScore))
-        # accountStatsMenu.add.button('Refresh Info', refresh_stats)
+        advSliLabel = accountStatsMenu.add.label(
+            'Advanced Sliding Game High Score: ' + str(currentLoggedInUser.advSlidingHighScore))
+        
         accountStatsMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Account Menu Buttons <-- ###
@@ -417,39 +433,41 @@ class main:
         ### --> Leaderboard Menu labels <-- ###
         def refresh_lb_stats():
             memLBLabel.set_title(
-                'Memory Game Highest Score and Leader: ' + str(memHighestScore) + ' - ' + memHighestScorePlayer)
-            avgMemLBLabel.set_title(
-                'Memory Game Avg. Score: ' + str(avg_memScore))
+                'Memory Game Easy Leader:   ' + str(memHighestScore) + ' - ' + str(memHighestScorePlayer))
+            advMemLBLabel.set_title(
+                'Memory Game Adv. Leader:   ' + str(advMemHighestScore) + ' - ' + str(advMemHighestScorePlayer))
             msLBLabel.set_title(
-                'Minesweeper Highest Score and Leader: ' + str(msHighestScore) + ' - ' + msHighestScorePlayer)
-            avgMsLBLabel.set_title(
-                'Minesweeper Avg. Score: ' + str(avg_msScore))
+                'Minesweeper Easy Leader:   ' + str(msHighestScore) + ' - ' + str(msHighestScorePlayer))
+            advMsLBLabel.set_title(
+                'Minesweeper Adv. Leader:   ' + str(advMsHighestScore) + ' - ' + str(advMsHighestScorePlayer))
             unscrambleLBLabel.set_title(
-                'Unscramble Highest Score and Leader: ' + str(unscrambleHighestScore) + ' - ' + unscrambleHighestScorePlayer)
-            avgUnscrambleLBLabel.set_title(
-                'Unscramble Avg. Score: ' + str(avg_unscrambleScore))
+                'Unscramble Easy Leader:    ' + str(unscrambleHighestScore) + ' - ' + str(unscrambleHighestScorePlayer))
+            advUnscrambleLBLabel.set_title(
+                'Unscramble Adv. Leader:    ' + str(advUnscrambleHighestScore) + ' - ' + str(advUnscrambleHighestScorePlayer))
             sliLBLabel.set_title(
-                'Sliding Game Highest Score and Leader: ' + str(slidingHighestScore) + ' - ' + slidingHighestScorePlayer)
-            avgSlidingLBLabel.set_title(
-                'Sliding Game Avg. Score: ' + str(avg_slidingScore))
+                'Sliding Game Easy Leader: ' + str(slidingHighestScore) + ' - ' + str(slidingHighestScorePlayer))
+            advSliLBLabel.set_title(
+                'Sliding Game Adv. Leader: ' + str(advSlidingHighestScore) + ' - ' + str(advSlidingHighestScorePlayer))
             leaderboardMenu.render()
 
         memLBLabel = leaderboardMenu.add.label(
-            'Memory Game Highest Score and Leader: ' + str(memHighestScore) + ' - ' + memHighestScorePlayer)
-        avgMemLBLabel = leaderboardMenu.add.label(
-            'Memory Game Avg. Score: ' + str(avg_memScore))
+                'Memory Game Easy Leader:   ' + str(memHighestScore) + ' - ' + str(memHighestScorePlayer))
+        advMemLBLabel = leaderboardMenu.add.label(
+                'Memory Game Adv. Leader:   ' + str(advMemHighestScore) + ' - ' + str(advMemHighestScorePlayer))
         msLBLabel = leaderboardMenu.add.label(
-            'Minesweeper Highest Score and Leader: ' + str(msHighestScore) + ' - ' + msHighestScorePlayer)
-        avgMsLBLabel = leaderboardMenu.add.label(
-            'Minesweeper Avg. Score: ' + str(avg_msScore))
+                'Minesweeper Easy Leader:   ' + str(msHighestScore) + ' - ' + str(msHighestScorePlayer))
+        advMsLBLabel = leaderboardMenu.add.label(
+                'Minesweeper Adv. Leader:   ' + str(advMsHighestScore) + ' - ' + str(advMsHighestScorePlayer))
         unscrambleLBLabel = leaderboardMenu.add.label(
-            'Unscramble Highest Score and Leader: ' + str(unscrambleHighestScore) + ' - ' + unscrambleHighestScorePlayer)
-        avgUnscrambleLBLabel = leaderboardMenu.add.label(
-            'Unscramble Avg. Score: ' + str(avg_unscrambleScore))
+                'Unscramble Easy Leader:    ' + str(unscrambleHighestScore) + ' - ' + str(unscrambleHighestScorePlayer))
+        advUnscrambleLBLabel = leaderboardMenu.add.label(
+                'Unscramble Adv. Leader:    ' + str(advUnscrambleHighestScore) + ' - ' + str(advUnscrambleHighestScorePlayer))
         sliLBLabel = leaderboardMenu.add.label(
-            'Sliding Game Highest Score and Leader: ' + str(slidingHighestScore) + ' - ' + slidingHighestScorePlayer)
-        avgSlidingLBLabel = leaderboardMenu.add.label(
-            'Sliding Game Avg. Score: ' + str(avg_slidingScore))
+                'Sliding Game Easy Leader: ' + str(slidingHighestScore) + ' - ' + str(slidingHighestScorePlayer))
+        advSliLBLabel = leaderboardMenu.add.label(
+                'Sliding Game Adv. Leader: ' + str(advSlidingHighestScore) + ' - ' + str(advSlidingHighestScorePlayer))
+        
+        leaderboardMenu.add.button('Back', pygame_menu.events.BACK)
 
         ### --> Main Menu Buttons <--- ###
         main_menu.add.button('Game Selection', gameMenu)

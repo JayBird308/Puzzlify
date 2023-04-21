@@ -2,12 +2,18 @@ import pygame
 import sys
 import random
 import constants
+import time
 from pygame.locals import *
+from user import *
+from tkinter import *
 
 # Create the constants (go ahead and experiment with different values)
 BOARDWIDTH = 4  # number of columns in the board
 BOARDHEIGHT = 4  # number of rows in the board
 TILESIZE = 200
+EASYSCORE = 0
+HARDSCORE = 0
+BOARDSOLVED = FALSE
 # 640, 480
 WINDOWWIDTH = constants.WIDTH
 WINDOWHEIGHT = constants.HEIGHT
@@ -47,14 +53,14 @@ loop = True
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BOARDWIDTH, BOARDHEIGHT, TILESIZE, BLANK, loop
-    global RESET_SURF, RESET_RECT, NEW_SURF, NEW_RECT, SOLVE_SURF, SOLVE_RECT
+    global RESET_SURF, RESET_RECT, NEW_SURF, NEW_RECT, SOLVE_SURF, SOLVE_RECT, EASYSCORE, HARDSCORE, BOARDSOLVED
     loop = True
 
     # easy mode
     if constants.DIFFICULTY == 0:
         # Create the constants (go ahead and experiment with different values)
         # number of columns in the board
-        BOARDWIDTH = 4
+        BOARDWIDTH = 3
         BOARDHEIGHT = 3
         TILESIZE = 240
         # 640, 480
@@ -62,18 +68,41 @@ def main():
         WINDOWHEIGHT = constants.HEIGHT
         FPS = 60
         BLANK = None
+        EASYSCORE = 0
     # advanced mode
     elif constants.DIFFICULTY == 1:
         # Create the constants (go ahead and experiment with different values)
-        BOARDWIDTH = 5  # number of columns in the board
-        BOARDHEIGHT = 4  # number of rows in the board
+        BOARDWIDTH = 4  # number of columns in the board
+        BOARDHEIGHT = 3  # number of rows in the board
         TILESIZE = 200
         # 640, 480
         WINDOWWIDTH = constants.WIDTH
         WINDOWHEIGHT = constants.HEIGHT
         FPS = 60
         BLANK = None
-        
+        HARDSCORE = 0
+
+    # pop up window for score finish
+    def easy_score_popup():
+        window = Tk()
+        window.title('Game Score')
+        msg = Label(window, text="Easy Score: " + str(EASYSCORE),
+                    fg='black', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
+        window.mainloop()
+    
+    def hard_score_popup():
+        window = Tk()
+        window.title('Game Score')
+        msg = Label(window, text="Advanced Score: " + str(HARDSCORE),
+                    fg='black', font=("Helvetica", 16))
+        msg.place(x=60, y=50)
+        window.geometry("300x200+700+400")
+        window.bind("<Escape>", lambda event: main.close_window(window, event))
+        window.mainloop()
+
     # pygame.init()
     FPSCLOCK = constants.clock
     # DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -94,13 +123,16 @@ def main():
     # a solved board is the same as the board in a start state.
     SOLVEDBOARD = getStartingBoard()
     allMoves = []  # list of moves made from the solved configuration
-
+    # start clock
+    start_time = time.time()
     while loop:  # main game loop
         slideTo = None  # the direction, if any, a tile should slide
         # contains the message to show in the upper left corner.
         msg = 'Click tile or press arrow keys to slide.'
         if mainBoard == SOLVEDBOARD:
-            msg = 'Solved!'
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            msg = 'Solved! Press "Escape" to view High Score'
 
         drawBoard(mainBoard, msg)
         # checkForQuit()
@@ -159,6 +191,28 @@ def main():
             allMoves.append(slideTo)  # record the slide
         pygame.display.update()
         FPSCLOCK.tick(FPS)
+    # solve score
+    if mainBoard == SOLVEDBOARD:
+        # push easy mode stats
+        if constants.DIFFICULTY == 0:
+            EASYSCORE = int(10000/elapsed_time)
+            print(f"Time elapsed: {elapsed_time}")
+            print(f"Your EASY score is: {EASYSCORE}")
+            if EASYSCORE > currentLoggedInUser.slidingHighScore:
+                currentLoggedInUser.slidingHighScore = EASYSCORE
+                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+            updateUser()
+            easy_score_popup()
+        # push advanced mode stats
+        elif constants.DIFFICULTY == 1:
+            HARDSCORE = int(10000/elapsed_time)
+            print(f"Time elapsed: {elapsed_time}")
+            print(f"Your EASY score is: {HARDSCORE}")
+            if HARDSCORE > currentLoggedInUser.advSlidingHighScore:
+                currentLoggedInUser.advSlidingHighScore = HARDSCORE
+                currentLoggedInUser.slidingGamesPlayed = currentLoggedInUser.slidingGamesPlayed + 1
+            updateUser()
+            hard_score_popup()
 
 # def terminate():
 #     pygame.quit()

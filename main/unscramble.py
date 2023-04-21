@@ -8,8 +8,8 @@ import random, constants
 from user import *
 
 # Define constants
-SCREEN_WIDTH = 1600
-SCREEN_HEIGHT = 900
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 POINTS = 0
 LIST_TITLE = ''
 LIST_SELECTED = []
@@ -372,6 +372,7 @@ def play():
             menu.add.label(title=('You completed the game with ' + str(hint_num) + ' reveals used!'))
 
             # Push stats
+            
             if POINTS > tempUser.unscrambleHighScore:
                 tempUser.unscrambleHighScore = POINTS
                 currentLoggedInUser.unscrambleGamesPlayed = tempUser.unscrambleGamesPlayed
