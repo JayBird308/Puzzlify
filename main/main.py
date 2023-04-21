@@ -298,9 +298,10 @@ class main:
             onchange=lambda widget, value: main.print_value(value)
         )
         diff_value = selector.get_value()
-        gameMenu.add.selector(selector._title, selector._items,
+        gameMenu_selector = gameMenu.add.selector(selector._title, selector._items,
                               onchange=selector._onchange,
                               default=selector._default_value)
+        gameMenu_selector.translate(0, -200)
         
         # game buttons with images:
         # memory button
@@ -360,13 +361,14 @@ class main:
         shadow_width=25
     )
 
-        gameMenu.add.button('Back', pygame_menu.events.BACK)
+        gameMenu_back = gameMenu.add.button('Back', pygame_menu.events.BACK, float=True)
 
         # positions the picture along the banner
-        memory_banner.translate(-350,250)
-        unscramble_banner.translate(-150,250)
-        minesweeper_banner.translate(100,250)
-        sliding_banner.translate(350,250)
+        memory_banner.translate(-550,0).resize(300,300)
+        unscramble_banner.translate(-175,0).resize(300,300)
+        minesweeper_banner.translate(175,0).resize(300,300)
+        sliding_banner.translate(550,0).resize(300,300)
+        gameMenu_back.translate(0, 400)
         
 
         ### --> Account Login Buttons <-- ###

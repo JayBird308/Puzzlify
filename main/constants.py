@@ -4,15 +4,14 @@ import customMenu_theme
 pygame.init()
 
 infoObject = pygame.display.Info()
-# WIDTH = infoObject.current_w
-# HEIGHT = infoObject.current_h
-# SCREEN = pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
+WIDTH = infoObject.current_w
+HEIGHT = infoObject.current_h
 
 # Test Variables
-WIDTH = 1920
-HEIGHT = 1080
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+# WIDTH = 1920
+# HEIGHT = 1080
 
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = 60
 DIFFICULTY = 0
 
