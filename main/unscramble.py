@@ -8,8 +8,8 @@ import random, constants
 from user import *
 
 # Define constants
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = constants.WIDTH
+SCREEN_HEIGHT = constants.HEIGHT
 POINTS = 0
 LIST_TITLE = ''
 LIST_SELECTED = []
@@ -20,6 +20,12 @@ HINT_COUNTER = 5
 main_menu = constants.main_menu
 main_menu.disable()
 DIFFICULTY = constants.DIFFICULTY
+EZ_INCREMENT = 100
+EZ_DECREMENT = 20
+EZ_REVEAL = 50
+AD_INCREMENT = 200
+AD_DECREMENT = 40
+AD_REVEAL = 100
 
 def random_small_list(difficulty_value):
     global LIST_SELECTED, LIST_TITLE, LAST_LIST, FIRST_RUN
@@ -223,7 +229,7 @@ def play():
         diff_label = 'Easy'
     elif DIFFICULTY == 1:
         diff_label = 'Advanced'
-    points = menu.add.label(f'Difficulty: {diff_label} | Points: {POINTS}')
+    points = menu.add.label(f'Difficulty: {diff_label} | Points: {POINTS}', label_id='points_label')
 
     def hint_button_action():
         global HINT_VALUE, HINT_COUNTER, POINTS
@@ -250,24 +256,40 @@ def play():
                 elif choice == widget.get_title() and widget.get_font_color_status(check_selection=True) != (220, 30, 30, 255):
                     widget.set_title(name)
                     widget.update_font({'color': (220, 30, 30)})
-                    POINTS = POINTS - 50
-                    points.set_title('Points:' + str(POINTS))
+                    # POINTS = POINTS - 50
+                    if DIFFICULTY == 0:
+                        POINTS -= EZ_REVEAL
+                    elif DIFFICULTY == 1:
+                        POINTS -= AD_REVEAL
+                    points.set_title(f'Difficulty: {diff_label} | Points: {POINTS}')
                     menu.render()
                     HINT_COUNTER = HINT_COUNTER - 1
                     HINT_VALUE = 0
-                    use_hint.set_title(f'Reveal a Word (-50 pts) {HINT_COUNTER}')
+                    if DIFFICULTY == 0:
+                        use_hint.set_title(f'Reveal a Word (-{EZ_REVEAL} pts) {HINT_COUNTER}')
+                    elif DIFFICULTY == 1:
+                        use_hint.set_title(f'Reveal a Word (-{AD_REVEAL} pts) {HINT_COUNTER}')
                     loop = False
                     # print('CHANGED LABEL ON THE MENU: ', choice)
                     break
                 # else:
                 #     print(f'Skipping this widget: {widget.get_title()}')
 
-    use_hint = menu.add.button(title=f'Reveal a Word (-50 pts) {HINT_COUNTER}', action=hint_button_action, button_id='hint_id')
+    use_hint = menu.add.button(title='', action=hint_button_action, button_id='hint_id')
+    if DIFFICULTY == 0:
+        use_hint.set_title(f'Reveal a Word (-{EZ_REVEAL} pts) {HINT_COUNTER}')
+    elif DIFFICULTY == 1:
+        use_hint.set_title(f'Reveal a Word (-{AD_REVEAL} pts) {HINT_COUNTER}')
     use_hint.set_border(2, (25, 25, 25), position=(pygame_menu.locals.POSITION_NORTH, pygame_menu.locals.POSITION_SOUTH,
                                                     pygame_menu.locals.POSITION_EAST, pygame_menu.locals.POSITION_WEST))
 
     # add the 5 hidden words to the screen
-    instructions = menu.add.label('Correct -> +100 pts! Wrong -> -20 pts!')
+    instructions = menu.add.label('')
+    if DIFFICULTY == 0:
+        instructions.set_title(f'Correct -> +{EZ_INCREMENT} pts! Wrong -> -{EZ_DECREMENT} pts!')
+    elif DIFFICULTY == 1:
+        instructions.set_title(f'Correct -> +{AD_INCREMENT} pts! Wrong -> -{AD_DECREMENT} pts!')
+
     instructions1 = menu.add.label(f'Unscramble these words ({LIST_TITLE}): ')
     instructions1.set_border(2, (25, 25, 25), position=pygame_menu.locals.POSITION_SOUTH)
 
@@ -303,9 +325,13 @@ def play():
                         widget.update_font({'color': (0, 120, 30)})
 
                         # Add the points and update the Points label
-                        POINTS = POINTS + 100
+                        # POINTS = POINTS + 100
+                        if DIFFICULTY == 0:
+                            POINTS += EZ_INCREMENT
+                        elif DIFFICULTY == 1:
+                            POINTS += AD_INCREMENT
                         print(f"Points: {POINTS}")
-                        points.set_title('Points:' + str(POINTS))
+                        points.set_title(f'Difficulty: {diff_label} | Points: {POINTS}')
                     input.set_value('')
                     menu.select_widget(input)
                     menu.render()
@@ -316,9 +342,13 @@ def play():
             if name != value and answer != True:
                 # Used for debug
                 # print(f"Wrong! {value} + Should be {name}")
-                POINTS = POINTS - 20
+                # POINTS = POINTS - 20
+                if DIFFICULTY == 0:
+                    POINTS -= EZ_DECREMENT
+                elif DIFFICULTY == 1:
+                    POINTS -= AD_DECREMENT
                 # print(f"Points: {POINTS}")
-                points.set_title('Points:' + str(POINTS))
+                points.set_title(f'Difficulty: {diff_label} | Points: {POINTS}')
                 input.set_value('')
                 menu.select_widget(input)
                 menu.render()
@@ -342,7 +372,7 @@ def play():
     menu.add.button('Exit (Closes Application)', pygame_menu.events.EXIT)  
 
     def check_end_game():
-        global FIRST_RUN
+        global FIRST_RUN, POINTS
         FIRST_RUN += 1
 
         guessed_correct = 0
@@ -370,15 +400,17 @@ def play():
             hint_widget.hide()
             hint_num = 5 - HINT_COUNTER
             menu.add.label(title=('You completed the game with ' + str(hint_num) + ' reveals used!'))
+            menu.add.label(title='** Each reveal not use will grant bonus points **')
+            bonus = HINT_COUNTER * 125
+            POINTS += bonus
+            points_widget = menu.get_widget('points_label')
+            points_widget.set_title(f'Difficulty: {diff_label} | Points: {POINTS}')
 
             # Push stats
-            
-            if POINTS > tempUser.unscrambleHighScore:
-                tempUser.unscrambleHighScore = POINTS
-                currentLoggedInUser.unscrambleGamesPlayed = tempUser.unscrambleGamesPlayed
-                currentLoggedInUser.unscrambleHighScore = tempUser.unscrambleHighScore
-            tempUser.unscrambleGamesPlayed += 1
-            currentLoggedInUser.unscrambleGamesPlayed = tempUser.unscrambleGamesPlayed
+            if DIFFICULTY == 0:
+                currentLoggedInUser.unscrambleHighScore = POINTS
+            elif DIFFICULTY == 1:
+                currentLoggedInUser.advUnscrambleHighScore = POINTS
             updateUser()
 
             # Show Congratulations for Completion

@@ -88,22 +88,22 @@ WidgetManager = pygame_menu._widgetmanager.WidgetManager(gameMenu)
 # memory game image
 memory_image_file = 'main\\images\\memory.png'
 memory_image = pygame_menu.baseimage.BaseImage(memory_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-memory_image.scale(0.30, 0.30, True)
+# memory_image.scale(0.30, 0.30, True)
 
 # unscramble game image
 unscramble_image_file = 'main\\images\\unscramble.png'
 unscramble_image = pygame_menu.baseimage.BaseImage(unscramble_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-unscramble_image.scale(0.30, 0.30, True)
+# unscramble_image.scale(0.30, 0.30, True)
 
 # minesweeper game image
 minesweeper_image_file = 'main\\images\\minesweeper.png'
 minesweeper_image = pygame_menu.baseimage.BaseImage(minesweeper_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-minesweeper_image.scale(0.30, 0.30, True)
+# minesweeper_image.scale(0.30, 0.30, True)
 
 # sliding game image
 sliding_image_file = 'main\\images\\sliding.png'
 sliding_image = pygame_menu.baseimage.BaseImage(sliding_image_file, drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-sliding_image.scale(0.15, 0.15, True)
+# sliding_image.scale(0.15, 0.15, True)
 
 # main class
 
