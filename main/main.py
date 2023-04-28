@@ -116,10 +116,19 @@ class main:
     def bad_user_popup():
         window = Tk()
         window.title('Incorrect Username Warning')
-        msg = Label(window, text="Incorrect Username",
-                    fg='red', font=("Helvetica", 16))
-        msg.place(x=60, y=50)
+        window.config(bg="#ffffff")
         window.geometry("300x200+700+400")
+        window.resizable(False, False)
+        
+        # Custom font for video game style
+        font = ("Arial", 16, "bold")
+        
+        msg = Label(window, text="INCORRECT USERNAME", fg='#ff0000', bg="#ffffff", font=font, bd=4, relief="ridge")
+        msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+        ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#ff0000', bd=4, relief="ridge", command=window.destroy)
+        ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+        
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
 
@@ -127,21 +136,39 @@ class main:
     def bad_pass_popup():
         window = Tk()
         window.title('Incorrect Password Warning')
-        msg = Label(window, text="Incorrect Password",
-                    fg='red', font=("Helvetica", 16))
-        msg.place(x=60, y=50)
+        window.config(bg="#ffffff")
         window.geometry("300x200+700+400")
+        window.resizable(False, False)
+        
+        # Custom font for video game style
+        font = ("Arial", 16, "bold")
+        
+        msg = Label(window, text="INCORRECT PASSWORD", fg='#ff0000', bg="#ffffff", font=font, bd=4, relief="ridge")
+        msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+        ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#ff0000', bd=4, relief="ridge", command=window.destroy)
+        ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+        
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
 
     # pop up window for good login credentials
     def good_login_popup():
         window = Tk()
-        window.title('Log In Success')
-        msg = Label(window, text="Successful Log In!",
-                    fg='green', font=("Helvetica", 16))
-        msg.place(x=60, y=50)
+        window.title('Login Success')
+        window.config(bg="#ffffff")
         window.geometry("300x200+700+400")
+        window.resizable(False, False)
+        
+        # Custom font for video game style
+        font = ("Arial", 16, "bold")
+        
+        msg = Label(window, text="Log In Successful!", fg='#00ff00', bg="#ffffff", font=font, bd=4, relief="ridge")
+        msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+        ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#00ff00', bd=4, relief="ridge", command=window.destroy)
+        ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+        
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
 
@@ -186,11 +213,9 @@ class main:
                 return currentLoggedInUser
             else:
                 main.bad_pass_popup()
-                print("Incorrect Password")
             return currentLoggedInUser
         except:
             main.bad_user_popup()
-            print("Incorrect Username")
         return currentLoggedInUser
 
     # sign out function
@@ -198,23 +223,39 @@ class main:
         def bad_sign_out_popup():
             window = Tk()
             window.title('Sign out Failure')
-            msg = Label(window, text="No account signed in",
-                        fg='red', font=("Helvetica", 16))
-            msg.place(x=60, y=50)
+            window.config(bg="#ffffff")
             window.geometry("300x200+700+400")
-            window.bind(
-                "<Escape>", lambda event: main.close_window(window, event))
+            window.resizable(False, False)
+            
+            # Custom font for video game style
+            font = ("Arial", 16, "bold")
+            
+            msg = Label(window, text="No Account Signed In", fg='#ff0000', bg="#ffffff", font=font, bd=4, relief="ridge")
+            msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+            ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#ff0000', bd=4, relief="ridge", command=window.destroy)
+            ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+            
+            window.bind("<Escape>", lambda event: main.close_window(window, event))
             window.mainloop()
 
         def sign_out_popup():
             window = Tk()
-            window.title('Sign out Success')
-            msg = Label(window, text="Sign out Successful!",
-                        fg='green', font=("Helvetica", 16))
-            msg.place(x=60, y=50)
+            window.title('Signout Success')
+            window.config(bg="#ffffff")
             window.geometry("300x200+700+400")
-            window.bind(
-                "<Escape>", lambda event: main.close_window(window, event))
+            window.resizable(False, False)
+            
+            # Custom font for video game style
+            font = ("Arial", 16, "bold")
+            
+            msg = Label(window, text="Sign Out Successful!", fg='#00ff00', bg="#ffffff", font=font, bd=4, relief="ridge")
+            msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+            ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#00ff00', bd=4, relief="ridge", command=window.destroy)
+            ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+            
+            window.bind("<Escape>", lambda event: main.close_window(window, event))
             window.mainloop()
 
         if currentLoggedInUser.username == "":
@@ -231,25 +272,41 @@ class main:
         # pop up window for successful signup
         def good_signup():
             window = Tk()
-            window.title('Sign up Success')
-            msg = Label(window, text="Sign up Successful!",
-                        fg='green', font=("Helvetica", 16))
-            msg.place(x=60, y=50)
+            window.title('Signup Success')
+            window.config(bg="#ffffff")
             window.geometry("300x200+700+400")
-            window.bind(
-                "<Escape>", lambda event: main.close_window(window, event))
+            window.resizable(False, False)
+            
+            # Custom font for video game style
+            font = ("Arial", 16, "bold")
+            
+            msg = Label(window, text="Sign Up Successful!", fg='#00ff00', bg="#ffffff", font=font, bd=4, relief="ridge")
+            msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+            ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#00ff00', bd=4, relief="ridge", command=window.destroy)
+            ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+            
+            window.bind("<Escape>", lambda event: main.close_window(window, event))
             window.mainloop()
 
         # pop up window for successful signup
         def bad_signup():
             window = Tk()
-            window.title('Sign up Warning')
-            msg = Label(window, text="Sign up Failed, Please Try Again.",
-                        fg='red', font=("Helvetica", 16))
-            msg.place(x=60, y=50)
+            window.title('Sign up Failure')
+            window.config(bg="#ffffff")
             window.geometry("300x200+700+400")
-            window.bind(
-                "<Escape>", lambda event: main.close_window(window, event))
+            window.resizable(False, False)
+            
+            # Custom font for video game style
+            font = ("Arial", 16, "bold")
+            
+            msg = Label(window, text="Sign Up Failed, Please Try Again.", fg='#ff0000', bg="#ffffff", font=font, bd=4, relief="ridge")
+            msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+            ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#ff0000', bd=4, relief="ridge", command=window.destroy)
+            ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+            
+            window.bind("<Escape>", lambda event: main.close_window(window, event))
             window.mainloop()
 
         tempUser.key = ""

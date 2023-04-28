@@ -85,21 +85,39 @@ def main():
     # pop up window for score finish
     def easy_score_popup():
         window = Tk()
-        window.title('Game Score')
-        msg = Label(window, text="Easy Score: " + str(EASYSCORE),
-                    fg='black', font=("Helvetica", 16))
-        msg.place(x=60, y=50)
+        window.title('Calculated Score')
+        window.config(bg="#ffffff")
         window.geometry("300x200+700+400")
+        window.resizable(False, False)
+        
+        # Custom font for video game style
+        font = ("Arial", 16, "bold")
+        
+        msg = Label(window, text="Easy Score: " + str(EASYSCORE), fg='#00008b', bg="#ffffff", font=font, bd=4, relief="ridge")
+        msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+        ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#00008b', bd=4, relief="ridge", command=window.destroy)
+        ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+        
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
     
     def hard_score_popup():
         window = Tk()
-        window.title('Game Score')
-        msg = Label(window, text="Advanced Score: " + str(HARDSCORE),
-                    fg='black', font=("Helvetica", 16))
-        msg.place(x=60, y=50)
+        window.title('Calculated Score')
+        window.config(bg="#ffffff")
         window.geometry("300x200+700+400")
+        window.resizable(False, False)
+        
+        # Custom font for video game style
+        font = ("Arial", 16, "bold")
+        
+        msg = Label(window, text="Advanced Score: " + str(HARDSCORE), fg='#00008b', bg="#ffffff", font=font, bd=4, relief="ridge")
+        msg.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+        ok_button = Button(window, text="OK", font=font, fg='#ffffff', bg='#00008b', bd=4, relief="ridge", command=window.destroy)
+        ok_button.place(relx=0.5, rely=0.8, anchor=CENTER)
+        
         window.bind("<Escape>", lambda event: main.close_window(window, event))
         window.mainloop()
 
